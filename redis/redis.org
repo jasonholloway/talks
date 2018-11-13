@@ -15,7 +15,10 @@
 
 - The further history
   - NoSQL hype
+    - turn against integration in db, where SQL has all the perfectly normalised public data of your domain
+    - dovetails with microservices, separation of domain into smaller units that can encapsulate complication locally
   - Redis can be used everywhere, for everything!
+    - like grease - check out 7d7w date (redis as the culmination of book)
   - extensions, use-cases
     - examples here
   - the rebound
@@ -43,6 +46,9 @@
     - logging
   - look at infos on both sentinels and servers
     - check masters and slaves
+
+      
+
 
 
 
