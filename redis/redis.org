@@ -12,9 +12,38 @@
   - instead of clean and simple method dispatch, you've got a tcp protocol
   - Demo of commands
     - sets the scene for later demos
+
 - The further history
   - NoSQL hype
+  - Redis can be used everywhere, for everything!
+  - extensions, use-cases
+    - examples here
   - the rebound
+    - examples here
+    - Aphyr proves the obvious
+- Data loss demo
+  - as continuation of rebound
+
+- Sum up positives and negatives
+  - good
+    - when consistency and durability aren't too important
+    - where data is encapsulated - bad for integration with other apps
+    - therefore, microservices
+    - prototyping
+  - gotchas
+    - bit cryptic
+  
+- Making the best of it
+  - logging and monitoring
+  - data could be asynchronously uploaded to S3?
+- Maintenance tips
+  - first of all, check connections
+    - from the network, from the client, from the server
+    - tcp connection exhaustion
+    - logging
+  - look at infos on both sentinels and servers
+    - check masters and slaves
+
 
 
 - faster writing than reading(?)
