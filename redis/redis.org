@@ -1,0 +1,53 @@
+* The Wonderful World of Redis
+  
+- What is it? A database, a cache, or neither?
+  - Intro from 7d7w
+  - other intros that clash
+- The history:
+  - in the beginning, memcache
+  - One process per request - cgi-bin, like php
+  - Antirez's usecase - tuple aggregation
+- Is like a collection library
+  - hosted in a peer process rather than as objects on the heap
+  - instead of clean and simple method dispatch, you've got a tcp protocol
+  - Demo of commands
+    - sets the scene for later demos
+- The further history
+  - NoSQL hype
+  - the rebound
+
+
+- faster writing than reading(?)
+- optimized for speed rather than RAM
+
+- originally, used OS fork() to do snapshotting to files
+- AOF was added
+  
+- master->slave async replication
+
+
+- extension on extension on extension
+  - extensions on the inside
+    - search
+  - extensions on the outside
+    - sentinel
+    - cluster
+
+- again, as if it's actually a programming environment
+  
+- single-threaded, good for consistency
+  - kinda like Node
+  - but the OS is parallelizing loads of stuff underneath
+  
+- extensions via C (or anything with C bindings)
+- Lua acripting ftw
+  - all is atomic, transactional
+  - script can live in client code
+  - show RedisEntityLogs as example
+    - predeclare keys so it fetches em upfront
+
+
+
+
+
+
