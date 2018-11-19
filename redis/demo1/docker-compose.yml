@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  controller:
+    build: ./controller
+
+  redis1:
+    image: redis
+
+  redis2:
+    image: redis
+    
