@@ -1,0 +1,16 @@
+* Redis: what is it?
+** Acronym:
+REmote DIctionary Service
+
+** redis.io:
+Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker. It supports data structures such as strings, hashes, lists, sets, sorted sets with range queries, bitmaps, hyperloglogs, geospatial indexes with radius queries and streams. 
+
+** antirez
+In may ways Redis resembles more a programming language than a database.  
+
+** matt.sh:
+Redis is a data structure server. Redis stores your data in one of five native Redis data types so you can perform fast, reliable operations on your data across a network.
+
+** rubyruy in reddit:
+It hits a nice sweet spot for "nosql" distirbuted data stores between simple K-V stores (again, like memcached) and map-reduce-ish type full on document databases (like, I dunno CouchDB or Cassandra or MongoDB or whatever the kids use these days).
+

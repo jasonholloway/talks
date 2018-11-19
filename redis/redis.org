@@ -1,88 +1,138 @@
 * The Wonderful World of Redis
   
-- What is it? A database, a cache, or neither?
-  - Intro from 7d7w
-  - other intros that clash
-- The history:
-  - in the beginning, memcache
-  - One process per request - cgi-bin, like php
-  - Antirez's usecase - tuple aggregation
-- Is like a collection library
-  - hosted in a peer process rather than as objects on the heap
-  - instead of clean and simple method dispatch, you've got a tcp protocol
-  - Demo of commands
-    - sets the scene for later demos
+** What is it? A database, a cache, or neither?
+*** Intro from 7d7w
+**** other intros that clash
 
-- The further history
-  - NoSQL hype
-    - turn against integration in db, where SQL has all the perfectly normalised public data of your domain
-    - dovetails with microservices, separation of domain into smaller units that can encapsulate complication locally
-  - Redis can be used everywhere, for everything!
-    - like grease - check out 7d7w date (redis as the culmination of book)
-  - extensions, use-cases
-    - examples here
-  - the rebound
-    - examples here
-    - Aphyr proves the obvious
-- Data loss demo
-  - as continuation of rebound
+** The history:
+*** in the beginning, memcached
+**** One process per request - cgi-bin, like php
+***** Antirez's usecase - tuple aggregation
 
-- Sum up positives and negatives
-  - good
-    - when consistency and durability aren't too important
-    - where data is encapsulated - bad for integration with other apps
-    - therefore, microservices
-    - prototyping
-  - gotchas
-    - bit cryptic
+
+** Is like a collection library
+*** hosted in a peer process rather than as objects on the heap
+*** instead of clean and simple method dispatch, you've got a tcp protocol
+*** Demo of commands
+**** sets the scene for later demos
+
+CONFIG: sets config at runtime - good to introduce first off, as partially explains Sentinel
+
+INCR, DECR: atomic unique id creation, can as global key source, values can then be committed to LIST
+LPUSH, LPOP, RPUSH, RPOP...: list commands 
+above two can be combined to create unique records, with list as an index
+http://oldblog.antirez.com/post/Sorting-in-key-value-data-model.html <- see for some patterns
+
+MULTI: gives you atomicity across commands
+
+First demo:
+  - INCR to get unique id
+  - store data to value referenced by unique id
+  - RPUSH to index it
+  - LPOP and then GET to act as consumer
+
+Second demo:
+  - MULTI...EXEC to group things in one atomic transaction
+
+
+** The further history
+*** NoSQL hype
+**** turn against integration in db, where SQL has all the perfectly normalised public data of your domain
+**** dovetails with microservices, separation of domain into smaller units that can encapsulate complication locally
+*** Redis can be used everywhere, for everything!
+**** like grease - check out 7d7w date (redis as the culmination of book)
+**** extensions, use-cases
+examples here
+*** the rebound
+**** examples here
+**** Aphyr proves the obvious
+
+** Data loss demo
+as continuation of rebound
+
+** Sum up positives and negatives
+*** good
+**** when consistency and durability aren't too important
+**** where data is encapsulated - bad for integration with other apps
+**** therefore, microservices
+**** prototyping
+*** gotchas
+**** bit cryptic
   
-- Making the best of it
-  - logging and monitoring
-  - data could be asynchronously uploaded to S3?
-- Maintenance tips
-  - first of all, check connections
-    - from the network, from the client, from the server
-    - tcp connection exhaustion
-    - logging
-  - look at infos on both sentinels and servers
-    - check masters and slaves
+** Making the best of it
+*** logging and monitoring
+*** data could be asynchronously uploaded to S3?
+
+** Maintenance tips
+*** first of all, check connections
+*** from the network, from the client, from the server
+*** tcp connection exhaustion
+*** logging
+*** look at infos on both sentinels and servers
+**** check masters and slaves
 
       
 
+It was voted most loved database in the Stack Overflow Developer Survey in 2017 and 2018
 
 
+** faster writing than reading(?)
+** optimized for speed rather than RAM
 
-- faster writing than reading(?)
-- optimized for speed rather than RAM
-
-- originally, used OS fork() to do snapshotting to files
-- AOF was added
+** originally, used OS fork() to do snapshotting to files
+** AOF was added
   
-- master->slave async replication
+** master->slave async replication
 
 
-- extension on extension on extension
-  - extensions on the inside
-    - search
-  - extensions on the outside
-    - sentinel
-    - cluster
+** extension on extension on extension
+*** extensions on the inside
+**** sentinel (2.8+)
+a self-regulating quorum of processes
+- should be in separate failure zones (like the hull of the Titanic: if on)
+- in practice, they can live alongside dbs, in same 'failure zones' (ie VMs)
+ 
+decide who the master is
+tell clients where to go to (not all clients use this feature though)
 
-- again, as if it's actually a programming environment
+**** cluster (3+)
+keys are partitioned, live on different nodes - multi-master, like Couchbase, Kafka
+again though, who decides which partitions live on which boxes
+if there are periods of inconsistency in the layout, then...
+
+**** geolocations (3+)
+
+**** modules (4+)
+https://redis.io/modules
+***** search
+*** extensions on the outside
+
+** again, as if it's actually a programming environment
   
-- single-threaded, good for consistency
-  - kinda like Node
-  - but the OS is parallelizing loads of stuff underneath
+** single-threaded, good for consistency
+*** kinda like Node
+**** concurrent by default, model is simplified by being general
+*** the OS is parallelizing loads of stuff underneath
+it's just being orchestrated by a single thread
+
+so, how does this fit with Redis being fast? surely Redis'd be faster and *more available* if more threads were used
+but - it means it just passes over to the OS as fast as possible
+
+and how can it be atomic unless it locks keys? well - it must ensure keys are only accessed one at a time
+
+
   
-- extensions via C (or anything with C bindings)
-- Lua acripting ftw
-  - all is atomic, transactional
-  - script can live in client code
-  - show RedisEntityLogs as example
-    - predeclare keys so it fetches em upfront
+** extensions via C (or anything with C bindings)
+
+** Lua acripting ftw
+*** all is atomic, transactional
+*** script can live in client code
+*** show RedisEntityLogs as example
+*** predeclare keys so it fetches em upfront
 
 
 
 
 
 
+    
