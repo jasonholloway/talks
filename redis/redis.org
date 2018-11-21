@@ -138,8 +138,9 @@ predeclare keys so it fetches em upfront
 
 * The History of Redis part II
 ** NoSQL hype
-- turn against integration in db, where SQL has all the perfectly normalised public data of your domain
-- dovetails with microservices, separation of domain into smaller units that can encapsulate complication locally
+- big turn against integration in db, where SQL has all the perfectly normalised data of your domain
+- dovetails with microservices
+- novelty, but not really
 
 ** Redis can be used everywhere, for everything!
 - "Redis is like grease..." 7d7w circa 2012
@@ -147,16 +148,14 @@ predeclare keys so it fetches em upfront
   
 ** extension on extension on extension
 *** sentinel (2.8+)
-a self-regulating quorum of processes
+- a self-regulating quorum of processes, overseeing masters and slaves
 - should be in separate failure zones
-- in practice, they can live alongside dbs, in same 'failure zones' (ie VMs)
-- decide who the master is
+- in practice, can live alongside Redis nodes
 - also tell clients where to go to (not always though - depends on lib)
 
 *** cluster (3+)
-keys are partitioned, live on different nodes - multi-master, like Couchbase, Kafka
-again though, who decides which partitions live on which boxes
-if there are periods of inconsistency in the layout, then...
+- keys are auto-partitioned, live on different nodes - multi-master, like Couchbase, Kafka
+- again though, who decides which partitions live on which boxes? If there are periods of inconsistency in the layout, then...
 
 *** geolocations (3+)
 
@@ -185,9 +184,8 @@ if there are periods of inconsistency in the layout, then...
   
 
 * Making the best of it
-- not actually that scalable - use partitioning!
-- data could be asynchronously uploaded to S3?
-- if just being used as KV store of documents, there are better options
+- not actually that scalable - use partitioning! As in, split data between clusters
+- if just being used as KV store of documents, there may be better options
 
   
 * Maintenance top tips
@@ -197,7 +195,7 @@ if there are periods of inconsistency in the layout, then...
 - beware tcp connection exhaustion!
 
 ** logging
-- would tell you about tcp connection exhaustion   
+- would tell you about tcp connection exhaustion!
 - also memory usage
 - and moving of master
 
