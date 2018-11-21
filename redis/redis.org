@@ -23,8 +23,8 @@ Redis is like grease. It's most often used to lubricate moving parts and keep th
 ** antirez
 In may ways Redis resembles more a programming language than a database.  
 
-** someone on reddit:
-It hits a nice sweet spot for "nosql" distirbuted data stores between simple K-V stores (like memcached) and map-reduce-ish type full-on document databases (like, I dunno CouchDB or Cassandra or MongoDB or whatever the kids use these days).
+# ** someone on reddit:
+# It hits a nice sweet spot for "nosql" distirbuted data stores between simple K-V stores (like memcached) and map-reduce-ish type full-on document databases (like, I dunno CouchDB or Cassandra or MongoDB or whatever the kids use these days).
 
 ** someone on hackernews:
 IMHO Redis barely registers as a database; it's more of a shared heap that supports snapshotting.
@@ -38,10 +38,37 @@ IMHO Redis barely registers as a database; it's more of a shared heap that suppo
 ** Antirez's usecase - tuple aggregation
 - prev OS projects: a PL interpreter, and a TCP analyzer
 - innovations: data structures + replication
+  
+* So then, what is it???
 
 ** Is like a collection library
 - hosted in a peer process rather than as objects on the heap
 - instead of clean and simple method dispatch, you've got a tcp protocol
+  
+** Optimized for speed
+- everything lives in RAM 
+- doesn't do virtual memory - so limited to 'physical' RAM
+- not optimized for minimum RAM usage either
+- faster writing than reading (which is strange, isn't it?)
+- takes pressure off scalability
+- partitioning ftw
+  
+** Single threaded
+- like NodeJS
+- ensures consistency WITHIN ONE NODE!
+  
+** Persists to disk asynchronously
+- snapshots to files in background
+- also has AOF journal mode
+- corruption is possible
+  
+** Master -> slave replication  
+- Can only write to single master
+- Slave is then a back-up if master disappears
+
+* Fun facts
+- voted most loved database in the Stack Overflow Developer Survey in 2017 and 2018
+
     
 * Some Redis commands
 - Syntax of commands is reflected in client libs
@@ -99,6 +126,12 @@ or - a programmable environment in which to create a bespoke database out of sma
   - doesn't do paging - hard limit of RAM
 
 ** Lua scripting
+- all is atomic, transactional
+- script can live in client code
+#+BEGIN_NOTES
+show RedisEntityLogs as example
+predeclare keys so it fetches em upfront
+#+END_NOTES
 
 * The History of Redis part II
 ** NoSQL hype
@@ -166,21 +199,6 @@ as continuation of rebound
       
 
 
-* Some Redis Facts
-** voted most loved database in the Stack Overflow Developer Survey in 2017 and 2018
-** is single-threaded
-#+BEGIN_NOTES
-- like Node, of course
-#+END_NOTES
-** optimized for speed rather than RAM
-** faster writing than reading
-#+BEGIN_NOTES
-- this implies something about its durability guarantees - ie, when you write, can it really be persisted?
-- suits the original use-case of aggregation
-#+END_NOTES
-** originally, used OS fork() to do snapshotting to files
-** AOF was added
-  
    
 
 
@@ -207,8 +225,4 @@ and how can it be atomic unless it locks keys? well - it must ensure keys are on
 ** extensions via C (or anything with C bindings)
 
 ** Lua scripting ftw
-*** all is atomic, transactional
-*** script can live in client code
-*** show RedisEntityLogs as example
-*** predeclare keys so it fetches em upfront
 
