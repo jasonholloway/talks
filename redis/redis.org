@@ -1,20 +1,50 @@
-* The Wonderful World of Redis
+#+OPTIONS: num:nil toc:nil
+#+OPTIONS: reveal_history:t
+#+Title: The Wonderful World of Redis
   
-** What is it? A database, a cache, or neither?
-*** Intro from 7d7w
-**** other intros that clash
+* What is it? A database, a cache, or...?!?
+  
+#+BEGIN_NOTES
+Best answer: a programmable data structure store!
+#+END_NOTES
 
-** The history:
-*** in the beginning, memcached
-**** One process per request - cgi-bin, like php
-***** Antirez's usecase - tuple aggregation
 
+** Acronym:
+REmote DIctionary Service
+#+BEGIN_NOTES
+Sounds like a KV store then...
+#+END_NOTES
+** redis.io:
+Redis is an open source, in-memory data structure store, used as a database, cache and message broker.
+
+** Seven Databases in Seven Weeks
+Redis is like grease. It's most often used to lubricate moving parts and keep them working smoothly by reducing friction. Whatever the machinery of your system, it could be improved with a bit poured over it. Sometimes the answer to your problem is simply a judicious use of more Redis.
+
+** antirez
+In may ways Redis resembles more a programming language than a database.  
+
+** someone on reddit:
+It hits a nice sweet spot for "nosql" distirbuted data stores between simple K-V stores (like memcached) and map-reduce-ish type full-on document databases (like, I dunno CouchDB or Cassandra or MongoDB or whatever the kids use these days).
+
+** someone on hackernews:
+IMHO Redis barely registers as a database; it's more of a shared heap that supports snapshotting.
+
+
+* A potted history, part 1
+** in the beginning, memcached
+- One process per request - CGI-BIN, like PHP
+- work shared between requests cheaply
+
+** Antirez's usecase - tuple aggregation
+- prev OS projects: a PL interpreter, and a TCP analyzer
+- innovations: data structures + replication
 
 ** Is like a collection library
-*** hosted in a peer process rather than as objects on the heap
-*** instead of clean and simple method dispatch, you've got a tcp protocol
-*** Demo of commands
-**** sets the scene for later demos
+- hosted in a peer process rather than as objects on the heap
+- instead of clean and simple method dispatch, you've got a tcp protocol
+    
+* Some Redis commands
+- Syntax of commands is reflected in client libs
 
 CONFIG: sets config at runtime - good to introduce first off, as partially explains Sentinel
 
@@ -23,71 +53,62 @@ LPUSH, LPOP, RPUSH, RPOP...: list commands
 above two can be combined to create unique records, with list as an index
 http://oldblog.antirez.com/post/Sorting-in-key-value-data-model.html <- see for some patterns
 
+
+MSET, MGET
 MULTI: gives you atomicity across commands
+
 
 First demo:
   - INCR to get unique id
   - store data to value referenced by unique id
   - RPUSH to index it
   - LPOP and then GET to act as consumer
+  - LRANGE etc - show Redis commands docs - like MS docs for collections again
+  - HGET, HSET - dictionaries
+  - very complicated SORT command - show ridiculous signature
 
 Second demo:
+  - MSET, MGET
   - MULTI...EXEC to group things in one atomic transaction
+  - Optimistic watching with WATCH
+    MULTI doesn't however allow you to read into and reapply local variables - therefore limited
+
+    
+  - Pipelining
+    (printf "PING\r\nPING\r\nPING\r\nPING\r\nPING"; sleep 5) | nc redis1 6379
+    overhead is hugely reduced; can send thousands of commands like this
+    like a machine gun
+    not atomic
+
+Third demo:
+  - /Redis is a event-driven substrate where it is simple to plug other ideas/ - Antirez
+    databases have internal pub/sub; Redis is like database turned inside out
+  - pub/sub - like mini rabbit
+  - mention streams too - a mini kafka
 
 
-** The further history
-*** NoSQL hype
-**** turn against integration in db, where SQL has all the perfectly normalised public data of your domain
-**** dovetails with microservices, separation of domain into smaller units that can encapsulate complication locally
-*** Redis can be used everywhere, for everything!
-**** like grease - check out 7d7w date (redis as the culmination of book)
-**** extensions, use-cases
-examples here
-*** the rebound
-**** examples here
-**** Aphyr proves the obvious
-
-** Data loss demo
-as continuation of rebound
-
-** Sum up positives and negatives
-*** good
-**** when consistency and durability aren't too important
-**** where data is encapsulated - bad for integration with other apps
-**** therefore, microservices
-**** prototyping
-*** gotchas
-**** bit cryptic
-  
-** Making the best of it
-*** logging and monitoring
-*** data could be asynchronously uploaded to S3?
-
-** Maintenance tips
-*** first of all, check connections
-*** from the network, from the client, from the server
-*** tcp connection exhaustion
-*** logging
-*** look at infos on both sentinels and servers
-**** check masters and slaves
-
-      
-
-It was voted most loved database in the Stack Overflow Developer Survey in 2017 and 2018
+like a database toolkit
 
 
-** faster writing than reading(?)
-** optimized for speed rather than RAM
+difference in approach between storing big serialized documents - a document database without any bells and whistles, ie /very few features/
+or - a programmable environment in which to create a bespoke database out of small composable units
 
-** originally, used OS fork() to do snapshotting to files
-** AOF was added
-  
-** master->slave async replication
+- it's very fast! 100k ops/s quoted; this makes up for its dubious scalability
+- pipelining - send commands while others are in flight
+- simple - replication is simple, unidirectional; flushing to disk is simple
+  - doesn't do paging - hard limit of RAM
 
+** Lua scripting
 
+* The History of Redis part II
+** NoSQL hype
+- turn against integration in db, where SQL has all the perfectly normalised public data of your domain
+- dovetails with microservices, separation of domain into smaller units that can encapsulate complication locally
+** Redis can be used everywhere, for everything!
+- "Redis is like grease..." 7d7w circa 2012
+- QUOTE PEOPLE EXTOLLING RELIABILITY
 ** extension on extension on extension
-*** extensions on the inside
-**** sentinel (2.8+)
+*** sentinel (2.8+)
 a self-regulating quorum of processes
 - should be in separate failure zones (like the hull of the Titanic: if on)
 - in practice, they can live alongside dbs, in same 'failure zones' (ie VMs)
@@ -95,17 +116,78 @@ a self-regulating quorum of processes
 decide who the master is
 tell clients where to go to (not all clients use this feature though)
 
-**** cluster (3+)
+*** cluster (3+)
 keys are partitioned, live on different nodes - multi-master, like Couchbase, Kafka
 again though, who decides which partitions live on which boxes
 if there are periods of inconsistency in the layout, then...
 
-**** geolocations (3+)
+*** geolocations (3+)
 
-**** modules (4+)
-https://redis.io/modules
-***** search
-*** extensions on the outside
+*** modules (4+)
+- https://redis.io/modules
+- search
+- machine-learning
+  
+*** streams (5+)
+- mini Kafka
+
+** Better and better and better but...
+- Aphyr proves the obvious, 2013: https://aphyr.com/posts/283-jepsen-redis
+  (look at final comment, much more recent)
+
+* Data loss demo
+as continuation of rebound
+
+
+
+
+
+* Sum up positives and negatives
+** good
+- when consistency and durability aren't too important
+- where data is encapsulated - bad for integration with other apps
+- therefore, microservices
+- brill for prototyping
+  
+
+* Making the best of it
+- logging and monitoring
+- data could be asynchronously uploaded to S3?
+
+  
+* Maintenance tips
+** first of all, check connections
+** from the network, from the client, from the server
+** tcp connection exhaustion
+** logging
+** look at infos on both sentinels and servers
+** check masters and slaves
+
+      
+
+
+* Some Redis Facts
+** voted most loved database in the Stack Overflow Developer Survey in 2017 and 2018
+** is single-threaded
+#+BEGIN_NOTES
+- like Node, of course
+#+END_NOTES
+** optimized for speed rather than RAM
+** faster writing than reading
+#+BEGIN_NOTES
+- this implies something about its durability guarantees - ie, when you write, can it really be persisted?
+- suits the original use-case of aggregation
+#+END_NOTES
+** originally, used OS fork() to do snapshotting to files
+** AOF was added
+  
+   
+
+
+
+** master->slave async replication
+
+
 
 ** again, as if it's actually a programming environment
   
@@ -124,15 +206,9 @@ and how can it be atomic unless it locks keys? well - it must ensure keys are on
   
 ** extensions via C (or anything with C bindings)
 
-** Lua acripting ftw
+** Lua scripting ftw
 *** all is atomic, transactional
 *** script can live in client code
 *** show RedisEntityLogs as example
 *** predeclare keys so it fetches em upfront
 
-
-
-
-
-
-    

@@ -14,3 +14,6 @@ Redis is a data structure server. Redis stores your data in one of five native R
 ** rubyruy in reddit:
 It hits a nice sweet spot for "nosql" distirbuted data stores between simple K-V stores (again, like memcached) and map-reduce-ish type full on document databases (like, I dunno CouchDB or Cassandra or MongoDB or whatever the kids use these days).
 
+** rbranson on hackernews:
+IMHO Redis barely registers as a database; it's more of a shared heap that supports snapshotting.
+

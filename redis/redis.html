@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>The Wonderful World of Redis</title>
+<meta name="author" content="(jason)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/moon.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'http://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">The Wonderful World of Redis</h1><h2 class="author">jason</h2><p class="date">Created: 2018-11-21 Wed 21:39</p>
+</section>
+
+<section>
+<section id="slide-org83686c0">
+<h2 id="org83686c0">What is it? A database, a cache, or&#x2026;?!?</h2>
+<aside class="notes">
+<p>
+Best answer: a programmable data structure store!
+</p>
+
+</aside>
+
+
+</section>
+<section id="slide-org9652cbf">
+<h3 id="org9652cbf">Acronym:</h3>
+<p>
+REmote DIctionary Service
+</p>
+<aside class="notes">
+<p>
+Sounds like a KV store then&#x2026;
+</p>
+
+</aside>
+</section>
+<section id="slide-orgb5947b9">
+<h3 id="orgb5947b9">redis.io:</h3>
+<p>
+Redis is an open source, in-memory data structure store, used as a database, cache and message broker.
+</p>
+
+</section>
+<section id="slide-org1128e29">
+<h3 id="org1128e29">Seven Databases in Seven Weeks</h3>
+<p>
+Redis is like grease. It's most often used to lubricate moving parts and keep them working smoothly by reducing friction. Whatever the machinery of your system, it could be improved with a bit poured over it. Sometimes the answer to your problem is simply a judicious use of more Redis.
+</p>
+
+</section>
+<section id="slide-org451258e">
+<h3 id="org451258e">antirez</h3>
+<p>
+In may ways Redis resembles more a programming language than a database.  
+</p>
+
+</section>
+<section id="slide-orgc416fce">
+<h3 id="orgc416fce">someone on reddit:</h3>
+<p>
+It hits a nice sweet spot for "nosql" distirbuted data stores between simple K-V stores (like memcached) and map-reduce-ish type full-on document databases (like, I dunno CouchDB or Cassandra or MongoDB or whatever the kids use these days).
+</p>
+
+</section>
+<section id="slide-org3edeed5">
+<h3 id="org3edeed5">someone on hackernews:</h3>
+<p>
+IMHO Redis barely registers as a database; it's more of a shared heap that supports snapshotting.
+</p>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org7924362">
+<h2 id="org7924362">A potted history, part 1</h2>
+<div class="outline-text-2" id="text-org7924362">
+</div>
+</section>
+<section id="slide-orga54893c">
+<h3 id="orga54893c">in the beginning, memcached</h3>
+<ul>
+<li>One process per request - CGI-BIN, like PHP</li>
+<li>work shared between requests cheaply</li>
+
+</ul>
+
+</section>
+<section id="slide-org5aa6a41">
+<h3 id="org5aa6a41">Antirez's usecase - tuple aggregation</h3>
+<ul>
+<li>prev OS projects: a PL interpreter, and a TCP analyzer</li>
+<li>innovations: data structures + replication</li>
+
+</ul>
+
+</section>
+<section id="slide-org916bb6b">
+<h3 id="org916bb6b">Is like a collection library</h3>
+<ul>
+<li>hosted in a peer process rather than as objects on the heap</li>
+<li>instead of clean and simple method dispatch, you've got a tcp protocol</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgc71415c">
+<h2 id="orgc71415c">Some Redis commands</h2>
+<ul>
+<li>Syntax of commands is reflected in client libs</li>
+
+</ul>
+
+<p>
+CONFIG: sets config at runtime - good to introduce first off, as partially explains Sentinel
+</p>
+
+<p>
+INCR, DECR: atomic unique id creation, can as global key source, values can then be committed to LIST
+LPUSH, LPOP, RPUSH, RPOP&#x2026;: list commands 
+above two can be combined to create unique records, with list as an index
+<a href="http://oldblog.antirez.com/post/Sorting-in-key-value-data-model.html">http://oldblog.antirez.com/post/Sorting-in-key-value-data-model.html</a> &lt;- see for some patterns
+</p>
+
+
+<p>
+MSET, MGET
+MULTI: gives you atomicity across commands
+</p>
+
+
+<p>
+First demo:
+</p>
+<ul>
+<li>INCR to get unique id</li>
+<li>store data to value referenced by unique id</li>
+<li>RPUSH to index it</li>
+<li>LPOP and then GET to act as consumer</li>
+<li>LRANGE etc - show Redis commands docs - like MS docs for collections again</li>
+<li>HGET, HSET - dictionaries</li>
+<li>very complicated SORT command - show ridiculous signature</li>
+
+</ul>
+
+<p>
+Second demo:
+</p>
+<ul>
+<li>MSET, MGET</li>
+<li>MULTI&#x2026;EXEC to group things in one atomic transaction</li>
+<li>Optimistic watching with WATCH
+MULTI doesn't however allow you to read into and reapply local variables - therefore limited</li>
+
+</ul>
+
+
+<ul>
+<li>Pipelining
+(printf "PING\r\nPING\r\nPING\r\nPING\r\nPING"; sleep 5) | nc redis1 6379
+overhead is hugely reduced; can send thousands of commands like this
+like a machine gun
+not atomic</li>
+
+</ul>
+
+<p>
+Third demo:
+</p>
+<ul>
+<li><i>Redis is a event-driven substrate where it is simple to plug other ideas</i> - Antirez
+databases have internal pub/sub; Redis is like database turned inside out</li>
+<li>pub/sub - like mini rabbit</li>
+<li>mention streams too - a mini kafka</li>
+
+</ul>
+
+
+<p>
+like a database toolkit
+</p>
+
+
+<p>
+difference in approach between storing big serialized documents - a document database without any bells and whistles, ie <i>very few features</i>
+or - a programmable environment in which to create a bespoke database out of small composable units
+</p>
+
+<ul>
+<li>it's very fast! 100k ops/s quoted; this makes up for its dubious scalability</li>
+<li>pipelining - send commands while others are in flight</li>
+<li>simple - replication is simple, unidirectional; flushing to disk is simple
+<ul>
+<li>doesn't do paging - hard limit of RAM</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org6a10860">
+<h3 id="org6a10860">Lua scripting</h3>
+
+</section>
+</section>
+<section>
+<section id="slide-org02221ff">
+<h2 id="org02221ff">The History of Redis part II</h2>
+<div class="outline-text-2" id="text-org02221ff">
+</div>
+</section>
+<section id="slide-orgf058dd7">
+<h3 id="orgf058dd7">NoSQL hype</h3>
+<ul>
+<li>turn against integration in db, where SQL has all the perfectly normalised public data of your domain</li>
+<li>dovetails with microservices, separation of domain into smaller units that can encapsulate complication locally</li>
+
+</ul>
+</section>
+<section id="slide-org7c895a2">
+<h3 id="org7c895a2">Redis can be used everywhere, for everything!</h3>
+<ul>
+<li>"Redis is like grease&#x2026;" 7d7w circa 2012</li>
+<li>QUOTE PEOPLE EXTOLLING RELIABILITY</li>
+
+</ul>
+</section>
+<section id="slide-org50742d7">
+<h3 id="org50742d7">extension on extension on extension</h3>
+<div class="outline-text-3" id="text-org50742d7">
+</div>
+</section>
+<section id="slide-org2c4d2fd">
+<h4 id="org2c4d2fd">sentinel (2.8+)</h4>
+<p>
+a self-regulating quorum of processes
+</p>
+<ul>
+<li>should be in separate failure zones (like the hull of the Titanic: if on)</li>
+<li>in practice, they can live alongside dbs, in same 'failure zones' (ie VMs)</li>
+
+</ul>
+
+<p>
+decide who the master is
+tell clients where to go to (not all clients use this feature though)
+</p>
+
+</section>
+<section id="slide-org9545865">
+<h4 id="org9545865">cluster (3+)</h4>
+<p>
+keys are partitioned, live on different nodes - multi-master, like Couchbase, Kafka
+again though, who decides which partitions live on which boxes
+if there are periods of inconsistency in the layout, then&#x2026;
+</p>
+
+</section>
+<section id="slide-org0d203f2">
+<h4 id="org0d203f2">geolocations (3+)</h4>
+
+</section>
+<section id="slide-org029dfcb">
+<h4 id="org029dfcb">modules (4+)</h4>
+<ul>
+<li><a href="https://redis.io/modules">https://redis.io/modules</a></li>
+<li>search</li>
+<li>machine-learning</li>
+
+</ul>
+
+</section>
+<section id="slide-org118e21a">
+<h3 id="org118e21a">the rebound</h3>
+<ul>
+<li>Aphyr proves the obvious, 2013: <a href="https://aphyr.com/posts/283-jepsen-redis">https://aphyr.com/posts/283-jepsen-redis</a>
+(look at final comment, much more recent)</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgcb8ca70">
+<h2 id="orgcb8ca70">Data loss demo</h2>
+<p>
+as continuation of rebound
+</p>
+
+
+
+
+
+</section>
+<section id="slide-org01776f2">
+<h3 id="org01776f2">Sum up positives and negatives</h3>
+<div class="outline-text-3" id="text-org01776f2">
+</div>
+</section>
+<section id="slide-orge44c378">
+<h4 id="orge44c378">good</h4>
+<ul>
+<li>when consistency and durability aren't too important</li>
+<li>where data is encapsulated - bad for integration with other apps</li>
+<li>therefore, microservices</li>
+<li>brill for prototyping</li>
+
+</ul>
+
+</section>
+<section id="slide-org4ef4183">
+<h3 id="org4ef4183">Making the best of it</h3>
+<ul>
+<li>logging and monitoring</li>
+<li>data could be asynchronously uploaded to S3?</li>
+
+</ul>
+
+</section>
+<section id="slide-orge8f3460">
+<h3 id="orge8f3460">Maintenance tips</h3>
+<div class="outline-text-3" id="text-orge8f3460">
+</div>
+</section>
+<section id="slide-orgfe18eba">
+<h4 id="orgfe18eba">first of all, check connections</h4>
+</section>
+<section id="slide-org1004780">
+<h4 id="org1004780">from the network, from the client, from the server</h4>
+</section>
+<section id="slide-org5d36b15">
+<h4 id="org5d36b15">tcp connection exhaustion</h4>
+</section>
+<section id="slide-org71d5697">
+<h4 id="org71d5697">logging</h4>
+</section>
+<section id="slide-org81b6901">
+<h4 id="org81b6901">look at infos on both sentinels and servers</h4>
+</section>
+<section id="slide-org34e48d1">
+<h4 id="org34e48d1">check masters and slaves</h4>
+
+
+
+
+</section>
+</section>
+<section>
+<section id="slide-org59df8bc">
+<h2 id="org59df8bc">Some Redis Facts</h2>
+<div class="outline-text-2" id="text-org59df8bc">
+</div>
+</section>
+<section id="slide-orge1c2621">
+<h3 id="orge1c2621">voted most loved database in the Stack Overflow Developer Survey in 2017 and 2018</h3>
+</section>
+<section id="slide-orge6e17ff">
+<h3 id="orge6e17ff">is single-threaded</h3>
+<aside class="notes">
+<ul>
+<li>like Node, of course</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org819db58">
+<h3 id="org819db58">optimized for speed rather than RAM</h3>
+</section>
+<section id="slide-orgbdb48ef">
+<h3 id="orgbdb48ef">faster writing than reading</h3>
+<aside class="notes">
+<ul>
+<li>this implies something about its durability guarantees - ie, when you write, can it really be persisted?</li>
+<li>suits the original use-case of aggregation</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org8664b22">
+<h3 id="org8664b22">originally, used OS fork() to do snapshotting to files</h3>
+</section>
+<section id="slide-org2171f5e">
+<h3 id="org2171f5e">AOF was added</h3>
+
+
+
+
+
+</section>
+<section id="slide-org8a46b0b">
+<h3 id="org8a46b0b">master-&gt;slave async replication</h3>
+
+
+
+</section>
+<section id="slide-org34f5f34">
+<h3 id="org34f5f34">again, as if it's actually a programming environment</h3>
+
+</section>
+<section id="slide-orgc4507dd">
+<h3 id="orgc4507dd">single-threaded, good for consistency</h3>
+<div class="outline-text-3" id="text-orgc4507dd">
+</div>
+</section>
+<section id="slide-orgc464577">
+<h4 id="orgc464577">kinda like Node</h4>
+<div class="outline-text-4" id="text-orgc464577">
+</div>
+<ul class="org-ul">
+<li><a id="orgf67ef10"></a>concurrent by default, model is simplified by being general<br /></li>
+</ul>
+</section>
+<section id="slide-org126b933">
+<h4 id="org126b933">the OS is parallelizing loads of stuff underneath</h4>
+<p>
+it's just being orchestrated by a single thread
+</p>
+
+<p>
+so, how does this fit with Redis being fast? surely Redis'd be faster and <b>more available</b> if more threads were used
+but - it means it just passes over to the OS as fast as possible
+</p>
+
+<p>
+and how can it be atomic unless it locks keys? well - it must ensure keys are only accessed one at a time
+</p>
+
+
+
+</section>
+<section id="slide-org490fdf7">
+<h3 id="org490fdf7">extensions via C (or anything with C bindings)</h3>
+
+</section>
+<section id="slide-org829b1ab">
+<h3 id="org829b1ab">Lua scripting ftw</h3>
+<div class="outline-text-3" id="text-org829b1ab">
+</div>
+</section>
+<section id="slide-org018b9c5">
+<h4 id="org018b9c5">all is atomic, transactional</h4>
+</section>
+<section id="slide-org11cd966">
+<h4 id="org11cd966">script can live in client code</h4>
+</section>
+<section id="slide-org3533c20">
+<h4 id="org3533c20">show RedisEntityLogs as example</h4>
+</section>
+<section id="slide-orgb806ee8">
+<h4 id="orgb806ee8">predeclare keys so it fetches em upfront</h4>
+</section>
+</section>
+</div>
+</div>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: true,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
