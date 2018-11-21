@@ -30,7 +30,7 @@ In may ways Redis resembles more a programming language than a database.
 IMHO Redis barely registers as a database; it's more of a shared heap that supports snapshotting.
 
 
-* A potted history, part 1
+* A potted history, Part I
 ** in the beginning, memcached
 - One process per request - CGI-BIN, like PHP
 - work shared between requests cheaply
@@ -46,12 +46,10 @@ IMHO Redis barely registers as a database; it's more of a shared heap that suppo
 - instead of clean and simple method dispatch, you've got a tcp protocol
   
 ** Optimized for speed
-- everything lives in RAM 
-- doesn't do virtual memory - so limited to 'physical' RAM
+- everything lives in 'physical' RAM 
 - not optimized for minimum RAM usage either
+- it's very fast! 100k ops/s quoted; this makes up for its dubious scalability
 - faster writing than reading (which is strange, isn't it?)
-- takes pressure off scalability
-- partitioning ftw
   
 ** Single threaded
 - like NodeJS
@@ -126,7 +124,6 @@ like a database toolkit
 difference in approach between storing big serialized documents - a document database without any bells and whistles, ie /very few features/
 or - a programmable environment in which to create a bespoke database out of small composable units
 
-- it's very fast! 100k ops/s quoted; this makes up for its dubious scalability
 - pipelining - send commands while others are in flight
 - simple - replication is simple, unidirectional; flushing to disk is simple
   - doesn't do paging - hard limit of RAM
@@ -143,17 +140,18 @@ predeclare keys so it fetches em upfront
 ** NoSQL hype
 - turn against integration in db, where SQL has all the perfectly normalised public data of your domain
 - dovetails with microservices, separation of domain into smaller units that can encapsulate complication locally
+
 ** Redis can be used everywhere, for everything!
 - "Redis is like grease..." 7d7w circa 2012
 - QUOTE PEOPLE EXTOLLING RELIABILITY
+  
 ** extension on extension on extension
 *** sentinel (2.8+)
 a self-regulating quorum of processes
-- should be in separate failure zones (like the hull of the Titanic: if on)
+- should be in separate failure zones
 - in practice, they can live alongside dbs, in same 'failure zones' (ie VMs)
- 
-decide who the master is
-tell clients where to go to (not all clients use this feature though)
+- decide who the master is
+- also tell clients where to go to (not always though - depends on lib)
 
 *** cluster (3+)
 keys are partitioned, live on different nodes - multi-master, like Couchbase, Kafka
@@ -167,6 +165,7 @@ if there are periods of inconsistency in the layout, then...
 - written in C (or in stuff with C bindings, which is more or less anything)
   
 *** streams (5+)
+- upcoming
 - mini Kafka
 
 ** Better and better and better but...
@@ -174,13 +173,10 @@ if there are periods of inconsistency in the layout, then...
   (look at final comment, much more recent)
 
 * Data loss demo
-as continuation of rebound
+...
 
 
-
-
-
-* Sum up positives and negatives
+* Strengths and Weaknesses
 ** good
 - when consistency and durability aren't too important
 - where data is encapsulated - bad for integration with other apps
@@ -190,29 +186,21 @@ as continuation of rebound
 
 * Making the best of it
 - not actually that scalable - use partitioning!
-- logging and monitoring
 - data could be asynchronously uploaded to S3?
+- if just being used as KV store of documents, there are better options
 
   
 * Maintenance top tips
 ** Check connectivity
 - use netcat or PuTTY (in raw mode)
 - from the network, from the client, from the server
+- beware tcp connection exhaustion!
 
-** tcp connection exhaustion
 ** logging
+- would tell you about tcp connection exhaustion   
+- also memory usage
+- and moving of master
+
 ** look at infos on both sentinels and servers
-** check masters and slaves
-
-      
-
-
-   
-
-
-
-
-
-  
-
+- check masters and slaves
 
