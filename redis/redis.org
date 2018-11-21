@@ -56,6 +56,12 @@ IMHO Redis barely registers as a database; it's more of a shared heap that suppo
 ** Single threaded
 - like NodeJS
 - ensures consistency WITHIN ONE NODE!
+- the OS is parallelizing loads of stuff underneath
+#+BEGIN_NOTES
+so, how does this fit with Redis being fast? surely Redis'd be faster and *more available* if more threads were used
+but - it means it just passes over to the OS as fast as possible
+and how can it be atomic unless it locks keys? well - it must ensure keys are only accessed one at a time
+#+END_NOTES
   
 ** Persists to disk asynchronously
 - snapshots to files in background
@@ -158,8 +164,7 @@ if there are periods of inconsistency in the layout, then...
 
 *** modules (4+)
 - https://redis.io/modules
-- search
-- machine-learning
+- written in C (or in stuff with C bindings, which is more or less anything)
   
 *** streams (5+)
 - mini Kafka
@@ -184,13 +189,16 @@ as continuation of rebound
   
 
 * Making the best of it
+- not actually that scalable - use partitioning!
 - logging and monitoring
 - data could be asynchronously uploaded to S3?
 
   
-* Maintenance tips
-** first of all, check connections
-** from the network, from the client, from the server
+* Maintenance top tips
+** Check connectivity
+- use netcat or PuTTY (in raw mode)
+- from the network, from the client, from the server
+
 ** tcp connection exhaustion
 ** logging
 ** look at infos on both sentinels and servers
@@ -203,26 +211,8 @@ as continuation of rebound
 
 
 
-** master->slave async replication
-
-
-
-** again, as if it's actually a programming environment
-  
-** single-threaded, good for consistency
-*** kinda like Node
-**** concurrent by default, model is simplified by being general
-*** the OS is parallelizing loads of stuff underneath
-it's just being orchestrated by a single thread
-
-so, how does this fit with Redis being fast? surely Redis'd be faster and *more available* if more threads were used
-but - it means it just passes over to the OS as fast as possible
-
-and how can it be atomic unless it locks keys? well - it must ensure keys are only accessed one at a time
 
 
   
-** extensions via C (or anything with C bindings)
 
-** Lua scripting ftw
 
