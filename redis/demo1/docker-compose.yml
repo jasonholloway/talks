@@ -5,8 +5,8 @@ services:
     build: ./controller
 
   redis1:
-    image: redis
+    build: ./node
 
   redis2:
-    image: redis
+    build: ./node
     

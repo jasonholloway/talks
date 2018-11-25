@@ -52,7 +52,7 @@ https://hub.docker.com/r/library/redis/tags/
 #+END_NOTES
 
 ** Antirez's usecase - aggregation
-- /The project started when Salvatore Sanfilippo, also known as antirez, was developing a real time web log analyzer. After problems in scaling certain specific workloads using traditional database systems... etc/ - Wikipedia
+- /The project started when Salvatore Sanfilippo, also known as antirez, was developing a _real time web log analyzer_. After problems in scaling certain specific workloads using traditional database systems... etc/ - Wikipedia
 - prev OS projects: a PL interpreter, and a TCP analyzer
 - innovation: data structures + persistence
   
@@ -62,7 +62,7 @@ https://hub.docker.com/r/library/redis/tags/
   
 * So then, what is it???
 
-** Is like a collection library
+** Kinda like a collection library
 - hosted in a peer process rather than as objects on the heap
 - instead of clean and simple method dispatch, you've got a tcp protocol
   
@@ -71,15 +71,20 @@ https://hub.docker.com/r/library/redis/tags/
 - not optimized for minimum RAM usage either
 - it's very fast! 100k ops/s quoted; this makes up for its dubious scalability
 - faster writing than reading (which is strange, isn't it?)
-  
+#+BEGIN_NOTES
+- doesn't do paging - hard limit of RAM
+#+END_NOTES  
+
 ** Single threaded
 - like NodeJS
 - ensures consistency WITHIN ONE NODE!
 - the OS is parallelizing loads of stuff underneath
+- no locking needed
 #+BEGIN_NOTES
 so, how does this fit with Redis being fast? surely Redis'd be faster and *more available* if more threads were used
 but - it means it just passes over to the OS as fast as possible
 and how can it be atomic unless it locks keys? well - it must ensure keys are only accessed one at a time
+- multiple cores not needed?
 #+END_NOTES
   
 ** Persists to disk asynchronously
@@ -90,6 +95,8 @@ and how can it be atomic unless it locks keys? well - it must ensure keys are on
 ** Master -> slave replication  
 - Can only write to single master
 - Slave is then a back-up if master disappears
+- Simple, unidirectional
+- No quorum, no need for three...
 
 * Fun facts
 - voted most loved database in the Stack Overflow Developer Survey in 2017 and 2018
@@ -97,28 +104,47 @@ and how can it be atomic unless it locks keys? well - it must ensure keys are on
     
 * Some Redis commands
 - Syntax of commands is reflected in client libs
-
+- Good docs online
 #+BEGIN_NOTES
-CONFIG: sets config at runtime - good to introduce first off, as partially explains Sentinel
+- Start by showing setup - docker-compose, config files
+- CONFIG
+  introduce first off, as partially explains Sentinel
+#+END_NOTES  
 
-INCR, DECR: atomic unique id creation, can as global key source, values can then be committed to LIST
+** Demo 1
+- incr, decr, lists, hashes
+- like a database toolkit
+#+BEGIN_NOTES
+difference in approach between storing big serialized documents - a document database without any bells and whistles, ie /very few features/
+or - a programmable environment in which to create a bespoke database out of small composable units
+
+- INCR, DECR
+  - atomic unique id creation, can as global key source, values can then be committed to LIST
+  - note: don't need initialize key - just refer to it!
+
 LPUSH, LPOP, RPUSH, RPOP...: list commands 
 above two can be combined to create unique records, with list as an index
 http://oldblog.antirez.com/post/Sorting-in-key-value-data-model.html <- see for some patterns
-
-
-MSET, MGET
-MULTI: gives you atomicity across commands
-
 
 First demo:
   - INCR to get unique id
   - store data to value referenced by unique id
   - RPUSH to index it
+  - LPOP and then GET to act as consumer - INCR to get unique id
+  - store data to value referenced by unique id
+  - RPUSH to index it
   - LPOP and then GET to act as consumer
+
   - LRANGE etc - show Redis commands docs - like MS docs for collections again
   - HGET, HSET - dictionaries
   - very complicated SORT command - show ridiculous signature
+#+END_NOTES
+
+** Demo 2
+- mget/mset, multi...
+#+BEGIN_NOTES
+MSET, MGET
+MULTI: gives you atomicity across commands
 
 Second demo:
   - MSET, MGET
@@ -132,22 +158,20 @@ Second demo:
     overhead is hugely reduced; can send thousands of commands like this
     like a machine gun
     not atomic
-
-Third demo:
-  - /Redis is a event-driven substrate where it is simple to plug other ideas/ - Antirez
-    databases have internal pub/sub; Redis is like database turned inside out
-  - pub/sub - like mini rabbit
-  - mention streams too - a mini kafka
 #+END_NOTES
 
-like a database toolkit
+** Demo 3
+- /Redis is a event-driven substrate where it is simple to plug other ideas/ - Antirez
+- databases have internal pub/sub; Redis is like database turned inside out
+- pub/sub - like mini rabbit
+- streams too - like a mini kafka
+  
+** Demo 4
+- SLAVEOF command
 
-difference in approach between storing big serialized documents - a document database without any bells and whistles, ie /very few features/
-or - a programmable environment in which to create a bespoke database out of small composable units
-
-- pipelining - send commands while others are in flight
-- simple - replication is simple, unidirectional; flushing to disk is simple
-  - doesn't do paging - hard limit of RAM
+#+BEGIN_NOTES
+...
+#+END_NOTES
 
 ** Lua scripting
 - all is atomic, transactional
@@ -157,7 +181,7 @@ show RedisEntityLogs as example
 predeclare keys so it fetches em upfront
 #+END_NOTES
 
-* The History of Redis part II
+* History, part II
 ** NoSQL hype
 - big turn against integration in db, where SQL has all the perfectly normalised data of your domain
 - dovetails with microservices
@@ -227,4 +251,6 @@ predeclare keys so it fetches em upfront
 
 ** look at infos on both sentinels and servers
 - check masters and slaves
+
+** Monitor command
 

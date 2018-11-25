@@ -27,12 +27,12 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide"><h1 class="title">The Wonderful World of Redis</h1><h2 class="author">jason</h2><p class="date">Created: 2018-11-25 Sun 11:45</p>
+<section id="sec-title-slide"><h1 class="title">The Wonderful World of Redis</h1><h2 class="author">jason</h2><p class="date">Created: 2018-11-25 Sun 22:05</p>
 </section>
 
 <section>
-<section id="slide-org6166cba">
-<h2 id="org6166cba">What is it? A database, a cache, or&#x2026;?!?</h2>
+<section id="slide-orgc083611">
+<h2 id="orgc083611">What is it? A database, a cache, or&#x2026;?!?</h2>
 <aside class="notes">
 <p>
 Best answer: a programmable data structure store!
@@ -42,8 +42,8 @@ Best answer: a programmable data structure store!
 
 
 </section>
-<section id="slide-org5ddfc45">
-<h3 id="org5ddfc45">Acronym:</h3>
+<section id="slide-orgaf57cbb">
+<h3 id="orgaf57cbb">Acronym:</h3>
 <p>
 REmote DIctionary Service
 </p>
@@ -55,15 +55,15 @@ Sounds like a KV store then&#x2026;
 </aside>
 
 </section>
-<section id="slide-org9fd18b3">
-<h3 id="org9fd18b3">redis.io:</h3>
+<section id="slide-org8e351ba">
+<h3 id="org8e351ba">redis.io:</h3>
 <p>
 <i>Redis is an open source, in-memory data structure store, used as a database, cache and message broker</i>
 </p>
 
 </section>
-<section id="slide-org0846555">
-<h3 id="org0846555">Seven Databases in Seven Weeks:</h3>
+<section id="slide-org392c121">
+<h3 id="org392c121">Seven Databases in Seven Weeks:</h3>
 <p>
 <i>Redis is like grease. It's most often used to lubricate moving parts and keep them working smoothly by reducing friction. Whatever the machinery of your system, it could be improved with a bit poured over it. Sometimes the answer to your problem is simply a judicious use of more Redis</i>
 </p>
@@ -75,8 +75,8 @@ The culmination of the book
 </aside>
 
 </section>
-<section id="slide-orgaf58ebd">
-<h3 id="orgaf58ebd">linux-mag:</h3>
+<section id="slide-org0c5991e">
+<h3 id="org0c5991e">linux-mag:</h3>
 <p>
 <i>Redis is a form of minimalism</i>
 </p>
@@ -90,15 +90,15 @@ How big is the distribution?
 </aside>
 
 </section>
-<section id="slide-orgbc9ee82">
-<h3 id="orgbc9ee82">antirez:</h3>
+<section id="slide-org4403a92">
+<h3 id="org4403a92">antirez:</h3>
 <p>
 <i>In may ways Redis resembles more a programming language than a database</i>
 </p>
 
 </section>
-<section id="slide-org2431995">
-<h3 id="org2431995">someone on hackernews:</h3>
+<section id="slide-org7f84a74">
+<h3 id="org7f84a74">someone on hackernews:</h3>
 <p>
 <i>IMHO Redis barely registers as a database; it's more of a shared heap that supports snapshotting</i>
 </p>
@@ -106,13 +106,13 @@ How big is the distribution?
 </section>
 </section>
 <section>
-<section id="slide-org70e3320">
-<h2 id="org70e3320">A potted history, Part I</h2>
-<div class="outline-text-2" id="text-org70e3320">
+<section id="slide-org7ec72a7">
+<h2 id="org7ec72a7">A potted history, Part I</h2>
+<div class="outline-text-2" id="text-org7ec72a7">
 </div>
 </section>
-<section id="slide-orgd8ab417">
-<h3 id="orgd8ab417">in the beginning, memcached + mysql</h3>
+<section id="slide-org2b91416">
+<h3 id="org2b91416">in the beginning, memcached + mysql</h3>
 <ul>
 <li>split betweeen dumb cache and db with query language</li>
 <li>one process per request - CGI-BIN, like PHP</li>
@@ -120,29 +120,29 @@ How big is the distribution?
 
 </ul>
 <aside class="notes">
-<p>
-Used by Google, Facebook&#x2026; most big web operations
-works for stable queries and updates of a certain granularity 
-very much matches our current usage
-small little updates not well served&#x2026;
-big leap in durability too from Memcached
-</p>
+<ul>
+<li>Used by Google, Facebook&#x2026; most big web operations</li>
+<li>works for stable queries and updates of a certain granularity</li>
+<li>very much matches our current usage</li>
+<li>small little updates not well served&#x2026;</li>
+
+</ul>
 
 </aside>
 
 </section>
-<section id="slide-org334868c">
-<h3 id="org334868c">Antirez's usecase - aggregation</h3>
+<section id="slide-org5a04cd1">
+<h3 id="org5a04cd1">Antirez's usecase - aggregation</h3>
 <ul>
-<li><i>The project started when Salvatore Sanfilippo, also known as antirez, was developing a real time web log analyzer. After problems in scaling certain specific workloads using traditional database systems&#x2026; etc</i> - Wikipedia</li>
+<li><i>The project started when Salvatore Sanfilippo, also known as antirez, was developing a <span class="underline">real time web log analyzer</span>. After problems in scaling certain specific workloads using traditional database systems&#x2026; etc</i> - Wikipedia</li>
 <li>prev OS projects: a PL interpreter, and a TCP analyzer</li>
 <li>innovation: data structures + persistence</li>
 
 </ul>
 
 </section>
-<section id="slide-org60a225a">
-<h3 id="org60a225a">The first version</h3>
+<section id="slide-org3739014">
+<h3 id="org3739014">The first version</h3>
 <ul>
 <li>here: <a href="https://gist.github.com/antirez/6ca04dd191bdb82aad9fb241013e88a8">https://gist.github.com/antirez/6ca04dd191bdb82aad9fb241013e88a8</a></li>
 <li><i>A complex system that works is invariably found to have evolved from a simple system that worked</i> - John Gall, Systemantics</li>
@@ -152,13 +152,13 @@ big leap in durability too from Memcached
 </section>
 </section>
 <section>
-<section id="slide-orgdb418b2">
-<h2 id="orgdb418b2">So then, what is it???</h2>
-<div class="outline-text-2" id="text-orgdb418b2">
+<section id="slide-org0c218b8">
+<h2 id="org0c218b8">So then, what is it???</h2>
+<div class="outline-text-2" id="text-org0c218b8">
 </div>
 </section>
-<section id="slide-orga60d7db">
-<h3 id="orga60d7db">Is like a collection library</h3>
+<section id="slide-org232e68a">
+<h3 id="org232e68a">Kinda like a collection library</h3>
 <ul>
 <li>hosted in a peer process rather than as objects on the heap</li>
 <li>instead of clean and simple method dispatch, you've got a tcp protocol</li>
@@ -166,8 +166,8 @@ big leap in durability too from Memcached
 </ul>
 
 </section>
-<section id="slide-org3be41d7">
-<h3 id="org3be41d7">Optimized for speed</h3>
+<section id="slide-orgb9adb07">
+<h3 id="orgb9adb07">Optimized for speed</h3>
 <ul>
 <li>everything lives in 'physical' RAM</li>
 <li>not optimized for minimum RAM usage either</li>
@@ -175,14 +175,22 @@ big leap in durability too from Memcached
 <li>faster writing than reading (which is strange, isn't it?)</li>
 
 </ul>
+<aside class="notes">
+<ul>
+<li>doesn't do paging - hard limit of RAM</li>
+
+</ul>
+
+</aside>
 
 </section>
-<section id="slide-orgd5f7353">
-<h3 id="orgd5f7353">Single threaded</h3>
+<section id="slide-org1632c08">
+<h3 id="org1632c08">Single threaded</h3>
 <ul>
 <li>like NodeJS</li>
 <li>ensures consistency WITHIN ONE NODE!</li>
 <li>the OS is parallelizing loads of stuff underneath</li>
+<li>no locking needed</li>
 
 </ul>
 <aside class="notes">
@@ -195,8 +203,8 @@ and how can it be atomic unless it locks keys? well - it must ensure keys are on
 </aside>
 
 </section>
-<section id="slide-orgce7fb20">
-<h3 id="orgce7fb20">Persists to disk asynchronously</h3>
+<section id="slide-org5478bf9">
+<h3 id="org5478bf9">Persists to disk asynchronously</h3>
 <ul>
 <li>snapshots to files in background</li>
 <li>also has AOF journal mode</li>
@@ -205,19 +213,20 @@ and how can it be atomic unless it locks keys? well - it must ensure keys are on
 </ul>
 
 </section>
-<section id="slide-org419a6a7">
-<h3 id="org419a6a7">Master -&gt; slave replication</h3>
+<section id="slide-orge5ad0b9">
+<h3 id="orge5ad0b9">Master -&gt; slave replication</h3>
 <ul>
 <li>Can only write to single master</li>
 <li>Slave is then a back-up if master disappears</li>
+<li>Simple, unidirectional</li>
 
 </ul>
 
 </section>
 </section>
 <section>
-<section id="slide-org79b2a5d">
-<h2 id="org79b2a5d">Fun facts</h2>
+<section id="slide-org66f97d1">
+<h2 id="org66f97d1">Fun facts</h2>
 <ul>
 <li>voted most loved database in the Stack Overflow Developer Survey in 2017 and 2018</li>
 
@@ -227,30 +236,52 @@ and how can it be atomic unless it locks keys? well - it must ensure keys are on
 </section>
 </section>
 <section>
-<section id="slide-org2ab9c4c">
-<h2 id="org2ab9c4c">Some Redis commands</h2>
+<section id="slide-org77f8319">
+<h2 id="org77f8319">Some Redis commands</h2>
 <ul>
 <li>Syntax of commands is reflected in client libs</li>
+<li>Good docs online</li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>Start by showing setup - docker-compose, config files</li>
+<li>CONFIG
+introduce first off, as partially explains Sentinel</li>
+
+</ul>
+
+</aside>
+
+</section>
+<section id="slide-orgd502a5a">
+<h3 id="orgd502a5a">Demo 1</h3>
+<ul>
+<li>incr, decr, lists, hashes</li>
+<li>like a database toolkit</li>
+
+</ul>
+<aside class="notes">
+<p>
+difference in approach between storing big serialized documents - a document database without any bells and whistles, ie <i>very few features</i>
+or - a programmable environment in which to create a bespoke database out of small composable units
+</p>
+
+<ul>
+<li>INCR, DECR
+<ul>
+<li>atomic unique id creation, can as global key source, values can then be committed to LIST</li>
+<li>note: don't need initialize key - just refer to it!</li>
+
+</ul></li>
 
 </ul>
 
 <p>
-CONFIG: sets config at runtime - good to introduce first off, as partially explains Sentinel
-</p>
-
-<p>
-INCR, DECR: atomic unique id creation, can as global key source, values can then be committed to LIST
 LPUSH, LPOP, RPUSH, RPOP&#x2026;: list commands 
 above two can be combined to create unique records, with list as an index
 <a href="http://oldblog.antirez.com/post/Sorting-in-key-value-data-model.html">http://oldblog.antirez.com/post/Sorting-in-key-value-data-model.html</a> &lt;- see for some patterns
 </p>
-
-
-<p>
-MSET, MGET
-MULTI: gives you atomicity across commands
-</p>
-
 
 <p>
 First demo:
@@ -259,12 +290,31 @@ First demo:
 <li>INCR to get unique id</li>
 <li>store data to value referenced by unique id</li>
 <li>RPUSH to index it</li>
+<li>LPOP and then GET to act as consumer - INCR to get unique id</li>
+<li>store data to value referenced by unique id</li>
+<li>RPUSH to index it</li>
 <li>LPOP and then GET to act as consumer</li>
+
 <li>LRANGE etc - show Redis commands docs - like MS docs for collections again</li>
 <li>HGET, HSET - dictionaries</li>
 <li>very complicated SORT command - show ridiculous signature</li>
 
 </ul>
+
+</aside>
+
+</section>
+<section id="slide-orgb5abc7c">
+<h3 id="orgb5abc7c">Demo 2</h3>
+<ul>
+<li>mget/mset, multi&#x2026;</li>
+
+</ul>
+<aside class="notes">
+<p>
+MSET, MGET
+MULTI: gives you atomicity across commands
+</p>
 
 <p>
 Second demo:
@@ -287,40 +337,29 @@ not atomic</li>
 
 </ul>
 
-<p>
-Third demo:
-</p>
-<ul>
-<li><i>Redis is a event-driven substrate where it is simple to plug other ideas</i> - Antirez
-databases have internal pub/sub; Redis is like database turned inside out</li>
-<li>pub/sub - like mini rabbit</li>
-<li>mention streams too - a mini kafka</li>
-
-</ul>
-
-
-<p>
-like a database toolkit
-</p>
-
-<p>
-difference in approach between storing big serialized documents - a document database without any bells and whistles, ie <i>very few features</i>
-or - a programmable environment in which to create a bespoke database out of small composable units
-</p>
-
-<ul>
-<li>pipelining - send commands while others are in flight</li>
-<li>simple - replication is simple, unidirectional; flushing to disk is simple
-<ul>
-<li>doesn't do paging - hard limit of RAM</li>
-
-</ul></li>
-
-</ul>
+</aside>
 
 </section>
-<section id="slide-org4f5609e">
-<h3 id="org4f5609e">Lua scripting</h3>
+<section id="slide-orgdd1546c">
+<h3 id="orgdd1546c">Demo 3</h3>
+<ul>
+<li><i>Redis is a event-driven substrate where it is simple to plug other ideas</i> - Antirez</li>
+<li>databases have internal pub/sub; Redis is like database turned inside out</li>
+<li>pub/sub - like mini rabbit</li>
+<li>streams too - like a mini kafka</li>
+
+</ul>
+
+<aside class="notes">
+<p>
+&#x2026;
+</p>
+
+</aside>
+
+</section>
+<section id="slide-orge6f21af">
+<h3 id="orge6f21af">Lua scripting</h3>
 <ul>
 <li>all is atomic, transactional</li>
 <li>script can live in client code</li>
@@ -337,13 +376,13 @@ predeclare keys so it fetches em upfront
 </section>
 </section>
 <section>
-<section id="slide-orge1f4a2b">
-<h2 id="orge1f4a2b">The History of Redis part II</h2>
-<div class="outline-text-2" id="text-orge1f4a2b">
+<section id="slide-orgc12547b">
+<h2 id="orgc12547b">History, part II</h2>
+<div class="outline-text-2" id="text-orgc12547b">
 </div>
 </section>
-<section id="slide-org5aae2aa">
-<h3 id="org5aae2aa">NoSQL hype</h3>
+<section id="slide-org3585076">
+<h3 id="org3585076">NoSQL hype</h3>
 <ul>
 <li>big turn against integration in db, where SQL has all the perfectly normalised data of your domain</li>
 <li>dovetails with microservices</li>
@@ -352,8 +391,8 @@ predeclare keys so it fetches em upfront
 </ul>
 
 </section>
-<section id="slide-org7093a43">
-<h3 id="org7093a43">Redis can be used everywhere, for everything!</h3>
+<section id="slide-org2177c92">
+<h3 id="org2177c92">Redis can be used everywhere, for everything!</h3>
 <ul>
 <li>"Redis is like grease&#x2026;" 7d7w circa 2012</li>
 <li>QUOTE PEOPLE EXTOLLING RELIABILITY</li>
@@ -361,13 +400,13 @@ predeclare keys so it fetches em upfront
 </ul>
 
 </section>
-<section id="slide-orgd55852e">
-<h3 id="orgd55852e">extension on extension on extension</h3>
-<div class="outline-text-3" id="text-orgd55852e">
+<section id="slide-orgdfe5916">
+<h3 id="orgdfe5916">extension on extension on extension</h3>
+<div class="outline-text-3" id="text-orgdfe5916">
 </div>
 </section>
-<section id="slide-orge0eebc5">
-<h4 id="orge0eebc5">sentinel (2.8+)</h4>
+<section id="slide-orgdf72e7a">
+<h4 id="orgdf72e7a">sentinel (2.8+)</h4>
 <ul>
 <li>a self-regulating quorum of processes, overseeing masters and slaves</li>
 <li>should be in separate failure zones</li>
@@ -377,8 +416,8 @@ predeclare keys so it fetches em upfront
 </ul>
 
 </section>
-<section id="slide-org375c40d">
-<h4 id="org375c40d">cluster (3+)</h4>
+<section id="slide-org5440179">
+<h4 id="org5440179">cluster (3+)</h4>
 <ul>
 <li>keys are auto-partitioned, live on different nodes - multi-master, like Couchbase, Kafka</li>
 <li>again though, who decides which partitions live on which boxes? If there are periods of inconsistency in the layout, then&#x2026;</li>
@@ -386,12 +425,12 @@ predeclare keys so it fetches em upfront
 </ul>
 
 </section>
-<section id="slide-orgbb26212">
-<h4 id="orgbb26212">geolocations (3+)</h4>
+<section id="slide-org44f16f4">
+<h4 id="org44f16f4">geolocations (3+)</h4>
 
 </section>
-<section id="slide-org0c2d1f5">
-<h4 id="org0c2d1f5">modules (4+)</h4>
+<section id="slide-org31a6f76">
+<h4 id="org31a6f76">modules (4+)</h4>
 <ul>
 <li><a href="https://redis.io/modules">https://redis.io/modules</a></li>
 <li>written in C (or in stuff with C bindings, which is more or less anything)</li>
@@ -399,8 +438,8 @@ predeclare keys so it fetches em upfront
 </ul>
 
 </section>
-<section id="slide-orgbc4ea8f">
-<h4 id="orgbc4ea8f">streams (5+)</h4>
+<section id="slide-org0bca426">
+<h4 id="org0bca426">streams (5+)</h4>
 <ul>
 <li>upcoming</li>
 <li>mini Kafka</li>
@@ -408,19 +447,25 @@ predeclare keys so it fetches em upfront
 </ul>
 
 </section>
-<section id="slide-orgf9ae00d">
-<h3 id="orgf9ae00d">Better and better and better but&#x2026;</h3>
+<section id="slide-org1be503f">
+<h3 id="org1be503f">Better and better and better but&#x2026;</h3>
 <ul>
-<li>Aphyr proves the obvious, 2013: <a href="https://aphyr.com/posts/283-jepsen-redis">https://aphyr.com/posts/283-jepsen-redis</a>
-(look at final comment, much more recent)</li>
+<li>Aphyr proves the obvious, 2013: <a href="https://aphyr.com/posts/283-jepsen-redis">https://aphyr.com/posts/283-jepsen-redis</a></li>
 
 </ul>
+<aside class="notes">
+<ul>
+<li>Scroll to Redis Strategies! - has good first para(s)</li>
+
+</ul>
+
+</aside>
 
 </section>
 </section>
 <section>
-<section id="slide-org8dd0ec1">
-<h2 id="org8dd0ec1">Data loss demo</h2>
+<section id="slide-orgbe8f90e">
+<h2 id="orgbe8f90e">Data loss demo</h2>
 <p>
 &#x2026;
 </p>
@@ -429,37 +474,35 @@ predeclare keys so it fetches em upfront
 </section>
 </section>
 <section>
-<section id="slide-org10b25b0">
-<h2 id="org10b25b0">Strengths and Weaknesses</h2>
-<div class="outline-text-2" id="text-org10b25b0">
+<section id="slide-org83efde0">
+<h2 id="org83efde0">Strengths and Weaknesses</h2>
+<div class="outline-text-2" id="text-org83efde0">
 </div>
 </section>
-<section id="slide-org00cfe09">
-<h3 id="org00cfe09">good</h3>
+<section id="slide-orgf24cb80">
+<h3 id="orgf24cb80">good</h3>
 <ul>
 <li>when consistency across nodes and durability aren't too important</li>
-<li>where data is encapsulated - bad for integration with other apps</li>
+<li>where data is encapsulated - bad for integration across domains</li>
 <li>therefore, microservices</li>
 <li>brill for prototyping</li>
 
 </ul>
 
 </section>
-<section id="slide-org3ce8b1a">
-<h3 id="org3ce8b1a">not so good</h3>
+<section id="slide-orgf7593de">
+<h3 id="orgf7593de">not so good</h3>
 <ul>
+<li>when consistency across nodes and durability <i>are</i> important</li>
 <li>big documents requiring indexing</li>
-<li></li>
-
-<li></li>
 
 </ul>
 
 </section>
 </section>
 <section>
-<section id="slide-org3bd7131">
-<h2 id="org3bd7131">Making the best of it</h2>
+<section id="slide-orgace0358">
+<h2 id="orgace0358">Making the best of it</h2>
 <ul>
 <li>not actually that scalable - use partitioning! As in, split data between clusters</li>
 <li>if just being used as KV store of documents, there may be better options</li>
@@ -470,13 +513,13 @@ predeclare keys so it fetches em upfront
 </section>
 </section>
 <section>
-<section id="slide-orgbe5e418">
-<h2 id="orgbe5e418">Maintenance top tips</h2>
-<div class="outline-text-2" id="text-orgbe5e418">
+<section id="slide-org12f1f30">
+<h2 id="org12f1f30">Maintenance top tips</h2>
+<div class="outline-text-2" id="text-org12f1f30">
 </div>
 </section>
-<section id="slide-org1e7a4f3">
-<h3 id="org1e7a4f3">Check connectivity</h3>
+<section id="slide-orgc89649a">
+<h3 id="orgc89649a">Check connectivity</h3>
 <ul>
 <li>use netcat or PuTTY (in raw mode)</li>
 <li>from the network, from the client, from the server</li>
@@ -485,8 +528,8 @@ predeclare keys so it fetches em upfront
 </ul>
 
 </section>
-<section id="slide-org61ff4eb">
-<h3 id="org61ff4eb">logging</h3>
+<section id="slide-org086fc27">
+<h3 id="org086fc27">logging</h3>
 <ul>
 <li>would tell you about tcp connection exhaustion!</li>
 <li>also memory usage</li>
@@ -495,8 +538,8 @@ predeclare keys so it fetches em upfront
 </ul>
 
 </section>
-<section id="slide-org5aac9d2">
-<h3 id="org5aac9d2">look at infos on both sentinels and servers</h3>
+<section id="slide-org5203f79">
+<h3 id="org5203f79">look at infos on both sentinels and servers</h3>
 <ul>
 <li>check masters and slaves</li>
 
