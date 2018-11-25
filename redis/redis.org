@@ -1,5 +1,6 @@
 #+OPTIONS: num:nil toc:nil
 #+OPTIONS: reveal_history:t
+#+REVEAL_PLUGINS: (notes)
 #+Title: The Wonderful World of Redis
   
 * What is it? A database, a cache, or...?!?
@@ -14,30 +15,50 @@ REmote DIctionary Service
 #+BEGIN_NOTES
 Sounds like a KV store then...
 #+END_NOTES
+
 ** redis.io:
-Redis is an open source, in-memory data structure store, used as a database, cache and message broker.
+/Redis is an open source, in-memory data structure store, used as a database, cache and message broker/
 
-** Seven Databases in Seven Weeks
-Redis is like grease. It's most often used to lubricate moving parts and keep them working smoothly by reducing friction. Whatever the machinery of your system, it could be improved with a bit poured over it. Sometimes the answer to your problem is simply a judicious use of more Redis.
+** Seven Databases in Seven Weeks:
+/Redis is like grease. It's most often used to lubricate moving parts and keep them working smoothly by reducing friction. Whatever the machinery of your system, it could be improved with a bit poured over it. Sometimes the answer to your problem is simply a judicious use of more Redis/
+#+BEGIN_NOTES
+The culmination of the book
+#+END_NOTES
 
-** antirez
-In may ways Redis resembles more a programming language than a database.  
+** linux-mag:
+/Redis is a form of minimalism/
+#+BEGIN_NOTES
+How big is the distribution?
+1.9mb!
+https://hub.docker.com/r/library/redis/tags/
+#+END_NOTES
 
-# ** someone on reddit:
-# It hits a nice sweet spot for "nosql" distirbuted data stores between simple K-V stores (like memcached) and map-reduce-ish type full-on document databases (like, I dunno CouchDB or Cassandra or MongoDB or whatever the kids use these days).
+** antirez:
+/In may ways Redis resembles more a programming language than a database/
 
 ** someone on hackernews:
-IMHO Redis barely registers as a database; it's more of a shared heap that supports snapshotting.
-
+/IMHO Redis barely registers as a database; it's more of a shared heap that supports snapshotting/
 
 * A potted history, Part I
-** in the beginning, memcached
-- One process per request - CGI-BIN, like PHP
+** in the beginning, memcached + mysql
+- split betweeen dumb cache and db with query language
+- one process per request - CGI-BIN, like PHP
 - work shared between requests cheaply
+#+BEGIN_NOTES
+- Used by Google, Facebook... most big web operations
+- works for stable queries and updates of a certain granularity 
+- very much matches our current usage
+- small little updates not well served...
+#+END_NOTES
 
-** Antirez's usecase - tuple aggregation
+** Antirez's usecase - aggregation
+- /The project started when Salvatore Sanfilippo, also known as antirez, was developing a real time web log analyzer. After problems in scaling certain specific workloads using traditional database systems... etc/ - Wikipedia
 - prev OS projects: a PL interpreter, and a TCP analyzer
-- innovations: data structures + replication
+- innovation: data structures + persistence
+  
+** The first version
+- here: https://gist.github.com/antirez/6ca04dd191bdb82aad9fb241013e88a8
+- /A complex system that works is invariably found to have evolved from a simple system that worked/ - John Gall, Systemantics
   
 * So then, what is it???
 
@@ -77,6 +98,7 @@ and how can it be atomic unless it locks keys? well - it must ensure keys are on
 * Some Redis commands
 - Syntax of commands is reflected in client libs
 
+#+BEGIN_NOTES
 CONFIG: sets config at runtime - good to introduce first off, as partially explains Sentinel
 
 INCR, DECR: atomic unique id creation, can as global key source, values can then be committed to LIST
@@ -116,10 +138,9 @@ Third demo:
     databases have internal pub/sub; Redis is like database turned inside out
   - pub/sub - like mini rabbit
   - mention streams too - a mini kafka
-
+#+END_NOTES
 
 like a database toolkit
-
 
 difference in approach between storing big serialized documents - a document database without any bells and whistles, ie /very few features/
 or - a programmable environment in which to create a bespoke database out of small composable units
@@ -169,7 +190,9 @@ predeclare keys so it fetches em upfront
 
 ** Better and better and better but...
 - Aphyr proves the obvious, 2013: https://aphyr.com/posts/283-jepsen-redis
-  (look at final comment, much more recent)
+#+BEGIN_NOTES
+- Scroll to Redis Strategies! - has good first para(s)
+#+END_NOTES
 
 * Data loss demo
 ...
@@ -177,11 +200,14 @@ predeclare keys so it fetches em upfront
 
 * Strengths and Weaknesses
 ** good
-- when consistency and durability aren't too important
-- where data is encapsulated - bad for integration with other apps
+- when consistency across nodes and durability aren't too important
+- where data is encapsulated - bad for integration across domains
 - therefore, microservices
 - brill for prototyping
   
+** not so good
+- when consistency across nodes and durability /are/ important
+- big documents requiring indexing
 
 * Making the best of it
 - not actually that scalable - use partitioning! As in, split data between clusters
