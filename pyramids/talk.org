@@ -1,4 +1,4 @@
-#+OPTIONS: num:nil toc:nil
+#+OPTIONS: num:nil toc:nil reveal_title_slide:nil
 #+REVEAL_THEME: league
 #+REVEAL_TRANS:None
 #+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
