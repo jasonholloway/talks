@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Pyramids</title>
+<meta name="author" content="(jason)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/css/theme/league.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/npm/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Pyramids</h1><h2 class="author">jason</h2><p class="date">Created: 2019-07-14 Sun 18:15</p>
+</section>
+
+<section>
+<section id="slide-sec-">
+<h2 id="org4775ed7">Integration Testing through the Ages</h2>
+<div class="outline-text-2" id="text-org4775ed7">
+</div>
+</section>
+<section id="slide-sec-">
+<h3 id="org1ace2ad">Pyramids of the World</h3>
+<p>
+Replete with pictures of pyramids, right here	
+</p>
+
+</section>
+<section id="slide-sec-">
+<h4 id="org5aab784">Egyptian Pyramid</h4>
+<ul>
+<li>imposing simplicity at scale</li>
+<li>an expression of the slave labour system</li>
+<li>mass of coupled balls of mud, a pile of compressed mud</li>
+
+</ul>
+
+</section>
+<section id="slide-sec-">
+<h4 id="org6bd1428">Stockport Pyramid</h4>
+<ul>
+<li>being honest, just to fill the gap of pyramid #2, but&#x2026;</li>
+<li>in place of outdated social housing, to stand next to extended motorway</li>
+<li>original developer had planned an entire 'valley' of kings</li>
+<li>but went bust after erecting one</li>
+<li><a href="https://www.manchestereveningnews.co.uk/news/greater-manchester-news/unknown-story-behind-stockports-pyramid-16363839">https://www.manchestereveningnews.co.uk/news/greater-manchester-news/unknown-story-behind-stockports-pyramid-16363839</a></li>
+
+</ul>
+
+</section>
+<section id="slide-sec-">
+<h4 id="org192a319">Testing Pyramid</h4>
+<ul>
+<li>from Mike Cohn's <i>Succeeding with Agile</i> (2009?)
+(Cohn himself has blog post about the 'missing' layer of the pyramid,the middle one - like the pyramid has only one dimension)</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-sec-">
+<h2 id="org313cc0c">Processes, Big and Small</h2>
+
+</section>
+</section>
+<section>
+<section id="slide-sec-">
+<h2 id="org8d8f0d0">A Solution</h2>
+<p>
+Use Docker!
+</p>
+
+
+
+<hr />
+
+<p>
+three canonical layers:
+</p>
+<ul>
+<li>UI - eurgh! etc</li>
+<li>services/integration</li>
+<li>unit</li>
+
+</ul>
+
+<p>
+Mike Cohn
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/lib/js/head.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'None', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>

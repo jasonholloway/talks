@@ -1,6 +1,7 @@
 #+OPTIONS: num:nil toc:nil
-#+REVEAL_THEME: Black
+#+REVEAL_THEME: league
 #+REVEAL_TRANS:None
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
 #+Title: Pyramids
 
 * Integration Testing through the Ages
@@ -18,6 +19,7 @@
 		- in place of outdated social housing, to stand next to extended motorway
 		- original developer had planned an entire 'valley' of kings
 		- but went bust after erecting one
+		- https://www.manchestereveningnews.co.uk/news/greater-manchester-news/unknown-story-behind-stockports-pyramid-16363839
 	 
 *** Testing Pyramid
 		- from Mike Cohn's /Succeeding with Agile/ (2009?)
