@@ -1,0 +1,42 @@
+#+OPTIONS: num:nil toc:nil
+#+REVEAL_THEME: Black
+#+REVEAL_TRANS:None
+#+Title: Pyramids
+
+* Integration Testing through the Ages
+
+** Pyramids of the World
+	 Replete with pictures of pyramids, right here	
+
+*** Egyptian Pyramid	
+		- imposing simplicity at scale
+		- an expression of the slave labour system
+		- mass of coupled balls of mud, a pile of compressed mud
+
+*** Stockport Pyramid
+		- being honest, just to fill the gap of pyramid #2, but...
+		- in place of outdated social housing, to stand next to extended motorway
+		- original developer had planned an entire 'valley' of kings
+		- but went bust after erecting one
+	 
+*** Testing Pyramid
+		- from Mike Cohn's /Succeeding with Agile/ (2009?)
+			(Cohn himself has blog post about the 'missing' layer of the pyramid,the middle one - like the pyramid has only one dimension)
+
+* Processes, Big and Small
+
+* A Solution	
+	Use Docker!
+
+
+
+-----
+
+three canonical layers:
+- UI - eurgh! etc
+- services/integration
+- unit
+
+Mike Cohn
+
+
