@@ -3,7 +3,7 @@
 #+REVEAL_PLUGINS: (notes)
 #+Title: The Wonderful World of Redis
   
-* What is it? A database, a cache, or...?!?
+* What is it? a database, a cache, or...?!?
   
 #+BEGIN_NOTES
 Best answer: a programmable data structure store!
@@ -42,7 +42,7 @@ https://hub.docker.com/r/library/redis/tags/
 * A potted history, Part I
 ** in the beginning, memcached + mysql
 - split betweeen dumb cache and db with query language
-- one process per request - CGI-BIN, like PHP
+- one process per request - cgi-bin, as with php
 - work shared between requests cheaply
 #+BEGIN_NOTES
 - Used by Google, Facebook... most big web operations
@@ -166,8 +166,6 @@ Second demo:
 - pub/sub - like mini rabbit
 - streams too - like a mini kafka
   
-** Demo 4
-- SLAVEOF command
 
 #+BEGIN_NOTES
 ...
@@ -190,6 +188,9 @@ predeclare keys so it fetches em upfront
 ** Redis can be used everywhere, for everything!
 - "Redis is like grease..." 7d7w circa 2012
 - QUOTE PEOPLE EXTOLLING RELIABILITY
+#+BEGIN_NOTES
+https://twitter.com/nick_craver/status/569670986511081472
+#+END_NOTES
   
 ** extension on extension on extension
 *** sentinel (2.8+)
@@ -197,6 +198,9 @@ predeclare keys so it fetches em upfront
 - should be in separate failure zones
 - in practice, can live alongside Redis nodes
 - also tell clients where to go to (not always though - depends on lib)
+#+BEGIN_NOTES
+- Demo: SLAVEOF command
+#+END_NOTES
 
 *** cluster (3+)
 - keys are auto-partitioned, live on different nodes - multi-master, like Couchbase, Kafka
