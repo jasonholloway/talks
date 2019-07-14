@@ -1,0 +1,101 @@
+
+
+*** ConfigureAwait
+
+- only comes into force after execution of first part of computation - on the first yield, when the task is returned to be configured
+- 
+
+
+when calling via async dispatch, means no attempt is made to keep the local current thread about: it's allowed to float off to do whaatever it likes,
+delegated by its mother pool to whatever task
+
+it's async/await unoptimised- in its raw state
+
+with the waiting occurring, if whatever is called via async blocks somewhere within, then this deleterious effect will fall on the calling thread
+
+in the case of UI code, the calling thread is precious - if at any point it blocks, then welose availability
+
+in the case of a web server, with a particularthreading model, we have the same problem - a limited number of threads are set aside for quickly serving requests
+if these threads become locked up in indirectly blocking on a callback, then availability will suffer 
+(though the same amount of overall blocking is going on, the fact it touches the precious server threads is problematic)
+
+--------
+
+so, a better model would be for the server to offload work immediately onto a thread pool better served for throughput, with more tolerance for horrible blocking
+
+BUT! the problem here is the reliance on the threading model for passing aroung implicit context
+ie HttpContext and DI scopes
+
+
+
+
+Start with TPL, what doeas async/await care about?
+NEW     TaskSchedulers           / same thing, ish - everything is a product of history,nothing is exactly as it should be
+  TaskScheduler.Current
+    plunge with decompiler - relies on Task.t_currentTask, which is a ThreadStatic field
+    so, if something is being executed as a task on a thread...    
+
+OLD     SynchronizationContexts  \
+
+    SynchronizationContexts
+    in WinForms: 
+	hides a single-threaded event pump
+    in WPF:
+	returns the application-wide WPF Dispatcher
+    in ASP:      
+	OLD     AspNetSynchronizationContext
+		SC: AspNetSynchronizationContext is the strangest implementation. It treats Post as synchronous rather than asynchronous and uses a lock to execute its delegates one at a time.
+	NEW(ish)TaskFriendlySynchronizationContext
+
+Thread statics
+[ThreadStatic] static int blah = 123;
+
+OLD ThreadLocal<T>
+NEW AsyncLocal<T>
+
+ExecutionContext
+  a bag of stuff attached to the current thread
+  also /flowed/ by async/await implicitly
+  enables a "logical flow of control" (Toub), apart from the impl-tied ThreadStatic route
+  if you've got computations spanning threads, you've got an /ExecutionContext/ that floats above the thread level, to be applied downwards
+  
+  everything in NET that dispatches things async captures and applies the ExecutionContext - /not just the TPL/
+
+Toub: ExecutionContext is one of those things that the vast majority of developers never need to think about.  It’s kind of like air: it’s important that it’s there, but except at some crucial times (e.g. when something goes wrong with it), we don’t think about it being there.  ExecutionContext is actually just a container for other contexts  
+
+ExecutionContext - a holder of themed contexts
+  SecurityContext
+    Principal
+    CAS
+  HostExecutionContext
+  CallContext
+    IllogicalCallContext
+      HttpContext
+  ...
+SynchronizationContext - a sibling of ExecutionContext, handled similarly, belongs as member of thread
+  but not as Framework-integrated as the above
+  
+  isn't automatically /flowed/ along with other contexts above
+  (tho manual invocation of ExecutionContest.Capture does flow it... duh)
+  
+  intended to be less transparent to the developer, whereas ExecutionContext is hidden away further
+
+  ...
+
+    ^ SynchronizationContext is part of the original idea of how the framework works...
+    then why was TaskScheduler.Current introduced?
+
+
+
+    CallContext
+    LogicalCallContext
+
+
+
+
+
+
+
+
+
+
