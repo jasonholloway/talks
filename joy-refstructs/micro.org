@@ -1,0 +1,401 @@
+* The Joy of Ref-Structs
+  or: Eric Lippert's Animal Past
+
+* Micro-Optimization Madness in C# 7.2
+  
+* Nano-Optimizations and Me
+
+
+** Heap/Stack
+*** Heap relies on GC
+*** Stack does determinate deallocation
+
+** AspNetCore perf
+   - anything that has to do a lot of parsing - which is actually most programs, as interpretation of inputs is essential
+   - a performance pain of managed languages (how do Java/Node compare?)
+   - some kinda graph showing relative importance (against say network/disk latency) would be striking
+
+   - web server benchmarks are important, but also desire to bring pipelines within managed code     
+   - but also things like:
+     - graphics routines
+     - DSP (ie audio)
+   
+** Spans
+   - and Memory, for temporary boxing
+     - adds a refcount to the target, relying on guarantees of GC
+     - whereas Spans /can only be used where the Stack guarantees the target is still in scope/
+
+** Paths over the horizon
+   - data-driven development(?)
+     - instead of encapsulating data within stateful objects, or flowing it through functions, transform data in-place
+   - stack-based languages
+
+     
+   
+basically, there has to be a bright future, or all this is just fiddlings in the wings
+the object-with-data paradigm will be supplanted by a via media passing data into programs approach
+(witness records in forthcoming language releases)
+(witness tuples and anonymous classes)
+^ but none of these require knowledge of stack/heap
+^ no, but they're a replaying of the same dynamic, with the same two opposing parties, dressed up in unrecognisable garments
+a post-OO, post-paradigm world
+
+in the floaty world of C#, data is a struct, or a record, or a tuple, or an anonymous class - all of which can only with difficulty
+be passed about by explicit contract; anything contractual needs an object, needs the indirection of the heap
+
+maybe, like
+
+in short, there's a gathering distinction in C#-style between programs and data, though the object-centredness still persists
+
+-------
+
+and as, the distinction is being made in the 'real' but ultimately ethereal world of our everyday programming life,
+the same distinction is being fallen back to at a lower layer: the thread stack is coming back to the fore
+
+though then there's also the intermediate 'stack' of multiple, nested, delimited scopes, well-known to coders within objects
+the object paradigm put this familiar world into bubbles: it was co-opted, encapsulated so that the outer world could be managed more simply
+
+in the managed world of objects, everything has a lifetime fit for its purpose, everything is public, if you knew where to look for it,
+death doesn't occur, if you can see it then it must exist; things are palpable
+
+it's the world modelled nice and friendly
+but then within procedural code, the scopes are set out, everything is strict and clear
+the skill of the programmer is in setting out and understanding the rules of the boundaries and allowances
+
+managed pointers here are just another meddlesome intricacy
+similarly ref structs are specialized and ungeneric - in fact (to gainsay the previous point)
+they are a way of threading the familiar stack safety through a type system provided for objects
+
+---
+
+a ref struct isn't passed by reference, but it can't be stored in a way that leaves it open to re-use
+the stack is pleasantly transient: it can live there
+
+the stack, and therefore the ref struct that can't me moved off it, is deterministically short-lived;
+the parent scope providing the memory backing the ref struct can therefore be absolutely sure that nothing will need the memory after its child scope has ended;
+or if it does, then the memory will now be protected by the garbage collector
+
+instead of allocating on the heap, weighing down the GC, this slimmed-down special kind of stack-backed reference is passed around
+the memory that backs the ref struct is protected by the parent scope, either by the procedural scoping guarantees of the mid-tier 'stack'
+or by GC (as the parent scope will continue to be a GC root) 
+
+here, then, why can't we just pass downwards by ref, as of old? this is an established way of referring to already-allocated memory without copying
+
+presumably because passing value types by ref doesn't get you direct access to native or heap-backed memory
+the span can point at anything you like: it is a managed pointer, but an arbitrary one
+
+you can't pass references byref; though why would you want to? - to avoid creating more GC roots at each intermediate layer
+by passing them by value, you're duplicating references
+but if you were to pass one in byref, then - i'm not sure what danger there could be, as if you stored it, it would become a root;
+you wouldn't be able to /store/ a ref, but then that's not what we're trying to do
+
+ref structs can't be stored, they can only live on the stack
+
+how about native memory, then?
+this would be accessed as a reference to a struct that lives within a stack scope
+but then this very reference could be passed to child scopes by reference
+
+the real novelty with spans /is that they can be randomly accessed by pointer arithmetic/
+instead of a single ref struct of values, either accessed directly individually(?) or marshalled back and forth via a managed array,
+a single Span<char> can represent a range of contiguous structs, accessible arbitrarily
+
+its essence is in its /spanniness/
+
+
+------
+
+*Eric Lippert's Animal Past*
+the issue is the interplay between the backward animal world of the native environment, and the refined, quilted kingdom of .NET
+(if Spans are really about passing around access to native memory)
+
+as soon as we get to the border with native code, there's particular ugliness, an incompatibility that requires /marshalling/
+
+an impedence mismatch - just as with data storage, where your object-based programming environment is wired up to your set-based datastore -
+here your object-based managed runtime is face-to-face, cheek-by-jowel with the thread, stack and heap-centred world of 'native' code
+
+(impedence is when two systems wired up to each other don't protect themselves from each other sufficiently, and so one dominates the other,
+subjugating it to its own logic, instead of cleanly communicating with it)
+
+it's interesting here that we call it 'native' - overtones of imperialism, of a troublesome world to be systematised on our own terms, instead of
+being worked with
+
+------
+
+
+ 
+
+
+
+-------
+
+- pointers are obviously a thing: needed for DataDrivenDev, but completely against the grain of managed runtimes with their guaranteed memory-safety
+  cursors across some sequence of structures
+
+- stack machines are a kind of idealized computer, versus register machines
+  all cpus we know are a bit of both, merging and mixing the two paradigms into a flexible whole
+  on one side we have the stack with its contextual, LIFO behaviour; on the other, a random free-for-all, in registers and heap
+
+- the stack is simulated from heap, but it is not secondary to the /managed heap/
+  
+- .NET programs are partially compiled into an explicitly stack-centred language: /CIL/ - though this is just what we know day-to-day simplified
+  the heap is of course still used, via the runtime
+
+
+
+Spans are an esoteric way of ekeing out more performant programmes, but they're not arbitrary additions to the language;
+they're a rounding out of existing concepts:
+- firstly, there's the stack-based structured simplicity that underlies C#
+- 
+
+
+
+passing structs by ref has always been possible
+preexisting 
+
+/the stack is an implementation detail.../
+Eric Lippert vs stack-hype /nano-optimisations/
+care about semantics, not underlying stuff that barely matters
+the battle against structs...
+
+
+Span<T> hype is the same again, the pendulum has swung back, for now
+
+
+So - what are the semantical implications of Span<T>?
+- The stack is no longer an implementation detail
+- the simple reassurance of the stack was always present, but submerged and indistinguishable from the more general GC-driven assurances of the runtime
+- Lippert above shifted attention to the semantics of value types, but these aren't stack-specific; in fact this was a distraction from the point: stacks are cool
+
+The stack is cool because its an archaic feature that still survives and structures the programming environment we work with every day
+Lippert says, /implementation detail/, but this was only because natural differences had been papered over
+(as with environments that try to obscure the difference between /local/ and /remote/)
+
+<big picture of /tree shrew/ >
+understanding of ourselves is expanded by appreciating animals, such as our ancestor here, the tree shrew
+
+--------
+
+stack allocation is entirely local - no locking needed in allocation, as the stack is only available to the local thread
+the heap is like a public space, where race conditions happen, an agora where things are shared
+
+but it's not just race conditions, its also where visibility is established from all angles
+if it's on the heap, then it's public
+though it may only be referred to by your local graph of objects, which is a kind of locality
+there's definitely still the concept of locality about, but not so simple and extreme as with stack allocation
+
+something on the stack has its lifetime guaranteed, determined by the reliable mechanisms of push and pop
+it can sit there, nice and safe (though this is transparent to us dealers in semantics - only safe things appear to us)
+
+/everything is safe.../ 
+that's the omnipresent, indistinguishable guarantee
+
+so /stackiness/ isn't about safety
+and its not about the structure of the memory backing up the values that are /stacky/
+as it could be implemented however you like (though not really, as a stack is a stack...)
+
+the idea of a stored value having a scoped lifetime is very basic
+
+---------------------------
+
+/Struct-Hype Mark II/
+
+the intention behind Java and C# has always been to hide away complicated facets of running processes, and to maintain, as much as possible, that
+we deal in graphs of objects only
+
+but what is an object? it's a process, active or passive, executing or potentially executing, a block of code wrapped up - imperative code modularised,
+linked by some mechanism of communication, of dispatch
+
+Java and C# have never, not for a second, been rid of their procedural heritage, and its difficult to even imagine how they could be - almost as if getting rid of this aspectwould be impossible
+functional languages, in closing over function arguments as they must do, have the same scoped-variable mechanism, entirely determined by the structure of the executing code,
+not by linkage of objects in a graph
+
+-----------------------------
+
+/I think one reason the stack/heap trope lingers.../
+
+like a kind of myth that no-one can get rid of
+it explains things like boxing, structs, etc
+
+there's no good reason why value types couldn't be passed round by reference more frequently
+they default to passing by value, but this is one of only two available options
+compare to objects which are always references-by-value
+
+
+ https://blogs.msdn.microsoft.com/ericlippert/2009/05/04/the-stack-is-an-implementation-detail-part-two/
+
+"Finally, the CLR does allow “ref return types”; you could in theory have a method “ref int M() { … }” that returned a reference to an integer variable. If for some bizarre reason we ever decided to allow that in C#, we’d have to fix up the compiler and verifier so that they ensured that it was only possible to return refs to variables that were known to be on the heap, or known to be “lower down” on the stack than the callee."
+
+Lippert says the compliations of stack based storage are leaked through to the language just because of the great efficiency savings they allow
+
+/Stack Semantics! - good googling/
+
+-------------------------
+
+Span<T>, Eric Lippert, A Tree Shrew
+
+three themes could be introduced stack-like
+and discussed LIFO
+
+but it would go:
+
+A Tree Shrew
+- vestiges of ancestry remain
+
+Eric Lippert
+- stack is just /implementation detail/
+
+Span<T>
+- new-fangled memory complication
+
+tho the joke would be better the other way round...
+but this way, the shrew could be introduced up front
+
+------------------------------
+
+it's not the /physical/ stack that really matters here, but the LIFO stack model, its /stack semantics/
+
+----
+
+Lippert says they've tried hard to hide the differences between different kinds of storage, but they still show through,
+and moreso under the pressure of writing performant code
+
+----
+
+Stack vs CPS - the thing that matter is the lifetime of storage locations
+blocks mean lifetimes become determinate
+
+"programmers need to reason about /lifetime/ - not about /storage/" - Lippert
+its just that stacks are paradigmatic, as well as being specific data structures
+
+------
+
+"When .NET was introduced the key ideas were sophistication and the creation of safe code. The move to so-called "managed languages" had to be seen as part of the general trend towards abstraction. Slowly but surely programming languages have been moving away from being a reflection of the hardware that runs them to something that is both machine independent and higher level."
+https://www.i-programmer.info/professional-programmer/i-programmer/4026-the-war-at-microsoft-managed-v-unmanaged.html
+
+so people have been eager to wrap the machine smoothly for a long time;
+but span memory isn't a necessary part of computation, it's just an OS feature for supporting processes:
+it's a 
+
+---
+
+it's only known as /Managed Code/ on the Microsoft stack - ie the dichotomy between managed/unmanaged dominates the positive features
+
+
+I've got some 
+
+------------------------------
+
+/GAMBITS/:
+- changing data in place is a hint of a foreign paradigm (tho for this to be interesting
+- it's a breaking of the levee, the abstraction of the machine fails (tho not generally)
+  or rather, the real system (not the machine) asserts itself: and does the real system include the /stack/?
+  
+  it can't include the per-thread stack of memory, as that can be got rid of
+  what we're left with instead is the idea of a stack of scopes, determined by the blocks we've entered and those we've left
+  
+  though these aren't always a stack, as the complication of closures blows this vision apart
+  the /stack/ is an old, simply understandable implementation
+  if you go in, you have to come out; scope of variables is determinate
+
+  but anything on the 'heap' is free-floating
+
+  instead of 'being on the heap', the location is instead understood as not being held under the sway of structured programming; its longevity is indeterminate, it is public to all threads of execution
+
+  ----
+
+ Mr Lippert moans about 'the stack' as being unimportant, yet it symbolizes an important concept deeply structuring the language:
+ there are threads of execution, and as they enter and exit blocks, they gather and release memory locations - this naturally forms a LIFO stack of layers
+
+ whether it's backed up a /stack/ data structure or not in the underlying machine is unimportant
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+a ref struct can only be passed around by reference, not by value
+its almost an impossible contradiction: a reference type and a value type together, like a platypus
+
+while normal ref types are allocated on the public heap and are referred to from multiple frames,
+these ref types must always be allocated locally
+
+ints etc can live in data structures on the heap of course,
+but then they're not accessed directly on the heap (or are they?) in fact they are accessible in their native habitat via ref
+
+so passing by ref is pretty natural thing to do with structs... and is not new... so...?
+
+-----------
+
+*The Joy of Ref-Structs*
+
+Span<T> is new, flash; but it goes against the spirit of the language, /pace/ Lippert.
+in that stack-as-memory isn't the concern of the programmer
+
+but it does relate to scoped code blocks, which are central to how we understand our code:
+not chains of declarations, but as a layered nest of availabilities, neatly modularised (hopefully)
+into little programs within programs
+
+
+there have been repeated waves of enthusiasm for structs, it seems, always batted away by reasonable commentators (ie Lippert)
+who want a kind of transparency to the execution model - running things asynchronously across actual scopes for instance,
+coroutines that don't fully yield - this contributes towards the flexibility of the language
+
+----
+
+the Span is effectively a pointer (it wraps a /managed pointer/)
+but it itself can't live outside of the nest of scopes that gets called (loosely) the /stack/
+
+this is because the runtime needs to know exactly where and when it will die:
+anything on the heap is this free-floating public thing, accessible to other threads and allsorts
+
+
+putting stack refs onto the heap is a complete taboo, as the heap isn't stable(?)
+nah - it's because there's no guarantee then that the reference won't outlive the thing referred to
+(as some things /pointed at/ by spans aren't managed by GC, but by the scoping system)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
