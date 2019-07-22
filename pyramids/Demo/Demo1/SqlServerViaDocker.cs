@@ -1,51 +1,37 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Docker.DotNet;
 using Docker.DotNet.Models;
-using Sorted.Tracking.Whippet.Test.Waiting;
 
-namespace Sorted.Tracking.Whippet.Test.SqlServerViaDocker
+namespace Demo
 {
-    public class SqlServerViaDocker
+    public class SqlServerViaDocker : IDisposable
     {
-        private static Lazy<DockerDeduction> _lzDeduced;
-        private static Lazy<DockerClient> _lzDocker;
-        
+        private static DockerClient _docker;
         private string _contId;
-        private Uri _contUri;
 
-        public string ConnectionString { get; private set; }
-        
         static SqlServerViaDocker()
         {
-            _lzDeduced = new Lazy<DockerDeduction>(DockerDeducer.Deduce);
-            _lzDocker = new Lazy<DockerClient>(
-                () => new DockerClientConfiguration(_lzDeduced.Value.DockerApi)
-                        .CreateClient());
+            _docker= new DockerClientConfiguration(new Uri("unix://var/docker.sock"))
+                        .CreateClient();
         }
         
-        public async Task Start(CancellationToken cancel)
+        public async Task Start()
         {
-            var docker = _lzDocker.Value;
-
             _contId = await RunContainer();
-            _contUri = await GetContainerUri();
-            
-            await ReadLogsTillMatch("ready for client connections").Timeout(20000);
-            
-            ConnectionString =
-                $"Server={_contUri.Host},{_contUri.Port};Database=electio_tracking;User Id=sa;Password=Wibble123!;Encrypt=False;Connection Timeout=30;MultipleActiveResultSets=True";
+
+            await ReadLogsTillMatch("ready for client connections")
+                    .Timeout(20000);
             
             async Task<string> RunContainer()
             {
                 var contParams = new CreateContainerParameters
                 {
-                    Image = "sqlservr-tracking",
+                    Image = "sqlserver-simple",
                     HostConfig = new HostConfig
                     {
                         AutoRemove = true,
@@ -54,35 +40,29 @@ namespace Sorted.Tracking.Whippet.Test.SqlServerViaDocker
                     },
                     ExposedPorts =new Dictionary<string, EmptyStruct>
                         { ["1433/tcp"] = default(EmptyStruct) },
-                    Env = new[] { "STOP_AFTER=2m" },
                 };
                 
-                var cont = await docker.Containers
-                    .CreateContainerAsync(contParams, cancel);
+                var cont = await _docker.Containers
+                    .CreateContainerAsync(contParams);
                 
-                await docker.Containers
-                    .StartContainerAsync(cont.ID, new ContainerStartParameters(), cancel);
+                await _docker.Containers
+                    .StartContainerAsync(cont.ID, new ContainerStartParameters());
                 
                 return cont.ID;
             }
-            
-            async Task<Uri> GetContainerUri()
-            {
-                var info = await docker.Containers.InspectContainerAsync(_contId, cancel);
-                var net = info.NetworkSettings;
-                var exposedHost = _lzDeduced.Value.ExposedHost;
 
-                return new Uri($"tcp://{exposedHost}:{net.Ports["1433/tcp"].First().HostPort}"); 
-            }
-            
             async Task ReadLogsTillMatch(string pattern)
             {
-                var matcher = new Regex(pattern);
-                
-                var logs = await docker.Containers.GetContainerLogsAsync(_contId,
-                    new ContainerLogsParameters {ShowStderr = false, ShowStdout = true, Follow = true, Since = "100000"},
-                    cancel);
+                var logs = await _docker.Containers.GetContainerLogsAsync(_contId,
+                    new ContainerLogsParameters 
+                    {
+                        ShowStderr = false, 
+                        ShowStdout = true, 
+                        Follow = true, 
+                        Since = "100000"
+                    });
 
+                var matcher = new Regex(pattern);
                 using (var reader = new StreamReader(logs))
                 {
                     while (true)
@@ -94,12 +74,11 @@ namespace Sorted.Tracking.Whippet.Test.SqlServerViaDocker
             }
         }
 
-        public void Close()
+        public void Dispose()
         {
-            if (_contId != null && _lzDocker.IsValueCreated)
+            if (_contId != null)
             {
-                var docker = _lzDocker.Value;
-                docker.Containers
+                _docker.Containers
                     .KillContainerAsync(_contId, new ContainerKillParameters());
             }
         }
