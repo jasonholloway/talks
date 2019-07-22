@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Dapper" Version="1.60.6" />
+      <PackageReference Include="Docker.DotNet" Version="3.125.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Sorted.Tracking.Whippet.Test.Waiting\Sorted.Tracking.Whippet.Test.Waiting.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,8 @@
+bin
+obj
+.idea
+.nuget
+.vs
+.vscode
+*.user
+
