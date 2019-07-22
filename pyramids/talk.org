@@ -2,6 +2,7 @@
 #+REVEAL_THEME: league
 #+REVEAL_TRANS:None
 #+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
+# -**- org-image-actual-width: 500; -**-
 #+Title: Pyramids
 
 * Integration Testing through the Ages
@@ -280,5 +281,119 @@ the growth of the triangle in stages- you've got the simple shape
 *** code runthrough
 ** CRIU
 *** code runthrough
+
+		
+------------------------------------------------------------------------
+
+Everything within a Unit Test is nicely controlled and manipulated as normal code. Normal runtime objects are assembled and tested against.
+
+Instantiating a class involves, at most, adding a nuget dependency - the tooling downloads everything into place - and newing it up. Then the garbage collectors cleans up after.
+boring boring boribg boring boring
+
+So, docker tooling does similar (supposedly) - arbitrary processes can be deployed, and their lifetime managed, as you like.
+
+And the Docker API, which allows these external processes to be downloaded and executed by name, has its own DotNet library...
+
+Another advantage, that goes along with isolation, is lifecycle management - the tooling makes it possible for things to self-clean after use.
+
+So, not only do you not need to worry about contending with other users at the same time (a problem that increases as more testing is done automatically)
+but you're also protected from your past self - no worries about leaving bad state behind, or accumulating resources
+
+
+
+[[./images/horses-pool.jpg]]
+
+
+
+-----------------------
+
+[[./images/namibhorses.jpg]]
+
+
+------------------------
+
+So to be simple about it:
+
+The test pyramid is a thing; it promotes a good spread of automated testing. 
+
+But when we move up the pyramid, there's a step where we get to the boundary of the runtime.
+and this boundary becomes more apparent when we're trying to do microservices
+
+Solution: better wrangling of 'external' services, in support of testing
+the wild horses versus the camels
+
+demo of wrangling SqlServer via Docker
+
+-------------------------
+
+
+
+
+
+
+
+though this bounary is of course inevitable - its the boundary of the module
+and it's represented on most diagrams of the pyramid: the horizontal slices.
+
+the ambiguous middle enshrines the category of /integration test/ - presumably above the isolated per-class testing below
+but below the marshmallowy /E2E/ above
+
+the step then is inevitable, to be expected - it has to be complemented with the idea that the middle is more important in actual development
+or rather, that there's a sweet spot - exactly where it is, who knows.
+
+but finding the sweet spot, where maintenance is minimised, coverage maximised, change eased... finding this spot is constrained by the barrier of the process
+
+----
+
+there's got to be an argument here too that microservices have changed the focus here
+though with wariness that this opens out to god knows what
+
+go on then, instead of worrying about it, how does the argument go?
+instead of integrating classes, the challenge becomes more to integrate processes
+and so the coverage of the unit segment lessens - does this mean the sweet spot must go up too?
+
+if the modularisation of the microservice is final, then oneof the arguments against unit tests disappears - the boundaries won't be changing; may as well do it properly
+though boundaries are apt to still change (which is an old familiar argument)
+
+
+
+
+1) Giza
+[[./images/giza1.jpg]]
+
+
+
+
+
+
+
+
+
+
+here are many camels milling about a market, with many people wrangling them:
+[[./images/camel-market2.jpg]]
+
+
+these camels are ready to ride:
+[[./images/camels-pool.jpg]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
