@@ -20,13 +20,6 @@ namespace Demo
                     await db.OpenAsync();
 
                     await db.ExecuteAsync(@"
-                        CREATE DATABASE Demo;
-
-                        CREATE TABLE Camels (
-                            Name nvarchar(50),
-                            Age int
-                        );
-
                         INSERT INTO Camels
                         VALUES 
                             ('Clarence', 12),

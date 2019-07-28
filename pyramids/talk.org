@@ -1,399 +1,117 @@
-#+OPTIONS: num:nil toc:nil reveal_title_slide:nil
-#+REVEAL_THEME: league
-#+REVEAL_TRANS:None
-#+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
+# -**- mode: Org; eval: (reveal-mode 1); -**-
 # -**- org-image-actual-width: 500; -**-
-#+Title: Pyramids
-
-* Integration Testing through the Ages
-
-** Pyramids of the World
-	 Replete with pictures of pyramids, right here	
-
-*** Egyptian Pyramid	
-		- imposing simplicity at scale
-		- an expression of the slave labour system
-		- mass of coupled balls of mud, a pile of compressed mud
-		-	Until 1300 AD, the Great Pyramid was the tallest structure in the world.
-		- It is generally believed that the pyramid was built in twenty years, ending around 2560 B.C
-
-*** Stockport Pyramid
-		- being honest, just to fill the gap of pyramid #2, but...
-		- in place of outdated social housing, to stand next to extended motorway
-		- original developer had planned an entire 'valley' of kings
-		- but went bust after erecting one
-		- https://www.manchestereveningnews.co.uk/news/greater-manchester-news/unknown-story-behind-stockports-pyramid-16363839
-	 
-*** Testing Pyramid
-		- from Mike Cohn's /Succeeding with Agile/ (2009?)
-			(Cohn himself has blog post about the 'missing' layer of the pyramid,the middle one - like the pyramid has only one dimension)
-    - there are different varieties (show various diagrams of it)			
-		- unit testing vs manual ui testing
-
-** Problems of the pyramid
-			
-**** The smooth gradient
-		 - can't follow because of the step
-***** 3-tier architecture
-			- api testing is in process these days
-			- but SqlServer - nah
-				- ORMs enable this nicely, but are otherwise unpalatable
-
-**** More than two dimensions
-		 - firstly, it's not a pyramid, it's a triangle
-		 - and, in fact, it's not even a triangle, or rather it's a very constrained triangle:
-			 it only has one dimension, or you could say, two directions: up and down
-***** Another dimension
-			- refactorability - the more interfaces you have in code, the less it flows
-				interfaces are not without cost
-				scaffolding is not without cost
-			- refactorability is most important at the beginning when patterns are being set,
-				when approaches are being decided
-			- susceptibility to change
-				if you think of tests as being scaffolding, imagine erecting scaffolding that will blow over as soon as the wind changes
-				(there are pyramids in Myanmar that are very ancient, and have been covered in exterior brickwork to preserve them)
-			- amounting to the most valuable tests (if we go with value instead of cost) being in a certain sweet spot, where they interact with fast/slow and cheap/expensive optimally
-			- so - it'd be nice if developer-led testing could move up the pyramid
-
-* Processes, Big and Small (aka moving to microservices)
-	want to introduce processes as deployable modules of code
-
-
-** Challenges of the Middle Layer
-	 - the three-layer app DIAGRAM
-	 - untestable boundaries between middleware, IIS and database
-	 - but, in the world of microservices, database integration is a no-no, data to be encapsulated within service
-	 - also, api surfaces multiply - what were internal code interfaces are now apis - bugs like these transitional layers
-
-
-*** Expectation of being in RunTime
-*** Databases are a particular problem
-		- We're mostly writing middleware, serving data from a database (though the db is certainly within our remit; and sorted apps are often datastores themselves)
-		- so the success of our apps is determined by their behaviours 
-		- but SqlServer is particularly unmockable
-*** Lack of Tooling
-		- but then the problem, especially with DotNet, is the tooling
-		- anything within the runtime, such as mocking libraries, can be developed, has been developed, without leaving the world of C#
-		  when you leave the confines of the runtime, there's a lot of fragile andobscure bodges to be done, in the world of the OS  
-*** SqlServer approaches
-		- using specially provisioned database
-		- in principal, should be workable
-		- but suffers from lack of isolation
-		- and with it, a lack of control
-		- too much integration too quick - in devving we want tests to be like unit tests: reproducible, under our sway, where problems are from our code only 
-		- another way of expressing it: a lack of reproducability
-*** In practical usage
-		- the repository pattern - database proxied within code to support partial testing
-			because of the lackof tooling, the focus of development is kept to a narrow 'business logic' layer (middleware dressed up)
-			
-		so that's it then: the .NET middle ground has integrations before and after:
-		- traditionally, IIS in front, SqlServer at the back
-		- now with AspNetCore (and since OWin and Nancy really) its possible to run an almost-real http pipeline in-process
-			and its not much more work to host a very real pipeline in-process using Kestrel
-		- but what to do with the database?
-
-and where do processes come in here?
-because everything is a process at some granularity
-introducing what Docker is involves describing differences between kinds of processes
-in C# testing, being inside the runtime is important, or at least orchestratable from within the runtime
-the problem with testing integration with external services is that they are outside the runtime
-Asp pipelines now run in-process
-
-
-* A Solution	
-	Use Docker!
-	
-
-
-we're in the business of summoning processes of different sizes
-to aid in testing
-in the 3-tier app SqlServer is an external process (IN PARTICULAR!)
-
-
-
-
-
------
-
-three canonical layers:
-- UI - eurgh! etc
-- services/integration
-- unit
-
-Mike Cohn
-
--------------------------------------
-
-so, go on then...
-
-there are things you're generally after in testing:
-- speed and simplicity of setup
-- clarity of feedback
-- against stable interfaces
-- leave the implementation reasonable freedom
-	
-the idea is that testing firstly at the middle layer has the fastest payback for quick iterations
-when the tests are in place, its a licence to hack
-
-
--------------------
-
-Pyramids of the world
-the Testing Pyramid
-the Testing Trophy
-the N-Tier App
-How to test at the periphery?
-Using Docker to mount a transient SqlServer
-
----------------------
-
-the pyramid/icecream thing is an attack on manual testing
-at the top you're expected to have a big fluffy mass of ad hoc testing (symolising messiness)
-whereas with the pyramid setup all is automated,all is orderly, marching forwards from the back
-
-the pyramid has many overtones
-
-Different ways of seeing the pyramid:
-- the territory of the developer at the bottom (fast, efficient, perfect but in hiding from the real interface of the software)
-- it's a defensive shrinking back behind the lines, combined with the whispered hope (posing as realised certainty) that developers will
-	rule the roost with their thorough systematicity
-
-half way up the pyramid, there are limits, that form steps - not just a smooth incline
-
-----------------------
-
-The testing pyramid is a vision of how things should be, a perfect spread of tests at every level
-but with the steppiness of the pyramid, then it fails
-
-what we have instead is stepped pyramid
-
-there's a big horizontal line, below which the testing is good
-(and by 'good' i mean controlled, reproducible, isolated, quick, conventient...)
-
-but above which problems instantly amass
-
-so I'm imagining a picture of a pyramid but with a step in it
-
-but such a pyramid is in fact a picture of /what is/, not what should be
-it's the state of affairs; and yet before this i'll have been whittling on about how things ought to be, given that we're always on the way to a good implementation
-
-(pyramids are a kind of perfectionism)
-
-(the surfaceof the frilly edge is greater the further down you go on the pyramid - more froth, more suds, as the edge of your testing is limited)
-
-if this edge of testing were indeed higher, then the absurdity of the edge would narrow
-
----------
-
-but anyway, the problem of the step in the pyramid: given these other processes, given these boundaries separated the runtime from big hulking components of functionality,
-we can't follow the recommendations ofthe smooth pyramid anyhow. We are in fact constrained to test a desiccated business layer. Often what we can test turns out to be trivial
-and that's becuase business logic is in reality spread out across many processes. So what we really have to test each time is the integration of our logic with the wider world,
-it's its behaviour at the edges.
-
-but anyway: the test pyramid recommends something positive, which we can't follow because of the limitations of the n-tier app in dotnet.
-
---------------------------
-
-the two overlaid dimensions of the testing pyramid:
-as you go up, coverage of course increases, which presumably correlates with value: so,value/investment increases as you go higher
-but with this, speed decreases.
-
-Fast/Slow
-Expensive/Cheap
-High Value/Pointless
-Ithink we can agree that the very smallest test is pointless: well, no test is entirely pointless, some kind of expectation must be covered, but it's a vanishing point,
-in that the value decreases so much we may as well as say there's nothing there
-
-I want to complicate things however and say that there are other dimensions involved
-not just fast/slow and the ambiguous cheap/expensive
-
-(cheap/expensive can of course cut both ways; fast/slow is simple, straight-forward)
-
-------------------------------
-
-because, as with pyramids made out of poured concrete, piled rubble, or girders and glass, what we're concerned with is less the final form as our approach to it
-we'd be idiots to think we can point at how something should be, and release loads of enslaved labourers to do our bidding, and have the means to carry this approach through
-and this applies the same to everyone in the process: time is always limited, only so much work can be done, and there's always so much to do
-being perfectionist about things is counterproductive
-
------------------------------
-
-with this being the case, the important thing is movement, and gradual shuffling in the right direction
-
-so, say the vision of the pyramid shows us what we want our system to be like,
-how do we get there?
-
-------
-
-firstly, bottom-up TDD says 'make testing at the smallest scale a normal part of practice' and everything will accumulate
-the problem is that things change, especially in the first stages of a project. And change of concrete code is positively encouraged by ideas such as the MVP,
-whereby tech debt is quickly accumulated to lunge towards an implementation that eases work for everybo
-
-there are costs to the MVP approach that are magically made good with the idea that code is made refactorable, but how is this achieved - surely not by choking it with unit tests?
-
--------
-
-but the MVP lunge is not how the pyramid portrays the world: the pyramid is a top-down affair. Someone has architected everything from the beginning. This is what allows so many small things to be heaped
-up so immovably.
-
-Exploratory coding (or as it really is, coding in the flux of decision making - movement isn't often through the code, rather the code has to follow the fluidity of the planning process)
-
-*pyramid is top down affair*
-
--------
-
-but is it really, in that at any time in the programming progress, you want a fair spread of tests
-you want to be covering the outer reaches but also the smaller parts
-
-the continuity of pyramid is then unrealistic
-
----------------------
-
-going down the pyramid, there are at least two increasing kinds of value:
-- firstly reuse through componentisation; the more a unit is hardened with tests, the more it becomes a piece to be deployed in different places
-- secondly a simplifying of the greater problem - though this is only a true simplification if it is fitting, otherwise it traps the code in an awkward shape
-
-- which is kind of the point of the excercise: if you can girdle the code from the middle, you've got more of a chance of fitting the problem 
-
-	
-but again, many factors, many dimensions to real world problems
-
-the growth of the triangle in stages- you've got the simple shape
-
-
----------------------------------------------------------------------------
-
-** Pyramid from the ground up
-** Pyramid as facade
-** The TestingPyramid
-*** Ambiguities
-		- more factors, more mess
-*** The TestingTeardrop
-*** Building from the middle out
-*** Pyramid as stick/Pyramid as continuum
-
-** The DotNet stack step
-*** The comfort of the in-env unit test
-** Feral Stallion = Windows Process
-** Camel in Caravan = Linux Process with Docker
-
-** SqlServer in a Docker container
-*** code runthrough
-** CRIU
-*** code runthrough
-
-		
-------------------------------------------------------------------------
-
-Everything within a Unit Test is nicely controlled and manipulated as normal code. Normal runtime objects are assembled and tested against.
-
-Instantiating a class involves, at most, adding a nuget dependency - the tooling downloads everything into place - and newing it up. Then the garbage collectors cleans up after.
-boring boring boribg boring boring
-
-So, docker tooling does similar (supposedly) - arbitrary processes can be deployed, and their lifetime managed, as you like.
-
-And the Docker API, which allows these external processes to be downloaded and executed by name, has its own DotNet library...
-
-Another advantage, that goes along with isolation, is lifecycle management - the tooling makes it possible for things to self-clean after use.
-
-So, not only do you not need to worry about contending with other users at the same time (a problem that increases as more testing is done automatically)
-but you're also protected from your past self - no worries about leaving bad state behind, or accumulating resources
-
-
-
-[[./images/horses-pool.jpg]]
-
-
-
------------------------
-
-[[./images/namibhorses.jpg]]
-
-
-------------------------
-
-So to be simple about it:
-
-The test pyramid is a thing; it promotes a good spread of automated testing. 
-
-But when we move up the pyramid, there's a step where we get to the boundary of the runtime.
-and this boundary becomes more apparent when we're trying to do microservices
-
-Solution: better wrangling of 'external' services, in support of testing
-the wild horses versus the camels
-
-demo of wrangling SqlServer via Docker
-
--------------------------
-
-
-
-
-
-
-
-though this bounary is of course inevitable - its the boundary of the module
-and it's represented on most diagrams of the pyramid: the horizontal slices.
-
-the ambiguous middle enshrines the category of /integration test/ - presumably above the isolated per-class testing below
-but below the marshmallowy /E2E/ above
-
-the step then is inevitable, to be expected - it has to be complemented with the idea that the middle is more important in actual development
-or rather, that there's a sweet spot - exactly where it is, who knows.
-
-but finding the sweet spot, where maintenance is minimised, coverage maximised, change eased... finding this spot is constrained by the barrier of the process
-
-----
-
-there's got to be an argument here too that microservices have changed the focus here
-though with wariness that this opens out to god knows what
-
-go on then, instead of worrying about it, how does the argument go?
-instead of integrating classes, the challenge becomes more to integrate processes
-and so the coverage of the unit segment lessens - does this mean the sweet spot must go up too?
-
-if the modularisation of the microservice is final, then oneof the arguments against unit tests disappears - the boundaries won't be changing; may as well do it properly
-though boundaries are apt to still change (which is an old familiar argument)
-
-
-
-
-1) Giza
-[[./images/giza1.jpg]]
-
-
-
-
-
-
-
-
-
-
-here are many camels milling about a market, with many people wrangling them:
-[[./images/camel-market2.jpg]]
-
-
-these camels are ready to ride:
-[[./images/camels-pool.jpg]]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#+OPTIONS: toc:nil 
+#+REVEAL_INIT_SCRIPT: slideNumber: 'h.v', 
+#+REVEAL_INIT_SCRIPT: hash: true, 
+#+REVEAL_THEME: sunblind
+#+REVEAL_TRANS:None
+#+REVEAL_TITLE_SLIDE:
+#+REVEAL_EXTRA_CSS:./custom.css
+#+Title: Docker in the Desert: A Testing Mirage
+#+Description: The Testing Pyramid often collapses in on itself, especially in the spangly world of Microservices. Luckily, containers are here to pull it all together. Featuring Docker, SqlServer and a variety of camels.
+
+* Pyramids of the World
+
+*** Djoser - Stepped
+		[[./images/djoser.jpg]]
+		#+BEGIN_NOTES
+		- 2630BC
+		- stepped, 'staggering'
+		- 6-tier
+	  - loads of /mastabas/ stacked
+		- earliest collossal mound in Egypt
+		- 63m high (almost twice as tall as Stockport pyramid)
+		- Djoser was first pharaoh of dynasty, after unification of Upper and Lower Egypt: prosperity
+		- build for him by the demi-god Imhotep
+		#+END_NOTES
+
+*** Meidum - Collapsed
+		[[./images/meidum-pyramid.jpg]]
+		#+BEGIN_NOTES
+		- straight, disasterous
+		- Sneferu, 1st King of 4th dynasty, inherited construction from his dad, Huni
+		#+END_NOTES
+
+*** Bent Pyramid
+		[[./images/bent-pyramid.jpg]]
+		#+BEGIN_NOTES
+		- Sneferu's first pyramid 
+		- changed angle and technique of bricklaying half way up
+		#+END_NOTES
+
+*** Great Pyramid of Giza - Success
+		[[./images/giza3.jpg]]
+		#+BEGIN_NOTES
+		- Pyramid of Khufu (bigger), Khafre (slightly smaller) and Menkaure (smaller, damaged)
+		- Khafre in the middle below, retains a cap of polished limestone
+		- one of the seven wonders of the world, the only one still standing
+		- tallest on earth till 1300AD
+		- Khufu was Sneferu's son
+		- perfected the shape but then decided it wasn't worthwhile
+			subsequent pyramids smaller, cheaper, naffer
+		- https://upload.wikimedia.org/wikipedia/commons/a/ac/Comparison_of_pyramids_SMIL.svg
+		#+END_NOTES
+
+#+BEGIN_QUOTE
+Most software today is very much like an Egyptian pyramid with millions of bricks piled on top of each other, with no structural integrity, but just done by brute force and thousands of slaves. 
+-- Alan Kay
+#+END_QUOTE
+
+
+* The Testing Pyramid
+*** Pyramid
+		[[./images/testpyramid.1.png]]
+		#+BEGIN_NOTES
+		- devised by Mike Cohn in 2009(AD)
+		- ambiguity of axes
+		#+END_NOTES
+
+*** Teardrop
+		[[./images/teardrop.svg]]
+		#+BEGIN_NOTES
+		- tautological tests very low value, with high maintenance
+		#+END_NOTES
+*** Onion
+		[[./images/onion.svg]]
+		#+BEGIN_NOTES
+		- tests above and around ease refactoring
+		- tests below are like concrete
+		- reflects structure of implementation - simpler software at a courser granularity
+		#+END_NOTES
+*** Spinning Top
+		[[./images/spinningtop.svg]]
+#+BEGIN_NOTES
+  - microservices pushing the horizontal line down
+	- previously HTTP pipeline was a barrier; not so anymore
+	- SQLServer in particular!
+	- but in general, Processes outside of CLR
+#+END_NOTES
+*** The challenge: make the pyramid triangular again
+
+* Process Wrangling
+	#+BEGIN_NOTES
+	- What is Docker? needs to be asked here 
+	#+END_NOTES
+** Camel Market
+	[[./images/camel-market2.jpg]]
+	#+BEGIN_NOTES
+	- contention
+	- unpreparedness
+	#+END_NOTES
+
+** Ready to Ride
+	[[./images/camels-pool.jpg]]
+
+
+** SqlServer for Linux
+	 - ported in 2017
+	 - adopted experimental Drawbridge project, effectively a small virtual Windows in a process
+		 - very similar to Docker itself
+		 - https://www.microsoft.com/en-us/research/project/drawbridge/
+	 - SqlServer in many ways an OS to itself - bypasses OS memory and disk management
+	 - so SqlServer inside Drawbridge inside Docker inside...
+	 - proprietary, but free for non-production use
+	 - Microsoft offers downloadable Docker image
+
+* Code
+	...
