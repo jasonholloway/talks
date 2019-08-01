@@ -5,8 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Docker.DotNet;
 using Docker.DotNet.Models;
+using Sorted.Tracking.Whippet.Test.SqlServerViaDocker;
 
-namespace Sorted.Tracking.Whippet.Test.SqlServerViaDocker
+namespace Demo2
 {
     public class SqlServerViaDockerFast
     {

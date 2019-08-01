@@ -13,7 +13,7 @@ namespace Demo
         private static DockerClient _docker;
         private string _contId;
 
-        static SqlServerViaDocker()
+        public SqlServerViaDocker()
         {
             _docker= new DockerClientConfiguration(new Uri("unix:///var/run/docker.sock"))
                         .CreateClient();

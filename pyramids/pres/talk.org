@@ -22,6 +22,7 @@
 		- earliest collossal mound in Egypt
 		- 63m high (almost twice as tall as Stockport pyramid)
 		- Djoser was first pharaoh of dynasty, after unification of Upper and Lower Egypt: prosperity
+		- previously, Kingdomssplit by cascades of Nile
 		- build for him by the demi-god Imhotep
 		#+END_NOTES
 
@@ -70,6 +71,8 @@ Most software today is very much like an Egyptian pyramid with millions of brick
 		[[./images/teardrop.svg]]
 		#+BEGIN_NOTES
 		- tautological tests very low value, with high maintenance
+			taper off towards nothing
+		- sweetspot!
 		#+END_NOTES
 *** Onion
 		[[./images/onion.svg]]
@@ -81,16 +84,25 @@ Most software today is very much like an Egyptian pyramid with millions of brick
 *** Spinning Top
 		[[./images/spinningtop.svg]]
 #+BEGIN_NOTES
+	- SQLServer in particular! ******
   - microservices pushing the horizontal line down
 	- previously HTTP pipeline was a barrier; not so anymore
-	- SQLServer in particular!
 	- but in general, Processes outside of CLR
 #+END_NOTES
-*** The challenge: make the pyramid triangular again
+*** So...
+		#+ATTR_REVEAL: :frag (t t t t)
+		- sharp boundary, above which tests decay
+		- microservices push boundary down further
+		- pyramid collapses into its base
+		- mid-range testing should be:
+			- cheaper
+			- manipulable
+			- more like CLR!
 
 * Process Wrangling
 	#+BEGIN_NOTES
 	- What is Docker? needs to be asked here 
+	- not just processes, but resources
 	#+END_NOTES
 ** Camel Market
 	[[./images/camel-market2.jpg]]
@@ -102,16 +114,24 @@ Most software today is very much like an Egyptian pyramid with millions of brick
 ** Ready to Ride
 	[[./images/camels-pool.jpg]]
 
-
-** SqlServer for Linux
-	 - ported in 2017
-	 - adopted experimental Drawbridge project, effectively a small virtual Windows in a process
-		 - very similar to Docker itself
-		 - https://www.microsoft.com/en-us/research/project/drawbridge/
-	 - SqlServer in many ways an OS to itself - bypasses OS memory and disk management
+** SqlServer, on Docker
+	 #+BEGIN_NOTES
+	 - SqlServer basically an OS in itself - bypasses stuff
+	 - https://hub.docker.com/_/microsoft-mssql-server
+	 #+END_NOTES
+	 - ported to Linux by Microsoft in 2017
+	 - free for non-production use
+	 - nestled inside experimental /Drawbridge/ process - like a small enclave of virtual Windows
 	 - so SqlServer inside Drawbridge inside Docker inside...
-	 - proprietary, but free for non-production use
-	 - Microsoft offers downloadable Docker image
 
 * Code
-	...
+** Slow but Convenient
+
+* CRIU
+	#+BEGIN_NOTES
+	- criogenics/copy restore
+	- https://criu.org/Main_Page
+	#+END_NOTES
+** Pretty Fast
+
+
