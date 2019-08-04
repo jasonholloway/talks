@@ -11,7 +11,7 @@ namespace Demo2
     public class Demo
     {
         [Test]
-        public async Task Slow() 
+        public async Task Normal() 
         {
             Marker("Starting");
             
@@ -39,11 +39,11 @@ namespace Demo2
         }
         
         [Test]
-        public async Task Fast() 
+        public async Task ViaCRIU() 
         {
             Marker("Starting");
             
-            using (var sqlServer = new SqlServerViaDockerFast("sqlservr-tracking")) 
+            using (var sqlServer = new SqlServerViaDockerCRIU("sqlservr-tracking")) 
             {
                 await sqlServer.Start();
                 Marker("Started");

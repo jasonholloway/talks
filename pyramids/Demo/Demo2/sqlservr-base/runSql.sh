@@ -8,7 +8,7 @@ main() {
 	sleep 15
 
 	runSqlFiles
-	sleep 10
+	sleep 20
 
 	kill %1
 	wait

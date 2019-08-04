@@ -28,7 +28,7 @@ trackStats() {
 trackPids() {
   while true; do
     pgrep "$1" | sort | xargs
-    sleep 0.2s
+    sleep 0.1s
   done \
     | $L uniq
 }
@@ -48,7 +48,7 @@ tailTop() {
           | $L awk '
               /^\W*top/    { print "B" }
               /^\W*[0-9]/  { print "M\t"$1"\t"$9"\t"$10 }
-              END          { print "B"; print "B"; fflush() }
+              END          { print "B"; fflush(); print "B"; fflush() }
           ' &
       topPid=$!
     fi

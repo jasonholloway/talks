@@ -6,13 +6,13 @@ using Docker.DotNet.Models;
 
 namespace Demo2
 {
-    public class SqlServerViaDockerFast : IDisposable
+    public class SqlServerViaDockerCRIU : IDisposable
     {
         private readonly string _imageName;
         private readonly DockerClient _docker;
         private string _contId;
         
-        public SqlServerViaDockerFast(string imageName) 
+        public SqlServerViaDockerCRIU(string imageName) 
         {
             _imageName = imageName;
             _docker = new DockerClientConfiguration(new Uri("unix:///var/run/docker.sock"))

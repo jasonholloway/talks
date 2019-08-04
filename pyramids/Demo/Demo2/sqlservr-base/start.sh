@@ -4,7 +4,7 @@ set -e
 main() {
   start &
 	pid=$!
-	trap "kill $pid" INT TERM QUIT
+	trap "kill -KILL $pid" INT TERM QUIT
 	stopAfterTimeout $pid
 	wait
 }
