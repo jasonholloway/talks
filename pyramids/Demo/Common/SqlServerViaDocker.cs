@@ -5,17 +5,18 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Docker.DotNet;
 using Docker.DotNet.Models;
-using Common;
 
-namespace Demo
+namespace Common
 {
     public class SqlServerViaDocker : IDisposable
     {
         private readonly DockerClient _docker;
+        private readonly string _imageName;
         private string _contId;
 
-        public SqlServerViaDocker()
+        public SqlServerViaDocker(string imageName) 
         {
+            _imageName = imageName;
             _docker = new DockerClientConfiguration(new Uri("unix:///var/run/docker.sock"))
                         .CreateClient();
         }
@@ -32,16 +33,15 @@ namespace Demo
         {
             var contParams = new CreateContainerParameters
             {
-                Image = "sqlserver-simple",
-                Tty = true,
+                Image = _imageName, 
                 HostConfig = new HostConfig
                 {
-                    AutoRemove = true,
+//                    AutoRemove = true,
                     PortBindings = new Dictionary<string, IList<PortBinding>>
                         { ["1433/tcp"] = new[] { new PortBinding { HostPort = "1433" } } }
                 },
                 ExposedPorts =new Dictionary<string, EmptyStruct>
-                    { ["1433/tcp"] = default(EmptyStruct) },
+                    { ["1433/tcp"] = default(EmptyStruct) }
             };
             
             var cont = await _docker.Containers

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Common
 {
-    public static class Events
+    public static class Markers
     {
         private static TextWriter _file = new Func<TextWriter>(() => 
         {

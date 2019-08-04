@@ -1,8 +1,10 @@
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using Common;
 using Dapper;
 using NUnit.Framework;
+using static Common.Markers;
 
 namespace Demo
 {
@@ -11,7 +13,7 @@ namespace Demo
         [Test]
         public async Task Blah() 
         {
-            using (var sqlServer = new SqlServerViaDocker()) 
+            using (var sqlServer = new SqlServerViaDocker("sqlserver-prepped")) 
             {
                 await sqlServer.Start();
 

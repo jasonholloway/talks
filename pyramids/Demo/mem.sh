@@ -5,7 +5,7 @@ L='stdbuf -eL -oL'
 main() {
   tm0=$(stopwatch)
 
-  (trackStats "sqlservr" \
+  (trackStats "sqlservr|criu|docker|containerd" \
    | timestamp \
    | toCsv \
    > "stats.csv") &

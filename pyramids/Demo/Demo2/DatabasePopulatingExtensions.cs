@@ -3,7 +3,7 @@ using System.Data;
 using System.Threading.Tasks;
 using Dapper;
 
-namespace Sorted.Tracking.Whippet.Test.SqlServerViaDocker
+namespace Demo2
 {
     public static class DatabasePopulatingExtensions
     {

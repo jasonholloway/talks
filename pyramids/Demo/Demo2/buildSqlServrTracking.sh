@@ -29,6 +29,7 @@ buildDerived() {
             --tmpfs=/run \
             "$temp" \
             ./startAndCheckpoint.sh) 
+            
 	docker logs -f "$cont" &
 	docker wait "$cont"
 	
