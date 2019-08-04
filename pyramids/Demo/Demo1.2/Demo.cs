@@ -13,6 +13,8 @@ namespace Demo
         [Test]
         public async Task Blah() 
         {
+            Marker("Started");
+            
             using (var sqlServer = new SqlServerViaDocker("sqlserver-prepped")) 
             {
                 await sqlServer.Start();

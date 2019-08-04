@@ -96,7 +96,7 @@ Most software today is very much like an Egyptian pyramid with millions of brick
 		- pyramid collapses into its base
 		- mid-range testing should be:
 			- cheaper
-			- manipulable
+			- easier
 			- more like CLR!
 
 * Process Wrangling
@@ -117,10 +117,27 @@ Most software today is very much like an Egyptian pyramid with millions of brick
 ** Ready to Ride
 	[[./images/camels-pool.jpg]]
 
+** Docker	
+	#+REVEAL_HTML: <div style="width:100%">
+	 #+REVEAL_HTML: <div style="float:left;width:50%">
+	 [[./images/docker.jpg]]
+	 #+REVEAL_HTML: </div>
+	 #+REVEAL_HTML: <div style="float:right;width:50%;padding-top:50px;">
+	 - each process in its own little world: isolated
+	 - environments of immutable layers: reproducible
+	 - well-used tooling hiding complexities of deployment: convenient
+		#+BEGIN_NOTES
+		- so... external resources made manageable
+		#+END_NOTES 
+		#+REVEAL_HTML: </div>
+	 #+REVEAL_HTML: </div>
+
+
 ** SqlServer, on Docker
 	 #+BEGIN_NOTES
 	 - SqlServer basically an OS in itself - bypasses stuff
 	 - https://hub.docker.com/_/microsoft-mssql-server
+	 - (even has /Temporary Internet Files/ folder inside the container)
 	 #+END_NOTES
 	 - ported to Linux by Microsoft in 2017
 	 - free for non-production use
@@ -130,13 +147,36 @@ Most software today is very much like an Egyptian pyramid with millions of brick
 * Code
 ** Convenient but slow-ish
 
+* The Mirage
+** CRIU: Checkpoint/Restore
+	#+REVEAL_HTML: <div style="width:100%">
+	 #+REVEAL_HTML: <div style="float:left;width:50%">
+	 [[./images/criu.svg]]
+	 #+REVEAL_HTML: </div>
+	 #+REVEAL_HTML: <div style="float:right;width:50%;padding-top:50px">
+	 #+ATTR_REVEAL: :frag (t t t t)
+	 - freezes and unfreezes processes
+	 - main use case: live migrations between hosts
+	 - but - can be used for fast startups too
+	 - supported by mainline kernel since 2013
+	 #+REVEAL_HTML: </div>
+	#+REVEAL_HTML: </div>
 
-* CRIU
 	#+BEGIN_NOTES
 	- criogenics/copy restore
 	- https://criu.org/Main_Page
+  - v much criogenics - think wiring up a brain(?); *Software Criogenics*
+	- 2011 - same era as Docker (2013) and Drawbridge
+	- made by people who worked on Virtuozzo project, with forked kernel etc
+  - other C/R implementations, all involving customized kernels
+  - other use cases: diagnostics
+	#+END_NOTES
+
+** [[./images/criu-ultimate-goal.jpg]]
+	#+BEGIN_NOTES
+		- impossible for it to be perfect, as too many uncontrolled bits (tho, with more kernel integration...)
+		- but, if the capture works once, it can be repeated
 	#+END_NOTES
 ** Pretty Fast
-** [[./images/criu-ultimate-goal.jpg]] 
 
 

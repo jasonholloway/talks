@@ -9,17 +9,22 @@ do
   docker ps -qa
 	sleep 0.3s
 done \
-	| awk '{ fresh=!v[$0]; v[$0]=1; if(fresh) { print $0; fflush() } }' \
+	| awk '
+		{ 
+		  cid=$0
+		  isNew=!v[cid]++ 
+			if(isNew) { print cid; fflush() } 
+		}' \
 	| while read -r cid
 		do
 			export i=$(( (i + 1) % 5 ))
-      col=$((i + 31))			
+      colour=$((i + 31))			
+			
+			cid=$(echo $cid | cut -c 1-6)
 
-		  docker logs -f $cid \
-			  | xargs -L1 \
-        | awk -v \
-						cid=$cid -v col=$col \
-						'{print "\033["col"m" substr(cid, 0, 6) ":\033[0m  " $0; fflush()}' &
+		  docker logs -f $cid 2>&1 \
+				| xargs -L1 \
+				| $L sed -e "/^/s//$(printf "\033[${colour}m ${cid}:\033[0m") /"
     done
 
 wait

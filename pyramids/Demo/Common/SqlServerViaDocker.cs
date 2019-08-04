@@ -36,7 +36,7 @@ namespace Common
                 Image = _imageName, 
                 HostConfig = new HostConfig
                 {
-//                    AutoRemove = true,
+                    AutoRemove = true,
                     PortBindings = new Dictionary<string, IList<PortBinding>>
                         { ["1433/tcp"] = new[] { new PortBinding { HostPort = "1433" } } }
                 },
