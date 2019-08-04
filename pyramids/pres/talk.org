@@ -123,9 +123,11 @@ Most software today is very much like an Egyptian pyramid with millions of brick
 	 [[./images/docker.jpg]]
 	 #+REVEAL_HTML: </div>
 	 #+REVEAL_HTML: <div style="float:right;width:50%;padding-top:50px;">
-	 - each process in its own little world: isolated
-	 - environments of immutable layers: reproducible
-	 - well-used tooling hiding complexities of deployment: convenient
+	 #+ATTR_REVEAL: :frag (t t t)
+	 - each process in its own little world: *isolated*
+	 - environments made up of immutable layers: *reproducible*
+	 - well-used tooling hiding complexities of deployment: *convenient*
+	 - potentially, very *realistic*
 		#+BEGIN_NOTES
 		- so... external resources made manageable
 		#+END_NOTES 
@@ -163,7 +165,7 @@ Most software today is very much like an Egyptian pyramid with millions of brick
 	#+REVEAL_HTML: </div>
 
 	#+BEGIN_NOTES
-	- criogenics/copy restore
+	- criogenics vs phoenix from flames
 	- https://criu.org/Main_Page
   - v much criogenics - think wiring up a brain(?); *Software Criogenics*
 	- 2011 - same era as Docker (2013) and Drawbridge
