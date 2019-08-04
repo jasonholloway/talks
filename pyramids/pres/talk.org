@@ -109,6 +109,9 @@ Most software today is very much like an Egyptian pyramid with millions of brick
 	#+BEGIN_NOTES
 	- contention
 	- unpreparedness
+	- lacks isolation
+	- lacks reliability
+	- lacks snappiness
 	#+END_NOTES
 
 ** Ready to Ride
@@ -125,7 +128,8 @@ Most software today is very much like an Egyptian pyramid with millions of brick
 	 - so SqlServer inside Drawbridge inside Docker inside...
 
 * Code
-** Slow but Convenient
+** Convenient but slow-ish
+
 
 * CRIU
 	#+BEGIN_NOTES
