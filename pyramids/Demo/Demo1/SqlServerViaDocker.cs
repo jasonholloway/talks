@@ -33,6 +33,7 @@ namespace Demo
             var contParams = new CreateContainerParameters
             {
                 Image = "sqlserver-simple",
+                Tty = true,
                 HostConfig = new HostConfig
                 {
                     AutoRemove = true,

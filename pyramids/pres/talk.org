@@ -133,5 +133,6 @@ Most software today is very much like an Egyptian pyramid with millions of brick
 	- https://criu.org/Main_Page
 	#+END_NOTES
 ** Pretty Fast
+** [[./images/criu-ultimate-goal.jpg]] 
 
 

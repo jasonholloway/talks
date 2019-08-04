@@ -1,21 +1,102 @@
 #!/bin/bash -e
 
-statsFile=stats.csv
+L='stdbuf -eL -oL'
 
-echo 'time,%cpu,%mem'>$statsFile
+main() {
+  tm0=$(stopwatch)
 
-trap 'kill %1' SIGINT
-kst2 $statsFile -n 100 -s 1 -x 1 -y 2 -y 3 &
+  (trackStats "sqlservr" \
+   | timestamp \
+   | toCsv \
+   > "stats.csv") &
+  
+  (trackLogs \
+   | timestamp \
+   | toCsv \
+   > "markers.csv")
 
+  kill "$(ps -s $$ -o pid=)" SIGINT
+}
 
-tm0=$(date +%s%1N)
+trackStats() {
+  trackPids "$1" \
+    | tailTop 0.1 \
+    | bucketUp \
+    | resample 0.05s
+}
 
-while true; do
-  pgrep sqlservr \
-    | awk '{print "-p "$1}' \
-    | xargs top -b -d0.05 -n1 \
-    | tail -n2 \
-    | awk -v tm=$(date +%s%1N) -v tm0=$tm0 '{cpu+=$9;mem+=$10}END{print ((tm-tm0)/10) ", "cpu", "mem}' \
-    | tee -a $statsFile \
-  || break
-done
+trackPids() {
+  while true; do
+    pgrep "$1" | sort | xargs
+    sleep 0.2s
+  done \
+    | $L uniq
+}
+
+toCsv() {
+  $L sed 's/\t/,\t/g'
+}
+
+tailTop() {
+  while read -r pids
+  do
+    [[ ! -z $topPid ]] && kill $topPid
+    topPid=
+
+    if [[ ! -z "$pids" ]]; then
+        top -b -d"$1" -p"${pids// /,}" \
+          | $L awk '
+              /^\W*top/    { print "B" }
+              /^\W*[0-9]/  { print "M\t"$1"\t"$9"\t"$10 }
+              END          { print "B"; print "B"; fflush() }
+          ' &
+      topPid=$!
+    fi
+  done
+  wait
+  echo "B"
+}
+
+bucketUp() {
+  $L awk '
+    BEGIN { cpu=0; mem=0 }
+    /^M/  { cpu+=$3; mem+=$4 }
+    /^B/  { print "B\t"cpu"\t"mem; cpu=0; mem=0 }
+  '    
+}
+
+resample() {
+  trap 'kill $(jobs -p)' SIGINT    
+  cat - >(cat &
+    while true; do sleep $1; echo "S"; done) \
+    | $L awk '
+      BEGIN  { cpu=0; mem=0 }
+      /^B/   { cpu=$2; mem=$3 }
+      /^S/   { print cpu"\t"mem }
+    '
+}
+
+timestamp() {
+  while read -r line 
+  do
+    elapsed=$(bc <<< "scale=2; ($(stopwatch) - $tm0) / 100")      
+    echo -e "$elapsed\t$line"
+  done
+}
+
+trackLogs() {
+  inotifywait -rm ./ -e create \
+    | while read -r path _ file 
+      do
+        if [[ "$file" = log ]]
+        then
+          tail -f "$path$file" &
+        fi
+      done
+}
+
+stopwatch() {
+  date +%s%2N
+}
+
+main
