@@ -13,3 +13,7 @@ img {
 	max-height: calc(66vh);
 	max-width: calc(66vw);
 }
+
+.criu-images img {
+	height: 50%;
+}

@@ -29,34 +29,34 @@
 *** Meidum - Collapsed
 		[[./images/meidum-pyramid.jpg]]
 		#+BEGIN_NOTES
+	  - Huni, son of Djoser, started it; Sneferu carried it on
 		- straight, disasterous
-		- Sneferu, 1st King of 4th dynasty, inherited construction from his dad, Huni
 		#+END_NOTES
 
 *** Bent Pyramid
 		[[./images/bent-pyramid.jpg]]
 		#+BEGIN_NOTES
 		- Sneferu's first pyramid 
-		- changed angle and technique of bricklaying half way up
+		- angle and technique of bricklaying changes abruptly half way up
 		#+END_NOTES
 
 *** Great Pyramid of Giza - Success
 		[[./images/giza3.jpg]]
 		#+BEGIN_NOTES
 		- Pyramid of Khufu (bigger), Khafre (slightly smaller) and Menkaure (smaller, damaged)
-		- Khafre in the middle below, retains a cap of polished limestone
+		- Khafre's retains a cap of polished limestone
 		- one of the seven wonders of the world, the only one still standing
 		- tallest on earth till 1300AD
 		- Khufu was Sneferu's son
-		- perfected the shape but then decided it wasn't worthwhile
-			subsequent pyramids smaller, cheaper, naffer
-		- https://upload.wikimedia.org/wikipedia/commons/a/ac/Comparison_of_pyramids_SMIL.svg
+		- pyramids after were smaller, cheaper, naffer - few survive
+		-	~https://upload.wikimedia.org/wikipedia/commons/a/ac/Comparison_of_pyramids_SMIL.svg~
 		#+END_NOTES
 
-#+BEGIN_QUOTE
-Most software today is very much like an Egyptian pyramid with millions of bricks piled on top of each other, with no structural integrity, but just done by brute force and thousands of slaves. 
--- Alan Kay
-#+END_QUOTE
+
+# #+BEGIN_QUOTE
+# Most software today is very much like an Egyptian pyramid with millions of bricks piled on top of each other, with no structural integrity, but just done by brute force and thousands of slaves. 
+# -- Alan Kay
+# #+END_QUOTE
 
 
 * The Testing Pyramid
@@ -94,10 +94,9 @@ Most software today is very much like an Egyptian pyramid with millions of brick
 		- sharp boundary, above which tests decay
 		- microservices push boundary down further
 		- pyramid collapses into its base
-		- mid-range testing should be:
-			- cheaper
-			- easier
-			- more like CLR!
+		- it'd be nice if...
+			- mid-range testing: cheaper!
+			- external resources: more like CLR!
 
 * Process Wrangling
 	#+BEGIN_NOTES
@@ -146,7 +145,8 @@ Most software today is very much like an Egyptian pyramid with millions of brick
 	 - nestled inside experimental /Drawbridge/ process - like a small enclave of virtual Windows
 	 - so SqlServer inside Drawbridge inside Docker inside...
 
-* Code
+** Demo
+
 ** Convenient but slow-ish
 
 * The Mirage
@@ -156,11 +156,10 @@ Most software today is very much like an Egyptian pyramid with millions of brick
 	 [[./images/criu.svg]]
 	 #+REVEAL_HTML: </div>
 	 #+REVEAL_HTML: <div style="float:right;width:50%;padding-top:50px">
-	 #+ATTR_REVEAL: :frag (t t t t)
-	 - freezes and unfreezes processes
+	 #+ATTR_REVEAL: :frag (t t t)
+	 - freezes and unfreezes entire groups of processes, all at once!
 	 - main use case: live migrations between hosts
-	 - but - can be used for fast startups too
-	 - supported by mainline kernel since 2013
+	 - but - can be used for fast bootups too
 	 #+REVEAL_HTML: </div>
 	#+REVEAL_HTML: </div>
 
@@ -172,13 +171,12 @@ Most software today is very much like an Egyptian pyramid with millions of brick
 	- made by people who worked on Virtuozzo project, with forked kernel etc
   - other C/R implementations, all involving customized kernels
   - other use cases: diagnostics
+	- impossible for it to be perfect, as too many uncontrolled bits (tho, with more kernel integration...)
+	- but, if the capture works once, it can be repeated
 	#+END_NOTES
-
 ** [[./images/criu-ultimate-goal.jpg]]
-	#+BEGIN_NOTES
-		- impossible for it to be perfect, as too many uncontrolled bits (tho, with more kernel integration...)
-		- but, if the capture works once, it can be repeated
-	#+END_NOTES
+** Demo
 ** Pretty Fast
+	 [[./images/success.jpg]]
 
 
