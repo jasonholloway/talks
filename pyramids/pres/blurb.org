@@ -1,0 +1,41 @@
+there are some twists and turns here:
+
+- the unit-test/ui-test gap
+- the gap is due to our unfamiliarity with bits outside of the runtime
+  there's the feeling of either being in the runtime and being manageable, or out of the runtime and being beyond our powers
+- but the OS is itself a runtime with runnable processes in it
+- if only there was a nice way of dealing with processes in the OS like we deal with objects in the CLR?
+	^^^ cliffhanger, justifying docker's appearance
+
+	
+
+- Should have a list of what we need in response to the collapsing pyramid problem:
+	boiled down to Realism and Convenience (picture of camel running in race)
+	so what gives us this: DOCKER!!!
+
+
+
+
+*Docker in the Desert: A Testing Mirage*
+
+Can pyramids collapse? Big piles of stones may seem sturdy; but stacked badly, and unsettled by subsidence, they quickly become big heaps of trouble - just ask the Ancient Egyptians.
+
+Luckily, integration testing in DotNet need have no such problems. All that's needed are Docker, a friendly image of SqlServer, and a few small leaps...
+
+-----
+
+Jason Holloway is a Senior Software Developer at Sorted in Manchester, and an occasional organiser of DotNetNorth events
+
+
+
+
+
+*Docker in the Desert: A Testing Mirage*
+
+Can pyramids collapse? Just ask the Ancient Egyptians: big piles of stones may seem sturdy at first, but stacked badly and unsettled by subsidence, they fast become big heaps of trouble.
+
+Luckily, integration testing in DotNet needn't have any such problems. All we require are Docker, a friendly image of SqlServer, and some magic incantations.
+
+-----
+
+Jason Holloway is a Senior Software Developer at Sorted in Manchester, and an occasional organiser of DotNetNorth events

@@ -1,0 +1,348 @@
+
+- stepped pyramid of Djoser
+- Meidum, first attempt at straight pyramid: disaster; of Huni
+- Bent pyramid of Sneferu
+- Great Pyramid of Giza; of Khufu
+	
+- Mike Kohn's Testing Pyramid (2009AD)
+	- seems to imply ever more weight at the bottom
+	- but tautological tests are of vanishing value: a sweetspot
+- Teardrop
+	- tests above are like scaffolding; tests below like concrete
+		happy middle zone - higher than often imagined, eases refactoring
+- Onion
+	- lovely continuous vision of perfection 
+		- tests are stable, delineating the inevitable shape of implementation,
+			but not so coarse as to be difficult to diagnose, slow to run, and expensive in terms of effort to set up
+	- but the real world isn't continuous, isn't smooth: you get things that work well in some areas, but less well in others
+		there are boundaries, and competing regimes, different spaces, and awkward transitional zones
+		this is particularly true in technology
+- Spinning Top
+	- sharp boundary, above which tests quickly decay
+	- boundary of CLR
+	- involvement of out of process services: eg SqlServer, or legacy Asp.Net closely integrated with IIS
+	- politics involved with shared resources
+	- but also two different professions: developers and testers
+	- pyramid collapses into its base
+	- and the drive to microservices pushes it further down
+	- it'd be nice if this mid-range was... cheaper, external resources were more like CLR objects
+	- other way of approaching it: it'd be nice if our existing techniques gave us more coverage, and greater realism
+	
+at which point, with so much build up, we've got to ask, what is the solution?
+	
+PROCESS WRANGLING
+
+this is a restatement of the problem: camel market is an example to list complications and problems: the turbulence
+of the unclaimed midzone. If you were serious about doing this stuff efficiently, you'd have vertically integrated
+camel industries
+
+then in contrast, we have the ready camels pre-wrapped. A vision of convenience
+you just need to point at the camel you want and its ready
+similarly you have to imagine there's some kind of licencing scheme in place, so you're never going to have too many competitors, and you're less likely to be ripped off: everyone in the system has a vested interest in its smooth operation.
+
+you have to imagine too the pyramid you want to visit just out of shot: everything is well placed, convenient: hop on, hop off
+
+--------------------------------------------------------
+
+the ONION is a vision of continuous perfection: the midzone, perfectly levitated to enable
+iterative development with refactoring Above it is scaffolding, below it is constitutive concrete.
+
+Concrete holds up well, gives strength; scaffolding gives shape and form.
+But all tests are scaffolding to what they enclose; but looking down on them they are certainly concrete, in that they get in the way. They stop things moving, as is a risk in maintenance across teams and across time.
+
+You want functionality to be pinned down as well as sufficiently framed to ease its creation, defensive as well as offensive. 
+
+Middle range tests span the broadest but simplest dimensions of the system (not UI tests here?)
+while still having the strength of modular coherence. Modules should be cleanly separate and also strongly coherent. As you rise above testing in the small, the inescapable minutiae of interference between the smallest components isin fact escaped.
+
+But it is wrong to think that modularisation doesnot apply to the smallest elements; and in the perfectly developed system even the smallest bits are as loose and well-coordinated as knit chainmail.
+
+But systems are comprehended, maintained and operated at a larger more human scale. The most important contracts, if too costly to exhaustively test against full environments and through all outer layers, are nevertheless feasibly tested in the middle.
+
+Think of opposite dimensions, with increasing losses as you go to extremes: its a question of balanacing of tendencies. Going up gives you greater, simpler coverage; conceptual affinity with the mind of the user which is most important; but the costs of such testing in both time of execution and effort in setting up, increase till they're unfeasible to run for fast feedback.
+
+There has to be a point where the benefits stand out the most before the costs dominate.
+
+Similarly an argument can be made that developments projects are dynamic things, always heading towards completion but never complete, with tactics and strategies that change in weighting through the phases of development. Thefully filled-out testing pyramid shows a project that has been thoroughly developed: it has the scaffolding delineating its more graspable macro structure, and also the stabilising concrete of the smaller tests enforcing behaviours throughout.
+
+But these different elements are not of equal importance throughout the project's lifecycle. What kind of testing should you begin with? Outside-in iterative testing, or incremental small-block-by-small-block unit testing, as if you were dry stone walling across a landscape.
+
+It's my contention that the outside-in testing is more important in the earlier phases, as it allows simpler more messy implementations that nevertheless work, it allows MVPs. But in not over-specifying the implementation from the beginning, it also minimises the risk oof ultimately wasted effort. Large-scale tests won't be wasted even with a quickly changing codebase, as the contracts they cover are immovable.
+
+Whereas similar stability can be had with unit tests only if the overall appraoch and architecture is settled and already well mapped out. This is the condition of relatively more mature projects. 
+
+So - the onion's bulge should be higher than normally granted, especially in the earlier stages of development.
+
+---------------------------
+
+But what of bottom-up develeopment, thoroughgoing TDD? Well, we don't expect to start with this approach from the very bottom: there are appreciably diminishing returns, the finer the granularity of testing we employ.
+At its ridiculous extreme we get tautological testing, whereby the test mirrors exactly the implementation, proving nothing more than the very code under test.
+
+So even the most extreme TDD practitioners must recognise that bottom-up actually involves a sweetspot too. And so we come back to the issue of how high up to locate it.
+
+---------------------------
+
+lookat the onion's lovely smooth sides,its continuous curves: if the triangle is a simplification the so is this.
+
+what would be required to have such a happy spread of tests? 
+
+we'd need not just the will, but the means: if we go back to the original diagram, we can see the axis here on the right, with the dollars and cents - it's another ambiguity; it could mean either value of implementation or cost of implementation.
+
+I've made the argument in my haphazard way, that the value curve isn't as simple as this; but neither is the cost curve! Tests at the top level are not necessarily that expensive, not when you have a dedicated QA team with free capacity. But more to the point, the cost curve, as it crosses various technological and organisational boundaries, isn't continuous!
+
+
+
+
+-------
+
+the test pyramid projects a spread of mass along the scale of granularity; but represented like this it makes the additional claim that this simple suggested spread tallies with speed and cost/value
+
+what it can't be is both at once: in as much as it is both, then the axis becomes meaningless:
+if everything is worth exactly what it costs, there's no point in doing the trade for a start, or rather,
+there is point, but as it is generous and fair in the small as in the large, it can't sway you in any direction in particular.
+
+what it's saying then is that you should have many cheap things, few expensive things, a few slow things of higher coverage and value, lots of small fast things, defence in depth and evenness
+
+it's trying to say have an even spread; it doesn't say anything beyond be fair, and adjust for the cost of things by correcting their quantities.
+
+God, that was a bit of a waffle. I think I'm circling in on my point.
+
+Right, where was I? Yes, that's it - the ONION.
+
+-------
+
+the pyramid-triangle became onion shaped because I started differentiating big tests from small tests, scaffolding from concrete; we gave it a tapering bottom because of decreasing value of tests as they prove less and less with a constant oevrhead of effort - the tautological test, like a clip at the bottom.
+
+The resultant bulge was then levitated upwards by talking about the phases of testing, and how scaffolding should be preferred to concrete before a project has found its form.
+
+And now, I'm saying this vision of how our testing should be is interrupted by the sad realities of life. Not only is the value line a curve with a sweetspot, but costs too are not straight forward either - in fact, they're not even continuous, as technological and organisational thresholds get in the way.
+
+For us as programmers, we're always wanting to be, imagining we are in, the friendly world of fast feedback and regularity of our chosen programing environment - think, Visual Studio with the Common Language Runtime: DotNet, basically.
+
+We live in a world of composable objects under the mixed ownership of other objects. If it's our team's repository then all is good. We write what you'd characterise as unit tests in your IDE, run them from the convenient test runner, new up an object here, dispose it there, repeatedly press F12 to find how things are set up below the surface. It's a paradise that those nice people at Microsoft have made for us and it's great.
+
+----------------
+
+after READY TO RIDE, list what we want: the boiled down CONVENIENCE and REALISM
+
+then DOCKER is the ANSWER
+
+----------------
+
+Docker is a portal into the world of linux; even when running Docker for Windows, 
+the reality is you've got a linux box running in secret in HyperV, and through the docker tooling,
+you're taken inside of it
+
+--------------------
+
+- First pyramid
+- Attempt at smooth pyramid; collapsed
+- Bent pyramid witness to disaster
+- Finally, success at Giza
+	
+- Cohn's Test Automation Pyramid; promotes even spread
+- tapered bottom: teardrop
+- levitated middle: onion; vision of things should be, earlier on at least - PERFECTION! this is the main point here; can make point that project phase matters here: scaffolding rather than concrete
+- real world: spinning top; technological and organisational boundaries
+	
+- then into process wrangling: a restatement of the problem in terms of camels in a market	
+	a further development of the spinning top
+- ready to ride: boundaries have been minimised in the exampleof the camels: preprepared, business will be swift and to the point
+	no additional stirrups, saddles, etc
+	with a situation more like this, we can go about getting a nice spread of testing that's not ruined by these mid-level boundaries
+- boils down to realism and convenience
+	
+and on into Docker
+
+-----------------------
+
+the high point is the ONION, which should be a stand out moment in the presentation: this is what we should aim for, especially in the first phases of projects: scaffolding, not concrete
+
+the successive disfiigured pyramids are central to everything
+(it would be nice to have a bit more content around these parts)
+
+each stage in the disfigurement is its own unique place in the presentation; instead of thinking that there'll be a likely chance later to recap, revisit, we should fully develop the point of focus as it comes up
+
+
+** Test Pyramid
+		- not a pyramid, a triangle: pyramid accentuates its dimensionality and stability
+		- in fact it is a simple shape, with a simple message, mybe you could even say a simplistic message
+	  - introduced, as we know by the Agile coach Mike Cohn in his book in the late 1990s(??)
+		- chosen this particular picture as its obviously a bodged together composite, and i quite liked it for that. 
+			The ThoughtWorks pyramid with its softened extremes has been overlaid with a triangle with tweaked names: Cohn called the top layer UI tests, and the middle ones Service tests
+		- what does the triangle actually show? a balanced distribution of tests of different granularities. 
+		- but overlaid axes like these show some of the complexity of it: fast and slow seems reasonable (but especially so given Cohn was specifically on about UI testing with frameworks like Selenium in this top layer); but these dollar signs here? ambiguously they could refer to either cost or value, or indeed both. As you go up, you get more value, in the form of coverage, from each individual test. But the increased cost and slowness of the same promotes using fewer.
+		- everything is fairly distributed in this view, even-handed: it's like a balanced diet in which you should have a bit of everything; you should cover all the bases. Implicit in this is the thought that tests at different levels have different qualities that make them differentiable in the first place. But the pyramid alone says nothing about what these different qualities are.
+		- the misconstrual of the pyramid: what does it say? get suggestions of the audience here perhaps. Suggests huge mass of unit tests. The wider base can be misinterpreted easily as not meaning number exactly, but mass of importance: on this view, your mid-level and end-to-end tests become a kind of garnish on the main dish of testing below.
+		- Cohn meant automated tests only, and the tip related to automated UI tests in particular: more misinterpretation; even i got this wrong at first, i thought the pyramid tried to represent the wider testing effort, though apparently not: but this mistake is easy to make
+			
+		- so, anyway, I'm going to try and develop the shape a bit: first of all to finesse the pyramid here into a better representation of how things should be (for me at least); then secondly to introduce an element of realism.
+			
+    - the first problem with the pyramid/triangle is that it just keeps on getting bigger as it gets lower. It says that the smaller the units being automatically tested, the faster they run, the lower their cost, and the more of them you should have. What this doesn't take into account is the problem of the tautological test, whereby tests prove little more than that the language does what's expected of it. There's a vanishing point at which a test proves nothing more than that the test itself runs. This is recognised by everybody - value at the bottom vanishes while the overheads of testing remain. So... what we really want is a tapered bottom, like this...
+
+** Tapered Teardrop
+	 by accepting the diminishing returns at the bottom, you accept the concept of there being a bulge in the middle; and as soon as it's not a triangle, something seems a bit unbalanced about it: it seems like its sagging under its own weight. And my point here is along those lines: you've accepted the bulge, and the gradual diminishing above it up to the automated tests that cover the whole, entire system; but where exactly, in practical terms, is this bulge? I think it's a bit higher than generally perceived, especially in the earlier stages of projects when you're still doing the first iterations, the MVPs and happy paths, when messy code is more palatable do get stuff out with the proviso that refactoring will happen, and further more preceise features will be introduced.
+
+The testing pyramid, with its fair proportioning of tests, is a completely static thing. It shows you how a project should be at a certain stage of maturity. It seems unlikely that a project's test profile shouldn't change across its lifecycle, that you should always have the same proportions of tests, right from the very beginning. In fact, it's impossible: at the start of a project you always have to choose to start somewhere, you can't just magic up a full suite of tests. So, where do you start? What's your plan of attack? Do you decide to test in the small, accumulating small increments of behaviour? or do you try and work inside in, not to the exclusion of testing smaller units when needed, but leaning on the greater coverage of courser,more inclusive testing?
+
+I'd defo say the latter: outside in, span the breadth of the apps behaviour first, then drill down to more precise testing when convenient. You can think of testing atthe top as being scaffolding, tests below as being concrete: one enables building and - crucially - keeps refactoring as cheap as possible, while the other ties down the existing implementation, making it difficult to break without being notified by a test, and difficult to refactor without rewriting multiple tests.
+
+So, it's a personal preference thing perhaps, but I'd say that especially in the first stages of projects, as things are being written, before the focus turns to long-term maintenance, and the form of your implementation is settled, you want coarser, mid-range testing especially.
+
+So, the bulge levitates...
+
+** Levitated Onion
+...and gives you this	 
+
+
+** Real World Spinning Top
+
+	 
+
+- Pyramid
+	- specifically automation
+	- Cohn said UI tests
+
+		
+---------------------------------------
+
+The testing pyramid was introduced by Mike Cohn in 2009 in his book /Succeeding with Agile/, and has been pretty popular ever since. It shows a fair spread of tests of every granularity, with more of them as their cost of running decreases. It's not a pyramid, it's a triangle, it's a very simple shape. In one direction you have fewer, in the other, more. 
+
+Its very easy to take this to mean that tests of some sizes are just more important than others: after all, the greatest width of the triangle is at the bottom: straight away you recognise the bottom-up testing argument, the feeling that you have a duty to test with discipline from the very bottom, with thoroughness, so the overall structure will have strength.
+
+But really a triangle is a very inclusive shape, with its continuous lines it says every layer has a necessary place - you can't have a triangle - or a pyramid - without a top or middle. With just the bottom there, you'd have the testing equivalent of the primordial burial mound as much as anything. 
+
+You can see these axes at the sides - I should say I've just taken this image off the internet, and you can see it's a bit of a bodge, underneath you can still see the traces of the ThoughtWorks test pyramid with its rounded extremities, adding a bit of vagueness to proceedings, and on top of it superimposed with newly sharp corners a new pyramid with adapted labels. The axes have been added at the same time. The dollars - what do they mean? Cost or value or both? Does the value of an automated cost go up and up and up as you climb the pyramid? Does the cost with overheads of a unit test go down and down as it tests less? I like this because you can kind of see the misinterpretation in action. What were for Mike Cohn UI tests in particular, that is slow heavy tests using Selenium driving a web browser, have now become End-to-End tests in general, service tests have become integration tests, and unit tests have remained unit tests, whatever unit tests are (very few components live in isolation, and isn't a service a unit?) - anyway the direction of travel has been from more specific situations, towards these woollier more general categories, the more the better.
+
+Anyway, the Test Automation Pyramid, it's not all that bad: it's just that its simple message has been rendered brittle
+
+-----
+
+Right that's that waffle out of the way! 
+
+From here, I'm going to disfigure the pyramid a bit by introducing a couple of factors, which will after a couple steps get us to what I propose is a better ideal of testing; then i'll shock you by showing you how the real world really is - but first, the disfigurement...
+
+-----
+
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+-----
+
+the specific case of Selenium UI tests, has been extrapolated from to suggest a very believable dynamic, but with time it's kind of calcified into an overly solid and weighty thing - an iron rule. And what's to say, by using different technologies or practices, we can't adjust its realities?
+
+
+
+as if you've got ever-diminishing testing overheads
+
+
+
+-----------------------------------
+
+PROCESS WRANGLING (or - THE CHALLENGES OF THE MIDDLE TIER)
+the leading idea is that all is good in the IDE, in the familiar world of the CLR
+but what I have on screen is a collection of camels
+
+you want to orchestrate some stuff? well, these are your problems...
+the camel market scenario, where all is there, but ill-prepared and complicated by ownership, language also
+
+-----------------------------------
+
+- pyramid suggests fewer up top, more down bottom; simple shape, simple message
+- presented in bodged form to highlight slight misreadings: specific becomes more general; slight drift
+- but even in exactly its original form, its an extrapolation, imperfect
+
+- next section, will gradually disfigure the pyramid until we get a more nuanced idea of what we should be aiming at
+- triangle: suggests simple down=good, up=bad dynamic; but we know of diminishing returns
+- teardrop: at this point, we've accepted concept of bulge - there has to be a bulge, a sweetspot somewhere, where we maximise bang for buck
+- but tp is static, applies to mature project; testing changes over course of project; scaffolding above, concrete below
+- onion: vision of perfection
+
+- real-world problems: this is already PROCESS WRANGLING really
+	
+the line *can't* be continuous: not in a real world of different technologies, shared resources owned by different teams and different people
+
+--------------------------------
+
+go on then, arse face: Cohn knew it already; the missing bit was the service testing
+which means the original pyramid is really a meeting of two extremes: the familiar slowness of Selenium UI testing, and the established practice of unit tests for developer feedback
+
+
+-----------------------------------------
+
+Since time immemorial, there's always been testing, and different approaches to testing.
+
+And I'm not just talking about programming here, any productive activity at all, from making pokey sticks to inventing the wheel to writing CRUD apps, needs some kind of feedback to direct that work. And as soon as, through the division of labour, the work of one person is being sold on to another person, there has to be some check on the quality of that work. There's a testing from below informing the work from within, and there's a testing from outside, that's less about the feedback and more about the filtering.
+
+And over time, of course, especially with computers, it makes sense for as much as possible of this to be mechanised, automated.
+
+------------------------------------------
+
+So you have the two characterizable types of testing here - and you can say that one, being more feedback orientated, should prefer nimbleness and precision at the expense of scope; while the other, a filter and safety net, needs thoroughness.
+
+Well, I'll tell you now, these two irreconcilible extremes are united by Mike Cohn's Test Automation Pyramid.
+
+
+----------------------------------------------
+
+The Two Poles of Testing
+
+Testing is as old as productive activity itself: to make something, there has to be feedback from trying out the thing you're making. Cavemen sharpening bits of flint will have tested the flint as they bashed it with a rock, slaves layering the massive ten tonne blocks of a pyramid will have tested them for stability as they laid them, and perhaps adapted them till they fitted snug.
+
+In the history of software testing too - there's a guy called Bob Hitzfeld who's written a book on it - the first phase, back in the early 1950s, was all about debugging by the programmers themselves - which is of course is still core to doing programming today.
+
+But then, if you allow me to leap back again in time, to resume my potted history of testing - workers producing things gradually came to form guilds, professional organisations, with the idea not just of keeping other workers out, but also of maintaining and guaranteeing standards of work. For this they had another kind of testing - you could call it Quality Assurance, that wasn't about getting precise and timely feedback to the craftsman, but about filtering out faults, that emphasised thoroughness. And such testing was expensive - the person doing the examining had to be a master themselves.
+
+And then, the industrial revolution happened... systematisation, automation.
+
+-------------------------------------
+
+at the bottom, flickering on, is the testing as feedback, with a picture of a cave man
+
+
+
+----------------------------------------------------
+
+A frequent criticism of the pinacleof the pyramid is that the tests, run in Seleniumor similar, are /brittle/
+and this makes sense: tests that cover more functionality, whether essential or accidental to what they're actually intending to test,
+are going to be more prone to break; they're going to be much flakier.
+
+But brittleness isn't just a thing at the top of the pyramid. If you follow the advice, and pour small tests like concrete through your codebase
+your going to find just as much if not more brittleness, its just that that brittleness is shared amongst lots of smaller bits. If you want to
+avoid brittleness, you need to find the contracts and interfaces that seldom change, are more permenant and stable.
+
+User Interfaces are not stable, as they're the confluence of all the rest of the apps behaviour, with added transitory bells and whistles. But that doesn't mean you should leap to the other extreme. And, of course, the testing triangle is a simple shape that encourages simplistic manouevres like this - if taken out of context.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+

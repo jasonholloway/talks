@@ -1,0 +1,32 @@
+* History of Testing
+
+** DZone Article thing - Leah Grantz
+	 - developer market opened up with miniturization and internet, code quality declined as it was democratised: specialisation of testers as QA gatekeepers
+		 ! but devs were previously higher value, and bugs were always a great problem
+		 ! seems that specialized QAs must always have been a thing at any kind of scale: unit testing is dev-led QA, a retreat back to the small scale, enabled by miniaturisation
+	 - mentions testing of other industries:
+		 - fashion's /toiles/ - working patterned garments made of cheap fabrics
+			 ! but isn't this outside in integration testing with MVPs?
+		 - per-department continuity testing in filmmaking
+		 ! this kind of stuff, in that it's testing not of the whole, but of cohesive cross-cutting aspects of the whole, does not match OO modularisation
+
+** https://en.wikiversity.org/wiki/Software_testing/History_of_testing
+		
+** Bill Hetzel
+	 - /seminal article/: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.502.6077&rep=rep1&type=pdf
+	 - also /Complete Guide to Software Testing/, barrel-rolled by Yourdon in 82
+
+	 - supposed phases:
+		 - primordial /Debugging-oriented/
+		 - /Demonstration-oriented/
+		 - /Destruction-oriented/
+		 - /Evaluation-oriented/
+		 - /Prevention-oriented/
+			 
+			 ! but all above are unfolded from the first, which is local and unspecialised, but complete
+			 ! demos needed to convince customers, then coopted to prove to self via destruction, which was formalised as evaluation, then with improvements came prevention
+
+
+
+
+

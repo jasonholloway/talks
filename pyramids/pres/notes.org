@@ -21,6 +21,7 @@
 *** Testing Pyramid
 		- from Mike Cohn's /Succeeding with Agile/ (2009?)
 			(Cohn himself has blog post about the 'missing' layer of the pyramid,the middle one - like the pyramid has only one dimension)
+			(Cohn says the middle layer is made up for in 'UI testing', ie manual acceptance test testing - which matches experience)
     - there are different varieties (show various diagrams of it)			
 		- unit testing vs manual ui testing
 
@@ -49,10 +50,16 @@
 				(there are pyramids in Myanmar that are very ancient, and have been covered in exterior brickwork to preserve them)
 			- amounting to the most valuable tests (if we go with value instead of cost) being in a certain sweet spot, where they interact with fast/slow and cheap/expensive optimally
 			- so - it'd be nice if developer-led testing could move up the pyramid
+				
+			- the top and bottom of the pyramid (sorry - triangle) are separated also by organisation: the top is managed as QA, the bottom as developer-led feedback.
+				the middle ground isn't just evidence of a technological difficulty, but also an organisational abyss
 
 * Processes, Big and Small (aka moving to microservices)
 	want to introduce processes as deployable modules of code
-
+	
+  this is quite a different angle of approach from above: it tries to broaden out and contextualise the 'gap' mentioned above
+	the gap is partly due to technology: the boundaries we're wanting to test here are outside of the manageable world of objects within the runtime: they're to do
+	increasingly with processes at the level of the operating system
 
 ** Challenges of the Middle Layer
 	 - the three-layer app DIAGRAM
@@ -69,7 +76,7 @@
 *** Lack of Tooling
 		- but then the problem, especially with DotNet, is the tooling
 		- anything within the runtime, such as mocking libraries, can be developed, has been developed, without leaving the world of C#
-		  when you leave the confines of the runtime, there's a lot of fragile andobscure bodges to be done, in the world of the OS  
+		  when you leave the confines of the runtime, there's a lot of fragile and obscure bodges to be done, in the world of the OS, the greater containing /runtime/  
 *** SqlServer approaches
 		- using specially provisioned database
 		- in principal, should be workable

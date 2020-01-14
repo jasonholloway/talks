@@ -3,8 +3,8 @@ set -e
 
 main() {
 	(buildBase sqlservr-base)
-	(buildDerived sqlservr-tracking)
-	echo "Built super fast sqlservr-tracking image"
+	(buildDerived sqlservr-camels)
+	echo "Built super fast sqlservr-camels image"
 }
 
 buildBase() {

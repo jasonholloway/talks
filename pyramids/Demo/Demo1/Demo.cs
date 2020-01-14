@@ -1,5 +1,4 @@
 using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Common;
@@ -29,8 +28,6 @@ namespace Demo
                     Marker("Connected");
                     
                     await db.ExecuteAsync(@"
-                        CREATE DATABASE Demo;
-
                         CREATE TABLE Camels (
                             Name nvarchar(50),
                             Age int

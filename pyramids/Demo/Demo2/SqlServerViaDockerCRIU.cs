@@ -37,7 +37,7 @@ namespace Demo2
                         PortBindings = new Dictionary<string, IList<PortBinding>>
                             { ["1433/tcp"] = new[] { new PortBinding { HostPort = "1433" } } }
                     },
-                    ExposedPorts =new Dictionary<string, EmptyStruct>
+                    ExposedPorts = new Dictionary<string, EmptyStruct>
                         { ["1433/tcp"] = default },
                     Env = new[] { "STOP_AFTER=1m", "RUN_FAST=1" },
                 };
@@ -47,6 +47,8 @@ namespace Demo2
                 
                 await _docker.Containers
                     .StartContainerAsync(cont.ID, new ContainerStartParameters());
+
+                await Task.Delay(300);
                 
                 return cont.ID;
             }

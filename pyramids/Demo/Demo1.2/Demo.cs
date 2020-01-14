@@ -18,23 +18,31 @@ namespace Demo
             using (var sqlServer = new SqlServerViaDocker("sqlserver-prepped")) 
             {
                 await sqlServer.Start();
+                
+                Marker("SqlServer ready");
 
-                using (var db = new SqlConnection($"Server=localhost,1433;User Id=sa;Password=Wibble123!")) 
+                using (var db = new SqlConnection($"Server=localhost,1433;Database=CamelsRUs;User Id=sa;Password=Wibble123!")) 
                 {
                     await db.OpenAsync();
+                    
+                    Marker("Connected");
 
                     await db.ExecuteAsync(@"
                         INSERT INTO Camels
                         VALUES 
-                            ('Clarence', 12),
-                            ('Cassandra', 10),
-                            ('Cuthbert', 8)
+                            ('Clarence', 'Dromedary', 12),
+                            ('Cassandra', 'Bactrian', 10),
+                            ('Cuthbert', 'Dromedary', 8)
                       ");
+                    
+                    Marker("Created");
 
                     var camels = await db.QueryAsync("SELECT * FROM Camels");
 
                     Assert.That(camels.Count(), Is.EqualTo(3));
                 }
+                
+                Marker("Done!");
             }
         }
     }

@@ -30,7 +30,7 @@ restore() {
 stopAfterTimeout() {
 	pid=$1
 	if [[ ! -z "$STOP_AFTER" ]]; then
-        (sleep "$STOP_AFTER"; kill $pid) &
+    (sleep "$STOP_AFTER"; kill $pid) &
 	fi
 }
 

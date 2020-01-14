@@ -1,0 +1,67 @@
+Here it is; or rather, here's a representation of it that I've taken off somewhere on the internet. You can see that someone's superimposed a simpler, more sharp-edged shape over a more amorphous blob underneath, and they've made the labels on the layers much more general, but the basic features are here.
+
+It shows the apread of testing you sould be aiming for: at the top you've got your big, hefty, all encompassing UI tests - sorry, end-to-end tests - of maximum slowness, like a tortoise waddling along rather than a fast-footed hare, and at maximum cost - these are all bad things.
+
+At the other end of the scale, down below, cheap fast and plentiful unit tests. It's a simple shape, with a simple message: write lots of unit tests! Or at least it's always seemed that way when it's cropped up in my career. It's always been presented with the implication that we should be as thouroughly thorough as possible with automated unit tests, the finer the granularity the better, to give the pyramid maximum strength from below.
+
+But think about this: a triangle - and it is a triangle despite its pretentions - is an inclusive, balanced and continuous shape. Such a nice shape is really saying: make sure you have all kinds of tests in place! You need a well-formed pinacle and a sturdy mid-section as well as a strong base if you're going to have any pyramid at all.
+
+And indeed - if we flip slides - here's the man himself, Mike Cohn, the inventor of the test pyramid. He was a very successful Agile consultant, and wrote a very successful book called 'Succeeding with Agile' back in 2009, which first presented the test pyramid to the world. Here he is, smiling nicely on the left, in case you were wondering. And here on the right, if you were wondering as well, is the very first, pristine test pyramid, taken from his book. The layers are very specifically labelled, rooted in reality - they refer in particular to Selenium web testing in the top layer, the UI layer; and API-level black-box testing of services in the middle layer - not amorphous categories like end-to-end and integration.
+
+And what he's really saying, if you read the text around the pyramid - not here, but in the book, I mean, is that the middle-layer shouldn't be skipped, that if you focus elsewhere, your test suites become problematic. This is his specific point, the point of introducing an inclusive, continuous shape like the triangle in the first place.
+
+Here are the words he concludes with, summing up what he wants to convey...
+
+So, at this point, I hope, we're all on the same page, us and Mike Cohn: we all agree that there's value in having a well-balanced testing profile - both because it seems like a reasonable idea, and because it makes a nice triangle shape. Generally taking a balanced approach is a wise thing to do.
+
+But we can do better even than this: we can inject more realism into it - not to give it intricacies, but nuances that actually matter. We can see how its shape morphs as we do so.
+
+We start off with the very familiar happy triangle shape. But what about this: the triangle only has two dimensions - when you go up it gets narrower, and when you go down it gets broader. It says, as you go down, you should have more and more tests that are smaller and smaller, making up for their smaller coverage by weight in numbers - but there's obviously a limit to this, otherwise in every project we'd be swamped by the tiniest most meaningless tests. Tautological tests are a thing, and we reasonably avoid them. The value of such tests declines as the overhead of writing and maintaining them remains about the same. Which means - our triangle really has a tapered bottom.
+
+And when you've accepted this, you must also have accepted the existence of the testing bulge - would be better called a sweetspot - where the value of your tests as opposed to their costs is maximised.
+
+Smaller isn't always better. This probably matches how we do testing in practice anyway.
+
+But this also leaves the question unanswered of where exactly this sweetspot is - before with the triangle we didn't have to think about this - but now we know it's there, where is it? In practical terms, I think you've got to say, it's at the same granularity as the most stable units of your code - which is generally above the level of most small-scale per-class or per-function tests.
+
+Tests can be enabling, in how they give you fast feedback as to how your implementation performs, and get you thinking outside-in as to how it should perform - like a kind of helpful scaffolding. But they can also be defensive, pinning down behaviour like concrete poured over a structure.
+
+And the test pyramid has no concept of time, is blind to the idea that projects go through phases. According to the test pyramid, an initial proof of concept, a messily coded MVP, a maturing project quickly taking shape, or an old one receiving only occasional tacked on features, should all have the same testing profile despite their very different situations. This is surely wrong. The phase of the project determines how many defensive, and how many enabling tests you need.
+
+So - for the purpose of this talk, let's assume that we're very much in the 'writing code' phase - where we're discovering and filling out the system we're writing. I'd say in this scenario, the sweetspot's got to levitate a bit.
+
+Which gives us... the Onion.
+
+So far so good - here we have a picture of perfection. But the real world is cruel and unforgiving. Lines in the real world, as with sadly collapsed pyramids, are continuous in only short sections. In the case of software, this is because there are both organisational and technological boundaries.
+
+What this real world gives us is this... a deformed Onion, the Spinning Top.
+
+It's basically the onion, but with an arbitrary threshold, above which attempts at testing suddenly get much more prone to failure. Well, it's probably not completely arbitrary, but it's there.
+
+As a developer writing tests, you're spoilt in so many ways - you've got your Visual Studio, you've got your CLR full of friendly manageable objects, the familiar ordered world of C#, you've got your integrated test runner, your debugger, your watches, the immediate window, whatever. If you want to orchestrate things for testing that are solely code, you might have some intractable interfaces, some unmockable concrete classes, but really everything is as immediate and convenient as can be - you're in your element, like a fish. This is what life's like below the arbitrary split.
+
+But above it, you've got other technologies, other processes, other runtimes, other operating systems, other boxes, other teams with other managers and other ways of working - suddenly everything becomes a lot more complicated, a lot more difficult. Much less is likely to be successfully put in place above the line, and what tests you do write there will rot into flakiness and disuse all the more quickly.
+
+In terms of technologies, there have been two main culprits here, for us DotNet devs. Firstly there's IIS, which is so integrated with traditional ASP that it makes it completely unmockable - but with NetCore this has changed completely, and running Asp with a fake http pipeline is now very much doable. Now you can do proper API testing instead of newing up controller classes, which is a big leap forward.
+
+But the second culprit, if you've been in the business of black-box service testing, is the out-of-process database, in particular SqlServer - and this is still a big problem. So much DotNet software is middleware for SqlServer, but so little testing involves SqlServer, because of the difficulty of orchestrating such a cumbersome piece of software.
+
+But anyway, this is where we still are today, still trying to test in the best way, but still coming up against problems at the edge of the CLR.
+
+As an aside, I mentioned controller testing in passing there, but how about the repository pattern? A big driver for the repository pattern is that it lets you test the code sitting on top of it. If you could orchestrate the database in testing just as easily as a mock...? But I'm getting ahead of myself here.
+
+This has been a big, roundabout posing of the problem. We want to build the pyramid/onion of our dreams, but our attempts always collapse into a heap. What do we do about it?
+
+PROCESS WRANGLING
+
+I mentioned before the cosiness of the CLR, and how it makes acquiring and managing resources as easy as can be. Now compare it to a camel market. All you want is to tour around a pyramid on a camel. But whenever you go out to find a camel, you keep on finding yourself here.
+
+...
+
+
+
+
+
+
+
+

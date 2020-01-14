@@ -17,3 +17,21 @@ img {
 .criu-images img {
 	height: 50%;
 }
+
+.cohn > div:nth-child(1) {
+		float: left;
+		width: 40%;
+}
+
+.cohn > div:nth-child(2) {
+		float: right;
+		width: 60%;
+}
+
+.borderless img {
+		border: 0 !important;
+}
+
+.workshop img {
+		width: 180%;
+}

@@ -40,8 +40,8 @@ namespace Common
                     PortBindings = new Dictionary<string, IList<PortBinding>>
                         { ["1433/tcp"] = new[] { new PortBinding { HostPort = "1433" } } }
                 },
-                ExposedPorts =new Dictionary<string, EmptyStruct>
-                    { ["1433/tcp"] = default(EmptyStruct) }
+                ExposedPorts = new Dictionary<string, EmptyStruct>
+                    { ["1433/tcp"] = default }
             };
             
             var cont = await _docker.Containers
