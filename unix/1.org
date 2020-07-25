@@ -1,0 +1,58 @@
+
+
+DSLs
+Inversion
+Port
+
+
+AT&T big monopolistic monolith
+ironically allowed space at periphery to Bell Labs
+pootling about, outside of commercial concerns with absent management
+interactions mirrored in interctions of little programs (each of which written by different person or small teams of people)
+
+Cutler macho, as counterpoint
+
+Independent from manufacturers, unusually -> porting removes dependency on particular machine
+PDP11 modular itself
+
+porting is kind of Dependency Inversion: different machines are adapted to UNIX via C compilers
+
+
+AT&T monopoly broken up, which brought Bell labs under commercial pressures, team was split up, etc
+Unix became an asset, attempt to monetize it
+this broke the spell of the product too; sudden rush to replace it with equivalent
+
+Gnu tried to recreate, but with militance against commercialism and focus on rsm - partial success, kernel failure due to overengineering
+Linux beat it, despite bodginess, concurrent with WWW, beginning of open source
+
+
+
+
+communication by text - most primitive, but also most expressive
+
+text is all they had
+
+similarly, lack of languages, at least initially, gave impetus for each small program to interpret its own language
+
+
+
+
+
+
+historical progression frames entire thing
+first demos are of basics
+files, pipes, dsls
+
+
+
+
+
+
+
+
+
+
+
+
+
+
