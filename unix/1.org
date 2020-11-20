@@ -1,3 +1,18 @@
+*Unix: Valley of the Dinosaurs?*
+
+before Multics, bundles of utilities formed an Operating System - less monolithic
+(so Unix was a lapse back to the old way even at its inception)
+
+
+MULTICS, sponsored by GE, who made a big computer especially for it
+(computing as a utility, like a telephone exchange, or electricity, maybe like today's CLOUD)
+very modular, within its specialised hardware
+
+Ken Thompson: "overdesigned and overbuilt and over everything. It was close to unusable" (see Seibel)
+
+but FAILURE ensued
+UNIX rose from its ashes, only without the tie-in to the hardware
+
 
 
 DSLs
@@ -36,6 +51,9 @@ similarly, lack of languages, at least initially, gave impetus for each small pr
 
 
 
+UNIX AS MODULAR SYNTHESIZER?!
+examples of things that are modular, and not modular
+main requirement is composability - ie getting different bits to talk to other bits
 
 
 
@@ -44,15 +62,41 @@ first demos are of basics
 files, pipes, dsls
 
 
+-------------------------------
+visions of future Unix
+
+Rob Pike
+Structural Regex - better parsing than per line default
+Plan9 plumber, more like bus
+9P used in WSL integration
+-------------------------------
+
+"t is ironic thatUNIXfiles are uninterpreted byte streams, yet the style of programming that most typ-ifiesUNIXhas  a  fairly  rigid  structure  imposed  on  files—arrays  of  not-too-long  lines"
+
+
+-------------
+
+- AWK is even the initials of its programmers! entirely owned by them
+
+----------
+
+ad-hoc line-oriented databases
+
+files of lines
+
+------------------------------------------------------------
+
+Two things at loggerheads (or maybe just in right amounts:
+- embedded DSLs into monolithic functions (the language makes the monolith flexible)
+- composability of specialised functions via pipes and flies
+
+*Kitchen-sink Swiss-Army-Knife* (pathological case of crap DSL)
+vs
 
 
 
 
-
-
-
-
-
-
-
+** Pipes
+	 the real composability of unix progs is in their line-oriented inputs and outputs
+	 pipes bring a more efficient and elegant way of using this composability
 
