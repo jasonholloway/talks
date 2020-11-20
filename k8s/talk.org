@@ -1,0 +1,65 @@
+
+* Kubernetes for the Rudderless
+
+** Hooks - a benign parasite of the underlying operating system
+
+** An Operating System from an Operating System
+	 but distributed
+	 a scheduler?
+
+** V complicated - open to extension!
+
+** Scary diagram
+	 only kidding
+
+** Governor
+	 Helmsman - hence the logo of a ship's wheel
+	 Cybernetics - feedback loops, automatic self-control
+	 Governor - self-governing, supposedly 
+
+** But we are the real governors
+
+** A RESTful API, with system behind it making the world match our REST model
+	 the pivot is declarative interface
+	 behind which imperative code chugs away to meet expectations
+	 but for convenience, we use kubectl as tool on top of this
+	 though there's also the dashboard UI
+
+** and then behind the API, there are governors running to make sure that the rules we've declared, the real resources we've indicated we want to exist, are actually in place
+	 a record of /intent/ - /eventually/ consistent - /desired/ state
+
+** Resources
+	 common shape throughout: spec and status
+
+*** VMs with K8s installed (gritty reality)
+
+*** Cluster with Nodes
+
+*** Pods
+
+*** Services and Ingresses
+
+*** Namespaces
+
+*** Deployments and ReplicaSets
+
+** KubeCtl
+
+
+** Top-down, instead of bottom-up
+	 most discussions start with 'what is a container', then 'what is a pod' - we'll get to that shortly enough, but first we need to situate these things
+	 the usul path is container first then pod, then the bits and pieces that make sure the right number of pods are in the right places, 
+
+	 
+	 
+
+
+
+** Nice Helmsman 1
+
+** Charon/Sea of Souls
+[[./charon_sea.jpg]]
+
+** Reluctant Sinners
+[[./charon_oar.png]]
+
