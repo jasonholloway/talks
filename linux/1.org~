@@ -1,0 +1,57 @@
+* Unix, Windows and DotNet 
+
+Bash as REPL, an interactive programming environment
+
+Everything is a file in a tree
+  - including things like `/dev/random`, `/dev/zero`
+	- but also process and thread memory - os resources you'd expect to be hidden away below many layers
+
+Variety of Unixes
+  - Cygwin, WSL - Linux
+	- Android! 
+	- iOS
+	- Mac OSX
+	- POSIX standard: things that appear everywhere, even in Git Bash
+		- to rein in the multiplicity of competing, branched Unixes, from late 1980s
+			
+POSIX
+  - less important now with docker available
+			
+Windows stands alone 
+  - all other popular OSes are unixes
+	- genealogical tree simplified
+	- though development is done in closed worlds (JVMs, CLRs and NodeJSs etc)
+		- but Unix is itself such a development environment
+		- in our world the development environment and the OS are more split than in others
+		- Shell=REPL
+  
+The path to containers
+  - from basic unix stuff via extensions
+  - fork/exec copies executes - very similar to Docker
+		- amazing Windows mimicry, v wasteful!
+	- chroot
+	- cgroups
+
+Shining familiar example: Git
+  - non-monolithic
+  - everything is small processes
+		
+Shining familiar example: Docker
+
+Setting up listeners, watchers, multiplexing
+  - steps towards an build-it-yourself IDE
+
+Tour of handy commands
+  - grep
+	- sed
+	- awk
+	- netcat
+	- curl
+
+Tour of file system
+  - src -> lib -> bin
+	- etc
+	- var
+	- root, usr, usr/local (like local/roaming appdata)
+	- opt
+
