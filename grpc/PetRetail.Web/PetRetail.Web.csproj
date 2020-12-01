@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Grpc.AspNetCore.Server" Version="2.33.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\PetRetail.Services\PetRetail.Services.csproj" />
+      <ProjectReference Include="..\PetRetail\PetRetail.csproj" />
+    </ItemGroup>
+
+</Project>

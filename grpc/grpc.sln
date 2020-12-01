@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetRetail.Web", "PetRetail.Web\PetRetail.Web.csproj", "{AE6B4235-AFFB-4C66-9A1C-255974780E0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetRetail", "PetRetail\PetRetail.csproj", "{91681D65-952F-4B2B-B148-BDD2901E914E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetRetail.Services", "PetRetail.Services\PetRetail.Services.csproj", "{F341B028-8C97-4C66-9AE9-3B035B429F05}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AE6B4235-AFFB-4C66-9A1C-255974780E0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE6B4235-AFFB-4C66-9A1C-255974780E0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE6B4235-AFFB-4C66-9A1C-255974780E0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE6B4235-AFFB-4C66-9A1C-255974780E0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91681D65-952F-4B2B-B148-BDD2901E914E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91681D65-952F-4B2B-B148-BDD2901E914E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91681D65-952F-4B2B-B148-BDD2901E914E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91681D65-952F-4B2B-B148-BDD2901E914E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F341B028-8C97-4C66-9AE9-3B035B429F05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F341B028-8C97-4C66-9AE9-3B035B429F05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F341B028-8C97-4C66-9AE9-3B035B429F05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F341B028-8C97-4C66-9AE9-3B035B429F05}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
