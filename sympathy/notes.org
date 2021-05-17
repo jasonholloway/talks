@@ -1,0 +1,56 @@
+* Profiling-Driven Development
+  
+It's really about how to improve big, sprawling, untouchable legacy software (or an attempt at it anyway)
+
+  
+We want:
+- performant
+- manageable
+  - easy to start up
+  - easy to swap data
+  
+    
+Feedback
+- not about setting limits and thresholds (this is defensive, not helpful for systematic exploration)
+  PDD - magically creative as well as stringent, like TDD - on one side, pinning down with oversight, on the other repeatably exploring
+- test runner good for this
+
+Matrix of scenarios - expandable, repeatable, comparable
+- can even do cartesian product via linq query syntax
+- not plotting over time (the concern of project oversight), but comparing between pluggable options
+  space vs time; problem of changing implementation and losing record of changes... solved by parameterisation, plug in better bits incrementally
+- superfluity of scenarios - for CI, select ones can be chosen
+- but then there's also single tests across time - ie full reports. These are interesting, informative, but difficult to compare
+    
+
+Profiling as part of dev:
+- https://blog.jetbrains.com/dotnet/2015/03/04/unit-testing-and-memory-profiling-can-they-be-combined/
+- tracking memory usage isn't super useful for most dev tasks, and so the costs of profiling (unless they can be minimised) won't make sense
+  - but in some cases, there definitely is value: eg when you're effectively writing an in-app database!
+- as well as memory tests, could be more interesting benchmarks tests
+  
+Interpretation
+- so we get figures out, but what do they mean? Need some way of saving full reports, instead of contextless aggregations
+
+Drama
+- Start with moaning about over-provisioned servers
+- Then, allocated aggregation shows big mem for DPD - eek!
+- But... dotMemory, through wrestle, shows memory usage to actually be quite reasonable
+
+Solution:
+- real fix would be earlier than this - data should be encoded compactly as soon as we receive it, asynchronously
+
+
+
+
+
+
+Steve Gordon's v similar mission:
+ - https://www.stevejgordon.co.uk/profiling-dotnetcore-memory-traffic-using-jetbrains-dotmemory
+
+
+
+
+
+
+
