@@ -1,0 +1,31 @@
+
+* JNK's overview
+	not tied to .NET 5! 
+  Grpc has been available on DotNet for yonks, since 2016 in fact
+	what's new: .NET runtime; gRPC-web
+
+* vs REST
+	REST = the contract is discoverable, and resources are exposed
+	gRPC - the contract is announced up front, then the calls are imperative (like in-process calls)
+	successor to WCF - but simpler, cross-platform
+	simplifies design issues - REST = bike-shedding, RPC = no fuss
+
+* Proto contract
+	/streaming is first-class-citizen
+
+* Service layer	
+	Base classes
+	
+* HTTP interface
+
+  Distinguish between Grpc and Grpc-Web
+	grpc not directly supported by browsers - need to use a special proxy (doable)
+  gRPC-Web protocol
+
+	integration with AspNetCore
+
+* BloomRPC
+
+
+
+
