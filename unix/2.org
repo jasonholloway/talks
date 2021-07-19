@@ -1,0 +1,119 @@
+
+The small tools with close ownership
+worked because of closeness of programmers perhaps
+but also complete lack of *NIH*
+the tools did their small things well
+and didn't overlap
+
+
+
+Unix: A Programmer's Paradise(?)
+
+The Origin Story
+
+Disaster!
+<big picture of volcano or similar>
+
+Phoenix from the Flames
+
+
+ultimately found a way for business to work with open source - sponsorship of free things
+which enabled proprietary stuff on top
+tapping into the bazaar
+
+
+but so much for the history... what's interesting are the concepts, the programming...
+
+
+
+small programs with their own rooted identities
+bearing imprint of their maker
+not overreaching, small and solid
+S
+
+how to make them cooperate?
+shell
+pipes
+just as the tools are smaller and more independent, communication between them becomes more important
+you need some good IPC mechanism
+again, this was developed bottom up, as a way of bringing peoples small contributions together
+common interface of structured documents: lines and columns; in its simplest case like CSVs, or like spreadsheets of data
+
+little languages
+given freedom of the structured data (the structure is exactly as in English! lines of words - another angle on the CSV)
+find, sed, awk, regex, globs, shell constructs, jq, socat
+the overlaying of these makes for complexity, and it gradually gets you looking out for the layers
+
+
+
+
+
+compilation of C - Dependency Inversion in action
+did what Microsoft did - commoditized hardware
+as long as you had the C source, it could be compiled for your machine (theoretically!)
+think of IL of C# and Java
+core of OS was written in this; tools were too; Unix was portable
+again because of the conditions of its creation: it wasn't tied to big hardware, but to a cheap computer the lab had hanging around
+D
+
+
+
+O - open for extension, but how?
+
+
+
+
+
+
+-------
+
+structured data can either be viewed as CSV spreadsheet; or as freeform English
+two sides of same coin; flexibility of format allows little languages
+
+
+they achieved modularisation from the ground up
+because of their conditions as independent researchers (naturally found space to grow an interest)
+because of their constraints - no teams to expand tools into bloated apps or platforms
+different from how it is in our world, trying to separate out big balls of mud into cleaner modules
+conways law in action - free-floating, self-organizing individuals 
+(contrast: tight-knit team producing tight-knit software - almost like an opposite pole)
+
+
+
+Trouble in paradise
+Ronald Reagan broke apart monopolies; BL split up; commercialization
+suddenly this free software with community around it was splintered from outside
+and what you got were a thousand competing Unixes (not finding their own space like the researches)
+
+
+
+
+
+------
+why didn't the competing Unixes find their own spaces? not because they didn't want to
+because cooperation wasn't allowed... what's the equivalent of a pipe or a stream of structured data to 
+competing OS offerings? they can't coexist; they can't communicate
+they competed because there was money to be made, simply
+licences, machines, etc, made for an awkward landscape that couldn't be easily straddled by a generic OS
+(though Unix was a generic OS via its C compiler)
+
+but suddenly licences meant the old Unix was no longer free
+and different offerings came on the market to try and make good the loss
+the heralded age of competition hit software too: the single good Unix was too good
+
+(imagine if Slack suddenly started charging)
+
+
+
+
+
+
+----
+narrative:
+it was brill
+then terrible things happened with capital
+but then it turned out great with capital
+
+
+
+Tyrrany of the Tree

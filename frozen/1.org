@@ -1,0 +1,8 @@
+* SqlServer From Frozen
+
+	SqlServer is meat and drink to DotNet apps - both their underlying sustenance and, for their programmers, a source of delight. So many services and can be boiled down to being /database middleware/, staging posts to the good stuff. Business logic is entranced by the database, condenses 
+
+
+
+
+

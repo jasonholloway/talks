@@ -1,0 +1,24 @@
+
+So central theme is really emergence of data-types
+
+Originally, you passed an args list to a ctor (a tuple - the simplest structuring of values) and after that it was up to the object to take in these values and to behave according to them
+
+over time, the caller has been given more constructive powers (fitting actual usage patterns)
+
+C#3 - anonymous types
+C#3 - Object initializers
+(above probably related to each other in implementation!)
+
+So for the above, Linq was the driver
+
+What drove tuples?
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,15 @@
+** Inversion of Control
+   three parties: the hardware, the orchestrator, and the 'business logic'
+   it's not magic - the DI triangle
+   
+   in the case of Unix, 
+   it wasn't just a program, but a set of tooling and a practice
+   
+   the C compiler provided the framework
+   and Unix code itself was expressed in C, via a small standard library
+   
+   by programming to this interface, the cost of porting to other systems was minimised
+   ie no adhoc reliance on proprietary hardware (because they weren't creating the hardware, had just inherited old machines)
+   they started from scraps, but this actually put them at an advantage
+
+   not geniuses but situational, happy circumstances

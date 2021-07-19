@@ -28,6 +28,9 @@
 ** and then behind the API, there are governors running to make sure that the rules we've declared, the real resources we've indicated we want to exist, are actually in place
 	 a record of /intent/ - /eventually/ consistent - /desired/ state
 
+** self-management - the desired things are stated,
+	 everything is managed behind the scenes to achieve it
+
 ** Resources
 	 common shape throughout: spec and status
 
@@ -55,11 +58,74 @@
 
 
 
-** Nice Helmsman 1
+* What's in a name?
+	
+Kuberenetes = Ancient Greek helmsman, pilot of a boat, sea-captain
+	
+But interestingly, if you do a search for 'ancient greek helmsman' on google, all the results are for this guy - Charon, Ferryman to the Underworld
 
 ** Charon/Sea of Souls
 [[./charon_sea.jpg]]
 
 ** Reluctant Sinners
 [[./charon_oar.png]]
+
+** Nice Helmsman 1
+	 daring, hardworking, cooperative sailors  in a vessel equipped with the latest technology
+	 [[./argo1.jpg]]
+
+** Ship in rough waters
+	 as quick culmination
+	 
+* Cybernetics
+** Cybernetics
+	 quotes from here:
+		https://www.yld.io/blog/kubernetes-piloting-the-cybernetic-dreamboat/
+		cold war creepiness, but interesting, but more than interesting - relevant to Kubernetes; the people who named Kubernetes knew about Cybernetics, it definitely wasn't an accident
+
+** Government
+	 less creepy, 
+	 
+Kubernetes, it means all these things
+
+
+* And what actually is it?
+	sneak peak: an API, but in order to talk about that, we need to quickly go over its domain
+	
+** Scheduler
+	a hosting platform for apps; it runs jobs; a scheduler
+	and not just a scheduler - a /modular/ scheduler, with an ecosystem of add-ons and tooling around it
+	
+*** timed job
+
+*** triggered jobs
+
+*** one off, ad hoc jobs
+
+*** constantly-running jobs
+
+*** jobs with replicas
+
+*** jobs that have to run on every node or else
+
+** Cattle not pets
+  the other side of cybernetics - making the managed more managable, as well as making the orchestration more clever
+	
+** An API
+
+
+
+
+
+
+	
+though... it is an API
+
+
+
+
+Kubernetes and Cybernetics: the same, but different; name is homage, but also knowingly separate
+Kubernetes is not an anti-aircraft gun! also it's not powered by a neural net, or even a team of mice wearing electrode hats
+but it does operate on the prinicipal of feedback, of self-regulation so as to meet certain set constraints
+which is exactly what Cybernetics was all about - human mastery of very helpful machines
 

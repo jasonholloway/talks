@@ -1,0 +1,21 @@
+
+
+** Tuple demo
+
+** Generalized deconstructor demo
+
+** Syntactic sugar, what's the point?
+
+*** affordance
+
+*** symmetry
+
+** Immutable data types
+
+** Ladder of pattern-matching
+
+*** 
+
+
+
+

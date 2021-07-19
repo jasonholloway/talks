@@ -100,3 +100,27 @@ vs
 	 the real composability of unix progs is in their line-oriented inputs and outputs
 	 pipes bring a more efficient and elegant way of using this composability
 
+
+** Acronyms and puns
+*** AWK
+*** GNU
+*** UNIX
+*** YACC
+
+		
+
+
+
+
+** Cathedral and Bazaar
+	 Good for maintenance
+	 Makes for a mess in new projects as each and every possibility is explored
+	 
+** Primitive freedom of interfaces
+	 Dream of elegant embedded languages
+	 Lots of variation
+
+
+
+
+

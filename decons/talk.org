@@ -1,0 +1,181 @@
+
+* Deconstructors
+
+** Demo of Tuples
+   with pattern matching sites
+
+*** been around since 2016! not new but only gradually idiomatic
+    C#7 feature
+
+*** are themselves like anon objects: 'lightweight unnamed types'
+
+** Demo of deconstructors in general
+
+** If just sugar, where's the value? where's the nutritious content?
+
+*** horses for courses
+
+**** some return types literally are just two important bits glued together, why pay the syntax tax of property access?
+
+**** tuples themselves are a bit weak
+     and naming the tuple members is big faff
+
+*** via symmetry, promotion of data-types
+
+** Not /destructor/
+
+*** another kind of symmetry - of objects alive on the heap - birth and death
+
+*** destructors = finalizers = what GC calls when an object is culled
+
+
+
+  
+** Should I use them?
+
+*** In general, probably not!
+
+*** but, could be a nice affordance on a commonly used type
+    better than returning a tuple, as it doesn't force tuples on the consumer
+
+
+** Symmetry - nice
+
+   
+** Ladder to data-types, C#7-9
+
+*** Deconstructors are the first step
+
+   
+** C#7 deconstructors only allow tuple-style structuring
+   ie a series of typed values
+
+*** a typed arg list is basically a tuple
+
+
+** C#8 pattern matching DSL provides auto-prop-unpacking
+
+*** property unpacking for all objects with properties
+
+**** goes with init-only setters
+     emphasises property packing as way of constructing object
+
+*** means you only need explicit Deconstruct for the anti-ctor list-of-args style
+
+** C#9 Records as culmination of data-types
+   
+*** anon objects++: derived deconstructors too!
+
+*** described in docs as 'data-centric reference types'
+
+   
+
+** Microservices and FaaS
+
+*** entities are removed, instead we deal with messages
+
+*** tooling for interpretation needed
+
+*** can't delegate to the owner for small interactions
+
+
+    
+** Pattern matching cuts across types
+
+
+
+** Encoding/Decoding
+   - all incoming data is interpreted by program, with outputs that can be similarly interpreted
+   - like incoming http requests
+   
+
+
+** The Path to Pattern matching
+
+*** the counterpart of callable objects
+
+**** transparency, not encapsulation
+
+**** what do you send to objects? messages!
+
+**** and how do you distinguish messages? by their structure
+
+*** we always had pattern matching
+
+**** null checks are pattern matches
+
+**** branching on booleans is pattern matching!
+
+**** deconstructors allow more ways to distinguish inputs
+
+***** example of interesting pattern match of an object
+     
+     
+*** very nearly values vs objects
+
+**** value types don't have identities, can be copied; objects own data or a context
+     though a context can be copied
+
+**** objects can have multiple aspects - this is nice; they can have both interpretable shape and encapsulated behaviour
+
+***** as with type matching switch statements
+     
+*** interesting pattern matchings
+
+**** in the world of objects, we structure by inheritance
+
+**** polymorphic dispatch distinguishes the structure of objects for us
+     we live with this all the time
+
+
+
+
+      in delegating through layers, what we call encapsulation is really a way to pare away the work to be done
+      we will interpret one level, while leaving further interpretations to something else, more specialised
+      like a pipeline of interpretation. This passing on of the problem isn't so much of a call between two communicating objects,
+      it is a pipeline, with the real to-and-fro happening at a layer above
+
+  
+  
+** Objects made transparent - the opposite of OO encapsulation
+
+*** opaque objects that do something vs a piece of interpretable information
+
+**** trad C# tries to make everything like the former
+
+*** also immutable vs mutable as second angle at this
+
+*** instead of sending messages to opaque well-behaving thing, we carve it up and inspect it
+    
+**** or rather, the split is between sending and receiving
+
+**** there's a line between commanding and offering up an interpretable request
+
+**** in structured programming we present and then receive
+
+**** pattern matching happens on receipt
+
+**** receipt happens in two ways, from the instigator and from the instigated
+     can think of it as a table tennis match, the ball paddled here and there
+     except simplified so the caller receives a response from the called
+     the called knows that is its final possible communication
+
+
+*** C# way is to invoke methods on objects that adhere to contracts
+
+**** we receive the response, and we do pattern match it already, though with a limited vocabulary of matchings
+
+**** Null checks are pattern matches
+
+**** Bool checks are pattern matches
+     
+**** matches object/value split
+
+**** if/else branching is pattern matching
+     the essence of computation, in C# as elsewhere: an input is provided, something is given back
+
+
+
+
+
+  
