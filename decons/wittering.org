@@ -1,24 +1,84 @@
+* Deconstructors
 
-So central theme is really emergence of data-types
+** Constructors (woo!)
+   that's the end of the talk (joke)
 
-Originally, you passed an args list to a ctor (a tuple - the simplest structuring of values) and after that it was up to the object to take in these values and to behave according to them
+*** what does it do? (q)
+    it creates an object, an instance of a class
+    it sets up the new instance
+    via the interfaces you know it implements, you can then interact with it
+    
+**** encapsulates (behaviour)
 
-over time, the caller has been given more constructive powers (fitting actual usage patterns)
+***** simply structured args list into black hole
 
-C#3 - anonymous types
-C#3 - Object initializers
-(above probably related to each other in implementation!)
+***** and it's one way
+      it's the business of the implementing type what it actually does
 
-So for the above, Linq was the driver
+***** this hides stuff below the contract
+      at this point we can wash our hands of it
+  
+**** packs (data)
+     objects as transparent containers
 
-What drove tuples?
+***** in trad C#, this done by properties, branching etc
+
+***** eg result classes
+
+***** transparency, symmetry
+
+***** decayed, degenerated from OO data+behaviour
+
+** C# across the ages
+
+*** with Linq
+    new ways of packing
+
+**** anon objects
+     not about encapsulation
+
+**** object initializers
+
+**** with prop-based unpacking
 
 
+*** 2016
+**** Tuples!
+     is like an args list without the type
 
+**** But also introduced new ways of unpacking data
 
+***** type matching (which is unpacking if you squint)
 
+***** pattern-matching of tuples
 
+****** brilliant symmetry of tuples - so simple and so obvious
+       like a pivot to a different way of seeing objects - pack/unpack
+       crystal clear
 
+***** Deconstructors
 
+****** tuples desugared
+       tuples carry the minimum amount of baggage, purest containers
+      
+****** demo of desconstructed type pattern matching
 
+** The present/future
+
+*** auto property deconstructuring
+
+**** just syntactical repackaging really
+
+**** but forms symmetrical pair with object initializers
+     just like how ctors with an args list tuple get unpacked
+
+*** and finally, records
+
+**** kind of templated data-carrying classes
+
+**** intended to be used with pattern-matching
+
+***** like anon objects v2
+
+**** culmination of data-type story
 

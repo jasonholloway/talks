@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Deconstructors</title>
+<meta name="author" content="jason"/>
+<meta name="description" content="blah blah blah"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/sunblind.css" id="theme"/>
+
+<link rel="stylesheet" href="./custom.css"/>
+<link rel="stylesheet" href="./reveal.js/lib/css/zenburn.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section>
+<section id="slide-1">
+<h2 id="1"><span class="section-number-2">1</span> </h2>
+<div class="org-src-container">
+
+<pre><code class="C#" >
+var thing = new Thing("blah", 123);
+
+</code></pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-2">
+<h2 id="2"><span class="section-number-2">2</span> Constructors (woo!)</h2>
+<div class="org-src-container">
+
+<pre><code class="C#" >
+var thing = new Thing("blah", 123);
+
+</code></pre>
+</div>
+<aside class="notes">
+<p>
+that's the end of the talk (joke)
+</p>
+
+</aside>
+
+<ul class="fragment roll-in">
+<li>encapsulates</li>
+
+</ul>
+<ul class="fragment roll-in">
+<li>packs</li>
+
+</ul>
+
+
+
+</section>
+</section>
+<section>
+<section id="slide-3">
+<h2 id="3"><span class="section-number-2">3</span> Encapsulates</h2>
+<ul>
+<li>opaquely wraps data, exposes behaviour</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre><code class="C#" >
+var dog = new Dog(name: "Bruce", loyalty: 0.37, enthusiasm: 0.76);
+
+//now parameters are the dog's business...
+
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="fragment roll-in"><code class="C#" >
+//mine is limited to the contract of interaction
+
+var stick = dog.FetchStick();
+
+</code></pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-4">
+<h2 id="4"><span class="section-number-2">4</span> Packs</h2>
+<ul>
+<li>transparently holds data</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre><code class="C#" >class Dog
+{
+	public FetchResult FetchStick()
+	{
+		return new FetchResult(
+			success: true,
+			stick: new Stick(variety: Wood.Birch, weight: 0.23)
+		);
+	}
+}
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="fragment roll-in"><code class="C#" >
+var fetched = dog.FetchStick();
+
+if(fetched.Success)
+{
+	Write($"Wow, this stick is {fetched.Stick.Weight} kilogrammes in weight!");
+}
+
+</code></pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-5">
+<h2 id="5"><span class="section-number-2">5</span> The tide changes</h2>
+
+</section>
+</section>
+<section>
+<section id="slide-6">
+<h2 id="6"><span class="section-number-2">6</span> C#3 LINQ</h2>
+<ul class="fragment roll-in">
+<li><p>
+can 'pack' via object initializers
+</p>
+<div class="org-src-container">
+
+<pre><code class="C#" >//caller dictates props
+var meal = new Dinner
+{
+	Main = new TruffleRisotto(),
+	Dessert = new TiraMisu()
+};
+</code></pre>
+</div></li>
+
+</ul>
+<ul class="fragment roll-in">
+<li><p>
+essential to anonymous objects
+</p>
+<div class="org-src-container">
+
+<pre><code class="C#" >var random = new 
+{
+	Blah = 13,
+	Wibble = "yapyapyap"
+};
+</code></pre>
+</div></li>
+
+</ul>
+<ul class="fragment roll-in">
+<li><p>
+still with prop-based unpacking
+</p>
+<div class="org-src-container">
+
+<pre><code class="C#" >things.Where(x =&gt; x.Wibble.Length &gt; 3);
+</code></pre>
+</div></li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li>not about encapsulation!</li>
+
+</ul>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-7">
+<h2 id="7"><span class="section-number-2">7</span> C#7 Type-Unpacking</h2>
+<aside class="notes">
+<ul>
+<li>C#5 had been about async - now we're back to syntax&#x2026;</li>
+<li>nascent symettry&#x2026;</li>
+<li>type param goes in, type param comes out</li>
+
+</ul>
+
+</aside>
+
+<ul class="fragment roll-in">
+<li>allows us to probe implementing type of the thing</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre class="fragment roll-in"><code class="C#" >if(pet is Dog dog)
+{
+	WhistleTo(dog);
+}
+else
+{
+	//...
+}
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="fragment roll-in"><code class="C#" >switch(thing)
+{
+	case Dog dog:
+		WhistleTo(dog);
+		break;
+
+	case Cat cat:
+		if(cat.Age &lt; 1)
+		{
+			TemptWithMilk(cat);
+		}
+		break;
+}
+</code></pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-8">
+<h2 id="8"><span class="section-number-2">8</span> C#7 Deconstructors</h2>
+<ul class="fragment roll-in">
+<li>height of unpacking! amazing symmetry achieved!</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre class="fragment roll-in"><code class="C#" >switch(thing)
+{
+	case Dog(name):
+		CallOut(name);
+		break;
+
+	case Cat cat:
+		if(cat.Age &lt; 1)
+		{
+			TemptWithMilk(cat);
+		}
+		break;
+}
+</code></pre>
+</div>
+
+
+</section>
+<section id="slide-8-1">
+<h3 id="8-1"><span class="section-number-3">8.1</span> 2016</h3>
+<p>
+what happened in 2016?
+</p>
+
+</section>
+<section id="slide-8-1-1">
+<h4 id="8-1-1"><span class="section-number-4">8.1.1</span> Tuples!</h4>
+<p>
+is like an args list without the type
+</p>
+
+</section>
+<section id="slide-8-1-2">
+<h4 id="8-1-2"><span class="section-number-4">8.1.2</span> But also introduced new ways of unpacking data</h4>
+<div class="outline-text-4" id="text-8-1-2">
+</div>
+<ol class="org-ol">
+<li><a id="8-1-2-1"></a>type matching (which is unpacking if you squint)<br /></li>
+
+<li><a id="8-1-2-2"></a>pattern-matching of tuples<br />
+<ol class="org-ol">
+<li><a id="8-1-2-2-1"></a>brilliant symmetry of tuples - so simple and so obvious<br />
+<p>
+like a pivot to a different way of seeing objects - pack/unpack
+crystal clear
+</p>
+</li>
+</ol>
+</li>
+
+<li><a id="8-1-2-3"></a>Deconstructors<br />
+<ol class="org-ol">
+<li><a id="8-1-2-3-1"></a>tuples desugared<br />
+<p>
+tuples carry the minimum amount of baggage, purest containers
+</p>
+</li>
+
+<li><a id="8-1-2-3-2"></a>demo of desconstructed type pattern matching<br />
+<div class="org-src-container">
+
+<pre><code class="C#" >switch(thing) {
+
+	case Thing("blah"):
+	 break;
+
+	case Thing("blahdy blah"):
+	 break;
+
+}
+</code></pre>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+
+
+</section>
+</section>
+<section>
+<section id="slide-9">
+<h2 id="9"><span class="section-number-2">9</span> The present/future</h2>
+<div class="outline-text-2" id="text-9">
+</div>
+</section>
+<section id="slide-9-1">
+<h3 id="9-1"><span class="section-number-3">9.1</span> auto property deconstructuring</h3>
+<div class="outline-text-3" id="text-9-1">
+</div>
+</section>
+<section id="slide-9-1-1">
+<h4 id="9-1-1"><span class="section-number-4">9.1.1</span> just syntactical repackaging really</h4>
+
+</section>
+<section id="slide-9-1-2">
+<h4 id="9-1-2"><span class="section-number-4">9.1.2</span> but forms symmetrical pair with object initializers</h4>
+<p>
+just like how ctors with an args list tuple get unpacked
+</p>
+
+</section>
+<section id="slide-9-2">
+<h3 id="9-2"><span class="section-number-3">9.2</span> init-only setters</h3>
+
+</section>
+<section id="slide-9-3">
+<h3 id="9-3"><span class="section-number-3">9.3</span> and finally, records</h3>
+<div class="outline-text-3" id="text-9-3">
+</div>
+</section>
+<section id="slide-9-3-1">
+<h4 id="9-3-1"><span class="section-number-4">9.3.1</span> kind of templated data-carrying classes</h4>
+
+</section>
+<section id="slide-9-3-2">
+<h4 id="9-3-2"><span class="section-number-4">9.3.2</span> intended to be used with pattern-matching</h4>
+<div class="outline-text-4" id="text-9-3-2">
+</div>
+<ol class="org-ol">
+<li><a id="9-3-2-1"></a>like anon objects v2<br /></li>
+</ol>
+
+</section>
+<section id="slide-9-3-3">
+<h4 id="9-3-3"><span class="section-number-4">9.3.3</span> culmination of data-type story</h4>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/js/reveal.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'None', // see README of reveal.js for options
+transitionSpeed: 'default',
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+ { src: './reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }]
+
+,slideNumber: 'h.v', hash: true,});
+</script>
+</body>
+</html>

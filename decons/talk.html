@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-07-19 Mon 21:56 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="jason" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgf183e74">1. Deconstructors</a>
+<ul>
+<li><a href="#orgfef59b9">1.1. Demo of Tuples</a>
+<ul>
+<li><a href="#orgb7e268d">1.1.1. been around since 2016! not new but only gradually idiomatic</a></li>
+<li><a href="#org1134cd8">1.1.2. are themselves like anon objects: 'lightweight unnamed types'</a></li>
+</ul>
+</li>
+<li><a href="#org09806e9">1.2. Demo of deconstructors in general</a></li>
+<li><a href="#org88f0b21">1.3. If just sugar, where's the value? where's the nutritious content?</a>
+<ul>
+<li><a href="#org0aaff43">1.3.1. horses for courses</a></li>
+<li><a href="#org6d44ea3">1.3.2. via symmetry, promotion of data-types</a></li>
+</ul>
+</li>
+<li><a href="#org8fd3e0a">1.4. Not <i>destructor</i></a>
+<ul>
+<li><a href="#org828edb6">1.4.1. another kind of symmetry - of objects alive on the heap - birth and death</a></li>
+<li><a href="#org53df78f">1.4.2. destructors = finalizers = what GC calls when an object is culled</a></li>
+</ul>
+</li>
+<li><a href="#org587b864">1.5. Should I use them?</a>
+<ul>
+<li><a href="#org3b288d0">1.5.1. In general, probably not!</a></li>
+<li><a href="#org3f7f3b5">1.5.2. but, could be a nice affordance on a commonly used type</a></li>
+</ul>
+</li>
+<li><a href="#org324b7b1">1.6. Symmetry - nice</a></li>
+<li><a href="#org837701f">1.7. Ladder to data-types, C#7-9</a>
+<ul>
+<li><a href="#org73dfeed">1.7.1. Deconstructors are the first step</a></li>
+</ul>
+</li>
+<li><a href="#orgf8ec90a">1.8. C#7 deconstructors only allow tuple-style structuring</a>
+<ul>
+<li><a href="#org273ad6a">1.8.1. a typed arg list is basically a tuple</a></li>
+</ul>
+</li>
+<li><a href="#org617f999">1.9. C#8 pattern matching DSL provides auto-prop-unpacking</a>
+<ul>
+<li><a href="#orga0eac9f">1.9.1. property unpacking for all objects with properties</a></li>
+<li><a href="#org27a9cc6">1.9.2. means you only need explicit Deconstruct for the anti-ctor list-of-args style</a></li>
+</ul>
+</li>
+<li><a href="#org18be3f5">1.10. C#9 Records as culmination of data-types</a>
+<ul>
+<li><a href="#org79d4cfb">1.10.1. anon objects++: derived deconstructors too!</a></li>
+<li><a href="#orgc19aea7">1.10.2. described in docs as 'data-centric reference types'</a></li>
+</ul>
+</li>
+<li><a href="#org59c7070">1.11. Microservices and FaaS</a>
+<ul>
+<li><a href="#orgcecc4ef">1.11.1. entities are removed, instead we deal with messages</a></li>
+<li><a href="#org24e46b1">1.11.2. tooling for interpretation needed</a></li>
+<li><a href="#org4342a3c">1.11.3. can't delegate to the owner for small interactions</a></li>
+</ul>
+</li>
+<li><a href="#org93aa1b5">1.12. Pattern matching cuts across types</a></li>
+<li><a href="#orge3d4cfc">1.13. Encoding/Decoding</a></li>
+<li><a href="#org941d78a">1.14. The Path to Pattern matching</a>
+<ul>
+<li><a href="#org7c8e772">1.14.1. the counterpart of callable objects</a></li>
+<li><a href="#org0f234a1">1.14.2. we always had pattern matching</a></li>
+<li><a href="#org51fe0a8">1.14.3. very nearly values vs objects</a></li>
+<li><a href="#org6f305c8">1.14.4. interesting pattern matchings</a></li>
+</ul>
+</li>
+<li><a href="#org2567752">1.15. Objects made transparent - the opposite of OO encapsulation</a>
+<ul>
+<li><a href="#org609769f">1.15.1. opaque objects that do something vs a piece of interpretable information</a></li>
+<li><a href="#org0732c00">1.15.2. also immutable vs mutable as second angle at this</a></li>
+<li><a href="#org8f2bb8c">1.15.3. instead of sending messages to opaque well-behaving thing, we carve it up and inspect it</a></li>
+<li><a href="#orgb5c7cc2">1.15.4. C# way is to invoke methods on objects that adhere to contracts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgf183e74" class="outline-2">
+<h2 id="orgf183e74"><span class="section-number-2">1</span> Deconstructors</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-orgfef59b9" class="outline-3">
+<h3 id="orgfef59b9"><span class="section-number-3">1.1</span> Demo of Tuples</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+with pattern matching sites
+</p>
+</div>
+
+<div id="outline-container-orgb7e268d" class="outline-4">
+<h4 id="orgb7e268d"><span class="section-number-4">1.1.1</span> been around since 2016! not new but only gradually idiomatic</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+C#7 feature
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1134cd8" class="outline-4">
+<h4 id="org1134cd8"><span class="section-number-4">1.1.2</span> are themselves like anon objects: 'lightweight unnamed types'</h4>
+</div>
+</div>
+
+<div id="outline-container-org09806e9" class="outline-3">
+<h3 id="org09806e9"><span class="section-number-3">1.2</span> Demo of deconstructors in general</h3>
+</div>
+
+<div id="outline-container-org88f0b21" class="outline-3">
+<h3 id="org88f0b21"><span class="section-number-3">1.3</span> If just sugar, where's the value? where's the nutritious content?</h3>
+<div class="outline-text-3" id="text-1-3">
+</div>
+<div id="outline-container-org0aaff43" class="outline-4">
+<h4 id="org0aaff43"><span class="section-number-4">1.3.1</span> horses for courses</h4>
+<div class="outline-text-4" id="text-1-3-1">
+</div>
+<ol class="org-ol">
+<li><a id="org34cda34"></a>some return types literally are just two important bits glued together, why pay the syntax tax of property access?<br /></li>
+
+<li><a id="orgfbbc4b7"></a>tuples themselves are a bit weak<br />
+<div class="outline-text-5" id="text-1-3-1-2">
+<p>
+and naming the tuple members is big faff
+</p>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-org6d44ea3" class="outline-4">
+<h4 id="org6d44ea3"><span class="section-number-4">1.3.2</span> via symmetry, promotion of data-types</h4>
+</div>
+</div>
+
+<div id="outline-container-org8fd3e0a" class="outline-3">
+<h3 id="org8fd3e0a"><span class="section-number-3">1.4</span> Not <i>destructor</i></h3>
+<div class="outline-text-3" id="text-1-4">
+</div>
+<div id="outline-container-org828edb6" class="outline-4">
+<h4 id="org828edb6"><span class="section-number-4">1.4.1</span> another kind of symmetry - of objects alive on the heap - birth and death</h4>
+</div>
+
+<div id="outline-container-org53df78f" class="outline-4">
+<h4 id="org53df78f"><span class="section-number-4">1.4.2</span> destructors = finalizers = what GC calls when an object is culled</h4>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-org587b864" class="outline-3">
+<h3 id="org587b864"><span class="section-number-3">1.5</span> Should I use them?</h3>
+<div class="outline-text-3" id="text-1-5">
+</div>
+<div id="outline-container-org3b288d0" class="outline-4">
+<h4 id="org3b288d0"><span class="section-number-4">1.5.1</span> In general, probably not!</h4>
+</div>
+
+<div id="outline-container-org3f7f3b5" class="outline-4">
+<h4 id="org3f7f3b5"><span class="section-number-4">1.5.2</span> but, could be a nice affordance on a commonly used type</h4>
+<div class="outline-text-4" id="text-1-5-2">
+<p>
+better than returning a tuple, as it doesn't force tuples on the consumer
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org324b7b1" class="outline-3">
+<h3 id="org324b7b1"><span class="section-number-3">1.6</span> Symmetry - nice</h3>
+</div>
+
+
+<div id="outline-container-org837701f" class="outline-3">
+<h3 id="org837701f"><span class="section-number-3">1.7</span> Ladder to data-types, C#7-9</h3>
+<div class="outline-text-3" id="text-1-7">
+</div>
+<div id="outline-container-org73dfeed" class="outline-4">
+<h4 id="org73dfeed"><span class="section-number-4">1.7.1</span> Deconstructors are the first step</h4>
+</div>
+</div>
+
+
+<div id="outline-container-orgf8ec90a" class="outline-3">
+<h3 id="orgf8ec90a"><span class="section-number-3">1.8</span> C#7 deconstructors only allow tuple-style structuring</h3>
+<div class="outline-text-3" id="text-1-8">
+<p>
+ie a series of typed values
+</p>
+</div>
+
+<div id="outline-container-org273ad6a" class="outline-4">
+<h4 id="org273ad6a"><span class="section-number-4">1.8.1</span> a typed arg list is basically a tuple</h4>
+</div>
+</div>
+
+
+<div id="outline-container-org617f999" class="outline-3">
+<h3 id="org617f999"><span class="section-number-3">1.9</span> C#8 pattern matching DSL provides auto-prop-unpacking</h3>
+<div class="outline-text-3" id="text-1-9">
+</div>
+<div id="outline-container-orga0eac9f" class="outline-4">
+<h4 id="orga0eac9f"><span class="section-number-4">1.9.1</span> property unpacking for all objects with properties</h4>
+<div class="outline-text-4" id="text-1-9-1">
+</div>
+<ol class="org-ol">
+<li><a id="org4bc51c3"></a>goes with init-only setters<br />
+<div class="outline-text-5" id="text-1-9-1-1">
+<p>
+emphasises property packing as way of constructing object
+</p>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-org27a9cc6" class="outline-4">
+<h4 id="org27a9cc6"><span class="section-number-4">1.9.2</span> means you only need explicit Deconstruct for the anti-ctor list-of-args style</h4>
+</div>
+</div>
+
+<div id="outline-container-org18be3f5" class="outline-3">
+<h3 id="org18be3f5"><span class="section-number-3">1.10</span> C#9 Records as culmination of data-types</h3>
+<div class="outline-text-3" id="text-1-10">
+</div>
+<div id="outline-container-org79d4cfb" class="outline-4">
+<h4 id="org79d4cfb"><span class="section-number-4">1.10.1</span> anon objects++: derived deconstructors too!</h4>
+</div>
+
+<div id="outline-container-orgc19aea7" class="outline-4">
+<h4 id="orgc19aea7"><span class="section-number-4">1.10.2</span> described in docs as 'data-centric reference types'</h4>
+</div>
+</div>
+
+
+
+<div id="outline-container-org59c7070" class="outline-3">
+<h3 id="org59c7070"><span class="section-number-3">1.11</span> Microservices and FaaS</h3>
+<div class="outline-text-3" id="text-1-11">
+</div>
+<div id="outline-container-orgcecc4ef" class="outline-4">
+<h4 id="orgcecc4ef"><span class="section-number-4">1.11.1</span> entities are removed, instead we deal with messages</h4>
+</div>
+
+<div id="outline-container-org24e46b1" class="outline-4">
+<h4 id="org24e46b1"><span class="section-number-4">1.11.2</span> tooling for interpretation needed</h4>
+</div>
+
+<div id="outline-container-org4342a3c" class="outline-4">
+<h4 id="org4342a3c"><span class="section-number-4">1.11.3</span> can't delegate to the owner for small interactions</h4>
+</div>
+</div>
+
+
+
+<div id="outline-container-org93aa1b5" class="outline-3">
+<h3 id="org93aa1b5"><span class="section-number-3">1.12</span> Pattern matching cuts across types</h3>
+</div>
+
+
+
+<div id="outline-container-orge3d4cfc" class="outline-3">
+<h3 id="orge3d4cfc"><span class="section-number-3">1.13</span> Encoding/Decoding</h3>
+<div class="outline-text-3" id="text-1-13">
+<ul class="org-ul">
+<li>all incoming data is interpreted by program, with outputs that can be similarly interpreted</li>
+<li>like incoming http requests</li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="outline-container-org941d78a" class="outline-3">
+<h3 id="org941d78a"><span class="section-number-3">1.14</span> The Path to Pattern matching</h3>
+<div class="outline-text-3" id="text-1-14">
+</div>
+<div id="outline-container-org7c8e772" class="outline-4">
+<h4 id="org7c8e772"><span class="section-number-4">1.14.1</span> the counterpart of callable objects</h4>
+<div class="outline-text-4" id="text-1-14-1">
+</div>
+<ol class="org-ol">
+<li><a id="orgb2e39c9"></a>transparency, not encapsulation<br /></li>
+
+<li><a id="orga17a562"></a>what do you send to objects? messages!<br /></li>
+
+<li><a id="org18b80f5"></a>and how do you distinguish messages? by their structure<br /></li>
+</ol>
+</div>
+
+<div id="outline-container-org0f234a1" class="outline-4">
+<h4 id="org0f234a1"><span class="section-number-4">1.14.2</span> we always had pattern matching</h4>
+<div class="outline-text-4" id="text-1-14-2">
+</div>
+<ol class="org-ol">
+<li><a id="orgb626b9c"></a>null checks are pattern matches<br /></li>
+
+<li><a id="org2ccba59"></a>branching on booleans is pattern matching!<br /></li>
+
+<li><a id="org1ffd536"></a>deconstructors allow more ways to distinguish inputs<br />
+<ol class="org-ol">
+<li><a id="org1e98bc4"></a>example of interesting pattern match of an object<br /></li>
+</ol>
+</li>
+</ol>
+</div>
+
+
+<div id="outline-container-org51fe0a8" class="outline-4">
+<h4 id="org51fe0a8"><span class="section-number-4">1.14.3</span> very nearly values vs objects</h4>
+<div class="outline-text-4" id="text-1-14-3">
+</div>
+<ol class="org-ol">
+<li><a id="orgfefe488"></a>value types don't have identities, can be copied; objects own data or a context<br />
+<div class="outline-text-5" id="text-1-14-3-1">
+<p>
+though a context can be copied
+</p>
+</div>
+</li>
+
+<li><a id="org9cf3f8f"></a>objects can have multiple aspects - this is nice; they can have both interpretable shape and encapsulated behaviour<br />
+<ol class="org-ol">
+<li><a id="orgafff9ac"></a>as with type matching switch statements<br /></li>
+</ol>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-org6f305c8" class="outline-4">
+<h4 id="org6f305c8"><span class="section-number-4">1.14.4</span> interesting pattern matchings</h4>
+<div class="outline-text-4" id="text-1-14-4">
+</div>
+<ol class="org-ol">
+<li><a id="orgc33bbb2"></a>in the world of objects, we structure by inheritance<br /></li>
+
+<li><a id="org3544913"></a>polymorphic dispatch distinguishes the structure of objects for us<br />
+<div class="outline-text-5" id="text-1-14-4-2">
+<p>
+we live with this all the time
+</p>
+
+
+
+
+<p>
+in delegating through layers, what we call encapsulation is really a way to pare away the work to be done
+we will interpret one level, while leaving further interpretations to something else, more specialised
+like a pipeline of interpretation. This passing on of the problem isn't so much of a call between two communicating objects,
+it is a pipeline, with the real to-and-fro happening at a layer above
+</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+
+
+<div id="outline-container-org2567752" class="outline-3">
+<h3 id="org2567752"><span class="section-number-3">1.15</span> Objects made transparent - the opposite of OO encapsulation</h3>
+<div class="outline-text-3" id="text-1-15">
+</div>
+<div id="outline-container-org609769f" class="outline-4">
+<h4 id="org609769f"><span class="section-number-4">1.15.1</span> opaque objects that do something vs a piece of interpretable information</h4>
+<div class="outline-text-4" id="text-1-15-1">
+</div>
+<ol class="org-ol">
+<li><a id="org93f10de"></a>trad C# tries to make everything like the former<br /></li>
+</ol>
+</div>
+
+<div id="outline-container-org0732c00" class="outline-4">
+<h4 id="org0732c00"><span class="section-number-4">1.15.2</span> also immutable vs mutable as second angle at this</h4>
+</div>
+
+<div id="outline-container-org8f2bb8c" class="outline-4">
+<h4 id="org8f2bb8c"><span class="section-number-4">1.15.3</span> instead of sending messages to opaque well-behaving thing, we carve it up and inspect it</h4>
+<div class="outline-text-4" id="text-1-15-3">
+</div>
+<ol class="org-ol">
+<li><a id="org68da961"></a>or rather, the split is between sending and receiving<br /></li>
+
+<li><a id="org2c02459"></a>there's a line between commanding and offering up an interpretable request<br /></li>
+
+<li><a id="org5ae0175"></a>in structured programming we present and then receive<br /></li>
+
+<li><a id="org4d20504"></a>pattern matching happens on receipt<br /></li>
+
+<li><a id="org2a885a7"></a>receipt happens in two ways, from the instigator and from the instigated<br />
+<div class="outline-text-5" id="text-1-15-3-5">
+<p>
+can think of it as a table tennis match, the ball paddled here and there
+except simplified so the caller receives a response from the called
+the called knows that is its final possible communication
+</p>
+</div>
+</li>
+</ol>
+</div>
+
+
+<div id="outline-container-orgb5c7cc2" class="outline-4">
+<h4 id="orgb5c7cc2"><span class="section-number-4">1.15.4</span> C# way is to invoke methods on objects that adhere to contracts</h4>
+<div class="outline-text-4" id="text-1-15-4">
+</div>
+<ol class="org-ol">
+<li><a id="org8017c8b"></a>we receive the response, and we do pattern match it already, though with a limited vocabulary of matchings<br /></li>
+
+<li><a id="org39047c7"></a>Null checks are pattern matches<br /></li>
+
+<li><a id="org2816a6e"></a>Bool checks are pattern matches<br /></li>
+
+<li><a id="orgc06063f"></a>matches object/value split<br /></li>
+
+<li><a id="org540d8fe"></a>if/else branching is pattern matching<br />
+<div class="outline-text-5" id="text-1-15-4-5">
+<p>
+the essence of computation, in C# as elsewhere: an input is provided, something is given back
+</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: jason</p>
+<p class="date">Created: 2021-07-19 Mon 21:56</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

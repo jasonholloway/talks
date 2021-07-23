@@ -1,0 +1,42 @@
+span[class|=section-number] {
+  display: none;
+}
+
+img {
+	max-height: calc(66vh);
+	max-width: calc(66vw);
+}
+
+.org-svg {
+	border: none;
+	box-shadow: none;
+	max-height: calc(66vh);
+	max-width: calc(66vw);
+}
+
+.criu-images img {
+	height: 50%;
+}
+
+.cohn > div:nth-child(1) {
+		float: left;
+		width: 40%;
+}
+
+.cohn > div:nth-child(2) {
+		float: right;
+		width: 60%;
+}
+
+.borderless img {
+		border: 0 !important;
+}
+
+.workshop img {
+		width: 180%;
+}
+
+code {
+		tab-sie: 4;
+		-moz-tab-size: 4;
+}

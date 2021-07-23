@@ -1,0 +1,260 @@
+# -**- mode: Org; eval: (reveal-mode 1); -**-
+# -**- org-image-actual-width: 500; -**-
+#+OPTIONS: toc:nil 
+#+REVEAL_INIT_SCRIPT: slideNumber: 'h.v', 
+#+REVEAL_INIT_SCRIPT: hash: true, 
+#+REVEAL_THEME: sunblind
+#+REVEAL_TRANS:None
+#+REVEAL_TITLE_SLIDE:
+#+REVEAL_EXTRA_CSS:./custom.css
+#+REVEAL_HLEVEL:1
+#+REVEAL_PLUGINS: (highlight)
+#+Title: Deconstructors
+#+Description: blah blah blah
+* 
+
+#+BEGIN_SRC C#
+
+var thing = new Thing("blah", 123);
+
+#+END_SRC
+
+* Constructors (woo!)
+#+BEGIN_SRC C#
+
+var thing = new Thing("blah", 123);
+
+#+END_SRC
+#+begin_notes
+  that's the end of the talk (joke)
+#+end_notes
+
+#    it creates an object, an instance of a class
+#    it sets up the new instance
+#    via the interfaces you know it implements, you can then interact with it
+    
+#  encapsulates (behaviour)
+
+#  simply structured args list into black hole
+
+#  and it's one way
+#       it's the business of the implementing type what it actually does
+
+#  this hides stuff below the contract
+#       at this point we can wash our hands of it
+  
+# packs (data)
+#      objects as transparent containers
+
+#  in trad C#, this done by properties, branching etc
+
+#  eg result classes
+
+#  transparency, symmetry
+
+#  decayed, degenerated from OO data+behaviour
+
+#+ATTR_REVEAL: :frag roll-in
+- encapsulates
+#+ATTR_REVEAL: :frag roll-in
+- packs
+
+
+
+* Encapsulates
+   - opaquely wraps data, exposes behaviour
+#+begin_src C#
+
+var dog = new Dog(name: "Bruce", loyalty: 0.37, enthusiasm: 0.76);
+
+//now parameters are the dog's business...
+
+#+end_src
+
+#+ATTR_REVEAL: :frag roll-in
+#+begin_src C#
+
+//mine is limited to the contract of interaction
+
+var stick = dog.FetchStick();
+
+#+end_src
+
+* Packs
+   - transparently holds data
+#+begin_src C#
+class Dog
+{
+  public FetchResult FetchStick()
+  {
+    return new FetchResult(
+      success: true,
+      stick: new Stick(variety: Wood.Birch, weight: 0.23)
+    );
+  }
+}
+#+end_src
+
+#+ATTR_REVEAL: :frag roll-in
+#+begin_src C#
+
+var fetched = dog.FetchStick();
+
+if(fetched.Success)
+{
+  Write($"Wow, this stick is {fetched.Stick.Weight} kilogrammes in weight!");
+}
+
+#+end_src
+
+* The tide changes
+
+* C#3 LINQ
+#+ATTR_REVEAL: :frag roll-in
+  - can 'pack' via object initializers
+    #+begin_src C#
+    //caller dictates props
+    var meal = new Dinner
+    {
+      Main = new TruffleRisotto(),
+      Dessert = new TiraMisu()
+    };
+    #+end_src
+#+ATTR_REVEAL: :frag roll-in
+  - essential to anonymous objects
+    #+begin_src C#
+    var random = new 
+    {
+      Blah = 13,
+      Wibble = "yapyapyap"
+    };
+    #+end_src
+#+ATTR_REVEAL: :frag roll-in
+  - still with prop-based unpacking
+    #+begin_src C#
+    things.Where(x => x.Wibble.Length > 3);
+    #+end_src
+#+begin_notes
+  - not about encapsulation!
+#+end_notes
+
+* C#7 Type-Unpacking
+
+#+begin_notes
+- C#5 had been about async - now we're back to syntax...
+- nascent symettry...
+- type param goes in, type param comes out
+#+end_notes
+  
+#+ATTR_REVEAL: :frag roll-in
+  - allows us to probe implementing type of the thing
+#+ATTR_REVEAL: :frag roll-in
+    #+begin_src C#
+      if(pet is Dog dog)
+      {
+        WhistleTo(dog);
+      }
+      else
+      {
+        //...
+      }
+    #+end_src
+
+#+ATTR_REVEAL: :frag roll-in
+    #+begin_src C#
+      switch(thing)
+      {
+        case Dog dog:
+          WhistleTo(dog);
+          break;
+
+        case Cat cat:
+          if(cat.Age < 1)
+          {
+            TemptWithMilk(cat);
+          }
+          break;
+      }
+    #+end_src
+
+* C#7 Deconstructors
+  
+#+ATTR_REVEAL: :frag roll-in
+  - height of unpacking! amazing symmetry achieved!
+#+ATTR_REVEAL: :frag roll-in
+    #+begin_src C#
+      switch(thing)
+      {
+        case Dog(name):
+          CallOut(name);
+          break;
+
+        case Cat cat:
+          if(cat.Age < 1)
+          {
+            TemptWithMilk(cat);
+          }
+          break;
+      }
+    #+end_src
+
+
+** 2016
+   what happened in 2016?
+
+*** Tuples!
+    is like an args list without the type
+
+*** But also introduced new ways of unpacking data
+
+**** type matching (which is unpacking if you squint)
+
+**** pattern-matching of tuples
+
+***** brilliant symmetry of tuples - so simple and so obvious
+      like a pivot to a different way of seeing objects - pack/unpack
+      crystal clear
+
+**** Deconstructors
+
+***** tuples desugared
+      tuples carry the minimum amount of baggage, purest containers
+      
+***** demo of desconstructed type pattern matching
+
+#+BEGIN_SRC C#
+switch(thing) {
+
+  case Thing("blah"):
+   break;
+
+  case Thing("blahdy blah"):
+   break;
+
+}
+#+END_SRC
+      
+
+* The present/future
+
+** auto property deconstructuring
+
+*** just syntactical repackaging really
+
+*** but forms symmetrical pair with object initializers
+    just like how ctors with an args list tuple get unpacked
+
+** init-only setters
+
+** and finally, records
+
+*** kind of templated data-carrying classes
+
+*** intended to be used with pattern-matching
+
+**** like anon objects v2
+
+*** culmination of data-type story
+
+
+

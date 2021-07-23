@@ -21,6 +21,10 @@ namespace Demo
 
     public class Thing
     {
+        public Thing(string name)
+        {
+            
+        }
         //...
     }
     
