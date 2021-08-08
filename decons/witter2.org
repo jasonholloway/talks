@@ -1,0 +1,85 @@
+
+
+
+
+
+with a ctor, we shovel in the least-possibly-structured list of values into a function we know will construct an object for us - very straight forward, very expected
+
+this constructed object then does two things - firstly it encapsulates itsdata, exposing only a contract of behaviourial interactions
+secondly it can function itself as data, as a transparent bag of things, ready to be passed elsewhere
+
+traditional C# has tended towards the former, but over time the idea of building objects as data has been gaining ground
+
+firstly, with LINQ we got anonymous objects, and with them object initializers
+
+then we got the syntactic sugar of tuples (ValueTuples to be precise)
+
+but alongside tuples we gained ways of unpacking as well as packing differently
+with pleasing symmetry
+
+the general feature of the language that allows tuple unpacking: /deconstructors/
+
+
+...example of deconstructing Result type
+
+
+
+
+lovely thought that in deconstructing you're almost reversing the passage of time, playing construction backwards
+/like in some daft Christopher Nolan film/
+
+
+the future: auto property deconstructing in C#10
+alongside records
+
+
+
+-------------------------------------------------
+
+
+The top of deconstructors
+
+What's the opposite of a constructor?
+Answer: a deconstructor!
+
+
+
+
+** Constructors
+   are very much one-way things: you shovel the formless arg list into them
+
+** ArgLists
+   literally a pile of values - a representation of a stack
+   the same thing as a tuple it turns out - the tuple is like an args list without the type constructor
+
+** Unpacking
+   most simply it is done with the dot operator, you drill down members; though also there is access-by-index, as in arrays and dictionaries
+   in original basic C#, that is the one way to unpack
+   and similarly, in original basic C# there's only one way to pack, and that's by the type constructor and arg list
+
+** Basic original C#
+   pack by constructors
+   unpack by the dot operator, drilling down members
+   which is asymmetrical, gives the flow of the language are familiar galloping rhythm - construct, unpack, operate on primitive values, make new constructions...
+   
+
+   though this pack/unpack rhythm is inescapable and universal; what is distinctive about old C#?
+   packing looks distinctive and unpacking looks distinctive
+   it actually matches the flow of pack/unpack - two separate modes always on the go
+   this is normal, familiar, comfortable
+
+
+   properties have also always been used in OO C#: and a props mean data, mean you get to frisk the object as well as invoke its behaviours
+   but you don't get to set the props, that's entirely up to the object, is an allowance, an affordance that you might take for granted
+
+   again, its not that the data relations didn't exist formerly, but the lack of symmetry obscuring the final utmost conception of transparent data
+   when we get the symmetry, what happens?
+
+   not much
+
+   
+
+
+
+
+

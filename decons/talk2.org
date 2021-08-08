@@ -19,7 +19,7 @@ var thing = new Thing("blah", 123);
 
 #+END_SRC
 
-* Constructors (woo!)
+* Constructors @@html:<span class="mini-exclaim">(woo!)</span>@@
 #+BEGIN_SRC C#
 
 var thing = new Thing("blah", 123);
@@ -27,6 +27,11 @@ var thing = new Thing("blah", 123);
 #+END_SRC
 #+begin_notes
   that's the end of the talk (joke)
+
+  an args list: the simplest possible construction of values, shoveled in to type constructor
+  and you get out, a thing
+
+  the construction does two things, to different degrees
 #+end_notes
 
 #    it creates an object, an instance of a class
@@ -54,15 +59,15 @@ var thing = new Thing("blah", 123);
 
 #  decayed, degenerated from OO data+behaviour
 
-#+ATTR_REVEAL: :frag roll-in
+#+ATTR_REVEAL: :frag (roll-in roll-in)
 - encapsulates
-#+ATTR_REVEAL: :frag roll-in
 - packs
 
 
 
-* Encapsulates
-   - opaquely wraps data, exposes behaviour
+* ctors /Encapsulate/
+   - opaquely wrap data, expose behaviour
+#+ATTR_REVEAL: :frag roll-in
 #+begin_src C#
 
 var dog = new Dog(name: "Bruce", loyalty: 0.37, enthusiasm: 0.76);
@@ -70,18 +75,23 @@ var dog = new Dog(name: "Bruce", loyalty: 0.37, enthusiasm: 0.76);
 //now parameters are the dog's business...
 
 #+end_src
+#+ATTR_HTML: :width 120px
+[[./dog1.jpg]]
 
 #+ATTR_REVEAL: :frag roll-in
 #+begin_src C#
 
-//mine is limited to the contract of interaction
+//our business is limited to the contract
 
 var stick = dog.FetchStick();
 
 #+end_src
+#+ATTR_HTML: :width 120px
+[[./dog2.jpg]]
 
-* Packs
-   - transparently holds data
+* ctors /Pack/
+   - transparently structure data, to be unpacked later
+#+ATTR_REVEAL: :frag roll-in
 #+begin_src C#
 class Dog
 {
@@ -107,11 +117,20 @@ if(fetched.Success)
 
 #+end_src
 
-* The tide changes
+* Illustrative picture
+  [[./dogstick.jpg]]
 
-* C#3 LINQ
+
+* C# Syntax
+  that's the semantics of it...
+  C# syntax has always supported both, but asymetrically
+
+* The rising tide of pack/unpack
+ [[./dogsurf.jpg]]
+
+* C#3 Prop-Packing
 #+ATTR_REVEAL: :frag roll-in
-  - can 'pack' via object initializers
+  - object initializers - set properties directly
     #+begin_src C#
     //caller dictates props
     var meal = new Dinner
@@ -121,7 +140,7 @@ if(fetched.Success)
     };
     #+end_src
 #+ATTR_REVEAL: :frag roll-in
-  - essential to anonymous objects
+  - needed by anonymous objects, essential to LINQ
     #+begin_src C#
     var random = new 
     {
@@ -130,9 +149,9 @@ if(fetched.Success)
     };
     #+end_src
 #+ATTR_REVEAL: :frag roll-in
-  - still with prop-based unpacking
+  - props go in, props come out: symmetry!
     #+begin_src C#
-    things.Where(x => x.Wibble.Length > 3);
+    things.Where(x => x.Wibble == "yapyapyap");
     #+end_src
 #+begin_notes
   - not about encapsulation!
@@ -147,57 +166,60 @@ if(fetched.Success)
 #+end_notes
   
 #+ATTR_REVEAL: :frag roll-in
-  - allows us to probe implementing type of the thing
+  - allows us to probe the type used to construct the object
 #+ATTR_REVEAL: :frag roll-in
     #+begin_src C#
       if(pet is Dog dog)
       {
-        WhistleTo(dog);
+        Beckon(dog.Name);
       }
       else
       {
         //...
       }
     #+end_src
-
 #+ATTR_REVEAL: :frag roll-in
     #+begin_src C#
-      switch(thing)
+      switch(pet)
       {
         case Dog dog:
-          WhistleTo(dog);
+          Beckon(dog.Name);
           break;
 
         case Cat cat:
-          if(cat.Age < 1)
-          {
-            TemptWithMilk(cat);
-          }
+          PutOutSomeFood();
+          WaitForAges();
           break;
       }
     #+end_src
+#+ATTR_REVEAL: :frag roll-in
+  - types go in, types come out: symmetry!
 
 * C#7 Deconstructors
   
 #+ATTR_REVEAL: :frag roll-in
-  - height of unpacking! amazing symmetry achieved!
+  - unpacks both type /and/ arg list     
 #+ATTR_REVEAL: :frag roll-in
     #+begin_src C#
-      switch(thing)
+      var pet = new Dog("Graham", 13);
+
+      //...
+
+      switch(pet)
       {
-        case Dog(name):
+        case Dog(var name, _) when name == "Graham":
           CallOut(name);
           break;
 
         case Cat cat:
-          if(cat.Age < 1)
-          {
-            TemptWithMilk(cat);
-          }
+          PutOutSomeFood();
           break;
       }
     #+end_src
+#+ATTR_REVEAL: :frag roll-in
+  - amazing symmetry achieved!
 
+* demo of implementing deconstructor...
 
 ** 2016
    what happened in 2016?
