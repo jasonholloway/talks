@@ -32,6 +32,14 @@ var thing = new Thing("blah", 123);
   and you get out, a thing
 
   the construction does two things, to different degrees
+
+  this is kind of what we get by default, as we're just, as I said, shovelling in this simple list of values into the constructor
+  how this type converts these values into the properties and methods it exposes is necessarily up to it, as we've delegated compete control to it
+  we're operating entirely on trust
+  
+  but there's another side to how we expect them to work...
+
+  encapsulation=delegation and packing=trust
 #+end_notes
 
 #    it creates an object, an instance of a class
@@ -65,57 +73,58 @@ var thing = new Thing("blah", 123);
 
 
 
-* ctors /Encapsulate/
-   - opaquely wrap data, expose behaviour
-#+ATTR_REVEAL: :frag roll-in
-#+begin_src C#
+* ctors /_Encapsulate_/
+     #+ATTR_REVEAL: :frag (roll-in roll-in)
+   - data is opaquely wrapped
+     @@html: <div class="dog-box">@@
+     #+begin_src C#
 
-var dog = new Dog(name: "Bruce", loyalty: 0.37, enthusiasm: 0.76);
+     var dog = new Dog(name: "Bruce", loyalty: 0.37, enthusiasm: 0.76);
 
-//now parameters are the dog's business...
+     //now parameters are the dog's business...
 
-#+end_src
-#+ATTR_HTML: :width 120px
-[[./dog1.jpg]]
+     #+end_src
+     [[./dog1.jpg]]
+     @@html: </div>@@
 
-#+ATTR_REVEAL: :frag roll-in
-#+begin_src C#
+   - and behaviour is exposed
+     @@html: <div class="dog-box">@@
+      #+begin_src C#
 
-//our business is limited to the contract
+      //our business is limited to the contract
 
-var stick = dog.FetchStick();
+      var stick = dog.FetchStick();
 
-#+end_src
-#+ATTR_HTML: :width 120px
-[[./dog2.jpg]]
+      #+end_src
+      [[./dog2.jpg]]
+     @@html: </div>@@
 
-* ctors /Pack/
-   - transparently structure data, to be unpacked later
-#+ATTR_REVEAL: :frag roll-in
-#+begin_src C#
-class Dog
-{
-  public FetchResult FetchStick()
-  {
-    return new FetchResult(
-      success: true,
-      stick: new Stick(variety: Wood.Birch, weight: 0.23)
-    );
-  }
-}
-#+end_src
+* ctors /_Pack_/
+     #+ATTR_REVEAL: :frag (roll-in roll-in)
+   - data is transparently structured
+      #+begin_src C#
+      class Dog
+      {
+        public FetchResult FetchStick()
+        {
+          return new FetchResult(
+            success: true,
+            stick: new Stick(variety: Wood.Birch, weight: 0.23)
+          );
+        }
+      }
+      #+end_src
+   - to be unpacked later
+      #+begin_src C#
 
-#+ATTR_REVEAL: :frag roll-in
-#+begin_src C#
+      var fetched = dog.FetchStick();
 
-var fetched = dog.FetchStick();
+      if(fetched.Success)
+      {
+        Write($"Wow, this stick is {fetched.Stick.Weight} kilogrammes in weight!");
+      }
 
-if(fetched.Success)
-{
-  Write($"Wow, this stick is {fetched.Stick.Weight} kilogrammes in weight!");
-}
-
-#+end_src
+      #+end_src
 
 * Illustrative picture
   [[./dogstick.jpg]]
@@ -135,23 +144,25 @@ if(fetched.Success)
     //caller dictates props
     var meal = new Dinner
     {
-      Main = new TruffleRisotto(),
-      Dessert = new TiraMisu()
+      Main = new MeatInGravy(),
+      Dessert = new DryBiscuits()
     };
     #+end_src
 #+ATTR_REVEAL: :frag roll-in
   - needed by anonymous objects, essential to LINQ
     #+begin_src C#
-    var random = new 
+    return new 
     {
-      Blah = 13,
-      Wibble = "yapyapyap"
+      Decibels = 90,
+      Voice = "yapyapyap"
     };
     #+end_src
 #+ATTR_REVEAL: :frag roll-in
   - props go in, props come out: symmetry!
     #+begin_src C#
-    things.Where(x => x.Wibble == "yapyapyap");
+    barks
+      .Where(x => x.Voice == "yapyapyap")
+      .Select(_ => "could be a poodle?");
     #+end_src
 #+begin_notes
   - not about encapsulation!
@@ -165,9 +176,9 @@ if(fetched.Success)
 - type param goes in, type param comes out
 #+end_notes
   
-#+ATTR_REVEAL: :frag roll-in
+    #+ATTR_REVEAL: :frag roll-in
   - allows us to probe the type used to construct the object
-#+ATTR_REVEAL: :frag roll-in
+    #+ATTR_REVEAL: :frag roll-in
     #+begin_src C#
       if(pet is Dog dog)
       {
@@ -178,7 +189,8 @@ if(fetched.Success)
         //...
       }
     #+end_src
-#+ATTR_REVEAL: :frag roll-in
+
+  #+ATTR_REVEAL: :frag roll-in
     #+begin_src C#
       switch(pet)
       {
@@ -198,26 +210,37 @@ if(fetched.Success)
 * C#7 Deconstructors
   
 #+ATTR_REVEAL: :frag roll-in
-  - unpacks both type /and/ arg list     
+  - allow us to unpack both *type* /and/ *arg list*
 #+ATTR_REVEAL: :frag roll-in
     #+begin_src C#
-      var pet = new Dog("Graham", 13);
+      var pets = new[]
+      {
+        new Dog("Graham", 13),
+        new Cat("Tabitha", Foods.Kippers)
+      };
 
       //...
 
       switch(pet)
       {
-        case Dog(var name, _) when name == "Graham":
+        case Dog(var name, _):
           CallOut(name);
           break;
 
-        case Cat cat:
-          PutOutSomeFood();
+        case Cat(_, var faveFood):
+          PutOutSomeFood(faveFood);
           break;
       }
     #+end_src
 #+ATTR_REVEAL: :frag roll-in
   - amazing symmetry achieved!
+
+* Dog looking at itself in a mirror
+  switch and 'is Type' statements are clear reflections of the syntax used to construct the type in the first place
+
+  Pic of dog here please
+
+
 
 * demo of implementing deconstructor...
 

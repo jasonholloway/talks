@@ -66,6 +66,20 @@ and you get out, a thing
 the construction does two things, to different degrees
 </p>
 
+<p>
+this is kind of what we get by default, as we're just, as I said, shovelling in this simple list of values into the constructor
+how this type converts these values into the properties and methods it exposes is necessarily up to it, as we've delegated compete control to it
+we're operating entirely on trust
+</p>
+
+<p>
+but there's another side to how we expect them to work&#x2026;
+</p>
+
+<p>
+encapsulation=delegation and packing=trust
+</p>
+
 </aside>
 
 <ul>
@@ -80,53 +94,58 @@ the construction does two things, to different degrees
 </section>
 <section>
 <section id="slide-3">
-<h2 id="3"><span class="section-number-2">3</span> ctors <i>Encapsulate</i></h2>
+<h2 id="3"><span class="section-number-2">3</span> ctors <i><span class="underline">Encapsulate</span></i></h2>
 <ul>
-<li>opaquely wrap data, expose behaviour</li>
-
-</ul>
+<li class="fragment roll-in"><p>
+data is opaquely wrapped
+ <div class="dog-box">
+</p>
 <div class="org-src-container">
 
-<pre class="fragment roll-in"><code class="C#" >
+<pre><code class="C#" >
 var dog = new Dog(name: "Bruce", loyalty: 0.37, enthusiasm: 0.76);
 
 //now parameters are the dog's business...
 
 </code></pre>
 </div>
+<p>
+<img src="./dog1.jpg" alt="dog1.jpg" />
+ </div>
+</p></li>
 
-<div id="org44fb2eb" class="figure">
-<p><img src="./dog1.jpg" alt="dog1.jpg" width="120px" />
+<li class="fragment roll-in"><p>
+and behaviour is exposed
+ <div class="dog-box">
 </p>
-</div>
-
 <div class="org-src-container">
 
-<pre class="fragment roll-in"><code class="C#" >
+<pre><code class="C#" >
 //our business is limited to the contract
 
 var stick = dog.FetchStick();
 
 </code></pre>
 </div>
+<p>
+ <img src="./dog2.jpg" alt="dog2.jpg" />
+ </div>
+</p></li>
 
-<div id="org9bdfbe1" class="figure">
-<p><img src="./dog2.jpg" alt="dog2.jpg" width="120px" />
-</p>
-</div>
+</ul>
 
 </section>
 </section>
 <section>
 <section id="slide-4">
-<h2 id="4"><span class="section-number-2">4</span> ctors <i>Pack</i></h2>
+<h2 id="4"><span class="section-number-2">4</span> ctors <i><span class="underline">Pack</span></i></h2>
 <ul>
-<li>transparently structure data, to be unpacked later</li>
-
-</ul>
+<li class="fragment roll-in"><p>
+data is transparently structured
+</p>
 <div class="org-src-container">
 
-<pre class="fragment roll-in"><code class="C#" >class Dog
+<pre><code class="C#" >class Dog
 {
 	public FetchResult FetchStick()
 	{
@@ -137,11 +156,13 @@ var stick = dog.FetchStick();
 	}
 }
 </code></pre>
-</div>
-
+</div></li>
+<li class="fragment roll-in"><p>
+to be unpacked later
+</p>
 <div class="org-src-container">
 
-<pre class="fragment roll-in"><code class="C#" >
+<pre><code class="C#" >
 var fetched = dog.FetchStick();
 
 if(fetched.Success)
@@ -150,7 +171,9 @@ if(fetched.Success)
 }
 
 </code></pre>
-</div>
+</div></li>
+
+</ul>
 
 </section>
 </section>
@@ -158,7 +181,7 @@ if(fetched.Success)
 <section id="slide-5">
 <h2 id="5"><span class="section-number-2">5</span> Illustrative picture</h2>
 
-<div id="org0d2b713" class="figure">
+<div id="org1b88a74" class="figure">
 <p><img src="./dogstick.jpg" alt="dogstick.jpg" />
 </p>
 </div>
@@ -180,7 +203,7 @@ C# syntax has always supported both, but asymetrically
 <section id="slide-7">
 <h2 id="7"><span class="section-number-2">7</span> The rising tide of pack/unpack</h2>
 
-<div id="orgc087c67" class="figure">
+<div id="org3b1c171" class="figure">
 <p><img src="./dogsurf.jpg" alt="dogsurf.jpg" />
 </p>
 </div>
@@ -199,8 +222,8 @@ object initializers - set properties directly
 <pre><code class="C#" >//caller dictates props
 var meal = new Dinner
 {
-	Main = new TruffleRisotto(),
-	Dessert = new TiraMisu()
+	Main = new MeatInGravy(),
+	Dessert = new DryBiscuits()
 };
 </code></pre>
 </div></li>
@@ -212,10 +235,10 @@ needed by anonymous objects, essential to LINQ
 </p>
 <div class="org-src-container">
 
-<pre><code class="C#" >var random = new 
+<pre><code class="C#" >return new 
 {
-	Blah = 13,
-	Wibble = "yapyapyap"
+	Decibels = 90,
+	Voice = "yapyapyap"
 };
 </code></pre>
 </div></li>
@@ -227,7 +250,9 @@ props go in, props come out: symmetry!
 </p>
 <div class="org-src-container">
 
-<pre><code class="C#" >things.Where(x =&gt; x.Wibble == "yapyapyap");
+<pre><code class="C#" >barks
+	.Where(x =&gt; x.Voice == "yapyapyap")
+	.Select(_ =&gt; "could be a poodle?");
 </code></pre>
 </div></li>
 
@@ -256,9 +281,9 @@ props go in, props come out: symmetry!
 </aside>
 
 <ul class="fragment roll-in">
-<li>allows us to probe the type used to construct the object</li>
-
-</ul>
+<li><p>
+allows us to probe the type used to construct the object
+</p>
 <div class="org-src-container">
 
 <pre class="fragment roll-in"><code class="C#" >if(pet is Dog dog)
@@ -270,7 +295,10 @@ else
 	//...
 }
 </code></pre>
-</div>
+</div></li>
+
+</ul>
+
 <div class="org-src-container">
 
 <pre class="fragment roll-in"><code class="C#" >switch(pet)
@@ -297,23 +325,27 @@ else
 <section id="slide-10">
 <h2 id="10"><span class="section-number-2">10</span> C#7 Deconstructors</h2>
 <ul class="fragment roll-in">
-<li>unpacks both type <i>and</i> arg list</li>
+<li>allow us to unpack both <b>type</b> <i>and</i> <b>arg list</b></li>
 
 </ul>
 <div class="org-src-container">
 
-<pre class="fragment roll-in"><code class="C#" >var pet = new Dog("Graham", 13);
+<pre class="fragment roll-in"><code class="C#" >var pets = new[]
+{
+	new Dog("Graham", 13),
+	new Cat("Tabitha", Foods.Kippers)
+};
 
 //...
 
 switch(pet)
 {
-	case Dog(var name, _) when name == "Graham":
+	case Dog(var name, _):
 		CallOut(name);
 		break;
 
-	case Cat cat:
-		PutOutSomeFood();
+	case Cat(_, var faveFood):
+		PutOutSomeFood(faveFood);
 		break;
 }
 </code></pre>
@@ -327,34 +359,49 @@ switch(pet)
 </section>
 <section>
 <section id="slide-11">
-<h2 id="11"><span class="section-number-2">11</span> demo of implementing deconstructor&#x2026;</h2>
-<div class="outline-text-2" id="text-11">
+<h2 id="11"><span class="section-number-2">11</span> Dog looking at itself in a mirror</h2>
+<p>
+switch and 'is Type' statements are clear reflections of the syntax used to construct the type in the first place
+</p>
+
+<p>
+Pic of dog here please
+</p>
+
+
+
+</section>
+</section>
+<section>
+<section id="slide-12">
+<h2 id="12"><span class="section-number-2">12</span> demo of implementing deconstructor&#x2026;</h2>
+<div class="outline-text-2" id="text-12">
 </div>
 </section>
-<section id="slide-11-1">
-<h3 id="11-1"><span class="section-number-3">11.1</span> 2016</h3>
+<section id="slide-12-1">
+<h3 id="12-1"><span class="section-number-3">12.1</span> 2016</h3>
 <p>
 what happened in 2016?
 </p>
 
 </section>
-<section id="slide-11-1-1">
-<h4 id="11-1-1"><span class="section-number-4">11.1.1</span> Tuples!</h4>
+<section id="slide-12-1-1">
+<h4 id="12-1-1"><span class="section-number-4">12.1.1</span> Tuples!</h4>
 <p>
 is like an args list without the type
 </p>
 
 </section>
-<section id="slide-11-1-2">
-<h4 id="11-1-2"><span class="section-number-4">11.1.2</span> But also introduced new ways of unpacking data</h4>
-<div class="outline-text-4" id="text-11-1-2">
+<section id="slide-12-1-2">
+<h4 id="12-1-2"><span class="section-number-4">12.1.2</span> But also introduced new ways of unpacking data</h4>
+<div class="outline-text-4" id="text-12-1-2">
 </div>
 <ol class="org-ol">
-<li><a id="11-1-2-1"></a>type matching (which is unpacking if you squint)<br /></li>
+<li><a id="12-1-2-1"></a>type matching (which is unpacking if you squint)<br /></li>
 
-<li><a id="11-1-2-2"></a>pattern-matching of tuples<br />
+<li><a id="12-1-2-2"></a>pattern-matching of tuples<br />
 <ol class="org-ol">
-<li><a id="11-1-2-2-1"></a>brilliant symmetry of tuples - so simple and so obvious<br />
+<li><a id="12-1-2-2-1"></a>brilliant symmetry of tuples - so simple and so obvious<br />
 <p>
 like a pivot to a different way of seeing objects - pack/unpack
 crystal clear
@@ -363,15 +410,15 @@ crystal clear
 </ol>
 </li>
 
-<li><a id="11-1-2-3"></a>Deconstructors<br />
+<li><a id="12-1-2-3"></a>Deconstructors<br />
 <ol class="org-ol">
-<li><a id="11-1-2-3-1"></a>tuples desugared<br />
+<li><a id="12-1-2-3-1"></a>tuples desugared<br />
 <p>
 tuples carry the minimum amount of baggage, purest containers
 </p>
 </li>
 
-<li><a id="11-1-2-3-2"></a>demo of desconstructed type pattern matching<br />
+<li><a id="12-1-2-3-2"></a>demo of desconstructed type pattern matching<br />
 <div class="org-src-container">
 
 <pre><code class="C#" >switch(thing) {
@@ -394,51 +441,51 @@ tuples carry the minimum amount of baggage, purest containers
 </section>
 </section>
 <section>
-<section id="slide-12">
-<h2 id="12"><span class="section-number-2">12</span> The present/future</h2>
-<div class="outline-text-2" id="text-12">
+<section id="slide-13">
+<h2 id="13"><span class="section-number-2">13</span> The present/future</h2>
+<div class="outline-text-2" id="text-13">
 </div>
 </section>
-<section id="slide-12-1">
-<h3 id="12-1"><span class="section-number-3">12.1</span> auto property deconstructuring</h3>
-<div class="outline-text-3" id="text-12-1">
+<section id="slide-13-1">
+<h3 id="13-1"><span class="section-number-3">13.1</span> auto property deconstructuring</h3>
+<div class="outline-text-3" id="text-13-1">
 </div>
 </section>
-<section id="slide-12-1-1">
-<h4 id="12-1-1"><span class="section-number-4">12.1.1</span> just syntactical repackaging really</h4>
+<section id="slide-13-1-1">
+<h4 id="13-1-1"><span class="section-number-4">13.1.1</span> just syntactical repackaging really</h4>
 
 </section>
-<section id="slide-12-1-2">
-<h4 id="12-1-2"><span class="section-number-4">12.1.2</span> but forms symmetrical pair with object initializers</h4>
+<section id="slide-13-1-2">
+<h4 id="13-1-2"><span class="section-number-4">13.1.2</span> but forms symmetrical pair with object initializers</h4>
 <p>
 just like how ctors with an args list tuple get unpacked
 </p>
 
 </section>
-<section id="slide-12-2">
-<h3 id="12-2"><span class="section-number-3">12.2</span> init-only setters</h3>
+<section id="slide-13-2">
+<h3 id="13-2"><span class="section-number-3">13.2</span> init-only setters</h3>
 
 </section>
-<section id="slide-12-3">
-<h3 id="12-3"><span class="section-number-3">12.3</span> and finally, records</h3>
-<div class="outline-text-3" id="text-12-3">
+<section id="slide-13-3">
+<h3 id="13-3"><span class="section-number-3">13.3</span> and finally, records</h3>
+<div class="outline-text-3" id="text-13-3">
 </div>
 </section>
-<section id="slide-12-3-1">
-<h4 id="12-3-1"><span class="section-number-4">12.3.1</span> kind of templated data-carrying classes</h4>
+<section id="slide-13-3-1">
+<h4 id="13-3-1"><span class="section-number-4">13.3.1</span> kind of templated data-carrying classes</h4>
 
 </section>
-<section id="slide-12-3-2">
-<h4 id="12-3-2"><span class="section-number-4">12.3.2</span> intended to be used with pattern-matching</h4>
-<div class="outline-text-4" id="text-12-3-2">
+<section id="slide-13-3-2">
+<h4 id="13-3-2"><span class="section-number-4">13.3.2</span> intended to be used with pattern-matching</h4>
+<div class="outline-text-4" id="text-13-3-2">
 </div>
 <ol class="org-ol">
-<li><a id="12-3-2-1"></a>like anon objects v2<br /></li>
+<li><a id="13-3-2-1"></a>like anon objects v2<br /></li>
 </ol>
 
 </section>
-<section id="slide-12-3-3">
-<h4 id="12-3-3"><span class="section-number-4">12.3.3</span> culmination of data-type story</h4>
+<section id="slide-13-3-3">
+<h4 id="13-3-3"><span class="section-number-4">13.3.3</span> culmination of data-type story</h4>
 </section>
 </section>
 </div>

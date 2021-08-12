@@ -16,6 +16,33 @@ img {
 		font-size: 70%;
 }
 
+.org-src-container pre {
+		margin: 0;
+		width: 100%;
+}
+
+div.dog-box {
+		display: flex;
+}
+
+div.dog-box div {
+		width: 720px;
+}
+
+div.dog-box p {
+		margin: 0;
+		margin-left: 16px;
+		height: 127px;
+}
+
+div.dog-box p img {
+		margin: 0;
+		border: 0;
+		height: 100%;
+		max-width: initial;
+		max-height: initial;
+}
+
 
 .org-svg {
 	border: none;
