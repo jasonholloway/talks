@@ -1,6 +1,7 @@
 #!/bin/bash
 
-(wget https://github.com/hakimel/reveal.js/archive/master.zip &&
+([[ ! -e master.zip ]] &&
+     wget https://github.com/hakimel/reveal.js/archive/master.zip &&
      unzip master.zip &&
      ln -s reveal.js-master reveal.js)
 
@@ -13,4 +14,7 @@
 (cd reveal.js/plugin &&
      git clone git@github.com:burnpiro/reveal-drawer.git)
 
-(git clone git@github.com:csev/dazzleSketch.git)
+(git clone git@github.com:mobomo/sketch.js.git)
+
+(git clone git@github.com:csev/dazzleSketch.git &&
+     find dazzleSketch -name '*js' | xargs sed -i 's/keypress/keydown/')
