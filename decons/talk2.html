@@ -3,28 +3,22 @@
 <head>
 <meta charset="utf-8"/>
 <title>Deconstructors</title>
-<meta name="author" content="jason"/>
+<meta name="author" content="U-MYPD\Jason.Holloway"/>
 <meta name="description" content="blah blah blah"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
-<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+<link rel="stylesheet" href="./reveal.js/dist/reveal.css"/>
 
-<link rel="stylesheet" href="./reveal.js/css/theme/sunblind.css" id="theme"/>
+<link rel="stylesheet" href="./reveal.js/dist/theme/sunblind.css" id="theme"/>
 
 <link rel="stylesheet" href="./custom.css"/>
-<link rel="stylesheet" href="./reveal.js/lib/css/zenburn.css"/>
 
-<!-- If the query includes 'print-pdf', include the PDF print sheet -->
-<script>
-    if( window.location.search.match( /print-pdf/gi ) ) {
-        var link = document.createElement( 'link' );
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = './reveal.js/css/print/pdf.css';
-        document.getElementsByTagName( 'head' )[0].appendChild( link );
-    }
-</script>
+<link rel="stylesheet" href="./reveal.js/plugin/reveal-pointer/dist/pointer.css"/>
+
+<link rel="stylesheet" href="./reveal.js/plugin/reveal-drawer/dist/drawer.css"/>
+<link rel="stylesheet" href="./reveal.js/plugin/highlight/zenburn.css"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
 <body>
 <div class="reveal">
@@ -82,9 +76,12 @@ encapsulation=delegation and packing=trust
 
 </aside>
 
+<p class="fragment roll-in">
+do two things:
+</p>
 <ul>
-<li class="fragment roll-in">encapsulates</li>
-<li class="fragment roll-in">packs</li>
+<li class="fragment roll-in">encapsulate</li>
+<li class="fragment roll-in">pack</li>
 
 </ul>
 
@@ -109,8 +106,8 @@ var dog = new Dog(name: "Bruce", loyalty: 0.37, enthusiasm: 0.76);
 
 </code></pre>
 </div>
-<p>
-<img src="./dog1.jpg" alt="dog1.jpg" />
+<p class="fragment roll-in">
+<img src="./dog1.jpg" alt="dog1.jpg" class="fragment roll-in" />
  </div>
 </p></li>
 
@@ -127,8 +124,8 @@ var stick = dog.FetchStick();
 
 </code></pre>
 </div>
-<p>
- <img src="./dog2.jpg" alt="dog2.jpg" />
+<p class="fragment roll-in">
+ <img src="./dog2.jpg" alt="dog2.jpg" class="fragment roll-in" />
  </div>
 </p></li>
 
@@ -181,7 +178,7 @@ if(fetched.Success)
 <section id="slide-5">
 <h2 id="5"><span class="section-number-2">5</span> Illustrative picture</h2>
 
-<div id="org1b88a74" class="figure">
+<div class="figure">
 <p><img src="./dogstick.jpg" alt="dogstick.jpg" />
 </p>
 </div>
@@ -192,10 +189,26 @@ if(fetched.Success)
 <section>
 <section id="slide-6">
 <h2 id="6"><span class="section-number-2">6</span> C# Syntax</h2>
-<p>
-that's the semantics of it&#x2026;
-C# syntax has always supported both, but asymetrically
+<ul>
+<li class="fragment roll-in">C# syntax hasn't <i><b>in the past</b></i> distinguished between these two ways of thinking about objects.</li>
+<li class="fragment roll-in"><p>
+you shovel in, then poke about after using the dot operator
 </p>
+
+<p>
+shovel-in/poke-about  vs ideal pack/unpack
+</p></li>
+
+</ul>
+
+
+
+
+
+
+
+
+
 
 </section>
 </section>
@@ -203,7 +216,7 @@ C# syntax has always supported both, but asymetrically
 <section id="slide-7">
 <h2 id="7"><span class="section-number-2">7</span> The rising tide of pack/unpack</h2>
 
-<div id="org3b1c171" class="figure">
+<div class="figure">
 <p><img src="./dogsurf.jpg" alt="dogsurf.jpg" />
 </p>
 </div>
@@ -244,6 +257,13 @@ needed by anonymous objects, essential to LINQ
 </div></li>
 
 </ul>
+
+<aside class="notes">
+<p>
+because bog-standard ctors <span class="underline">really</span> need an implementing type: doesn't fit ad hoc use case
+</p>
+
+</aside>
 <ul class="fragment roll-in">
 <li><p>
 props go in, props come out: symmetry!
@@ -333,7 +353,7 @@ else
 <pre class="fragment roll-in"><code class="C#" >var pets = new[]
 {
 	new Dog("Graham", 13),
-	new Cat("Tabitha", Foods.Kippers)
+	new Cat("Tabitha", Food.Kippers)
 };
 
 //...
@@ -344,7 +364,7 @@ switch(pet)
 		CallOut(name);
 		break;
 
-	case Cat(_, var faveFood):
+	case Cat("Tabitha", var faveFood):
 		PutOutSomeFood(faveFood);
 		break;
 }
@@ -359,138 +379,25 @@ switch(pet)
 </section>
 <section>
 <section id="slide-11">
-<h2 id="11"><span class="section-number-2">11</span> Dog looking at itself in a mirror</h2>
-<p>
-switch and 'is Type' statements are clear reflections of the syntax used to construct the type in the first place
+<h2 id="11"><span class="section-number-2">11</span> The End</h2>
+
+<div class="figure">
+<p><img src="./mirror.jpg" alt="mirror.jpg" />
 </p>
+</div>
 
 <p>
-Pic of dog here please
+&#x2026;dogs don't recognise mirrors as mirrors&#x2026;
 </p>
-
-
-
-</section>
-</section>
-<section>
-<section id="slide-12">
-<h2 id="12"><span class="section-number-2">12</span> demo of implementing deconstructor&#x2026;</h2>
-<div class="outline-text-2" id="text-12">
-</div>
-</section>
-<section id="slide-12-1">
-<h3 id="12-1"><span class="section-number-3">12.1</span> 2016</h3>
-<p>
-what happened in 2016?
-</p>
-
-</section>
-<section id="slide-12-1-1">
-<h4 id="12-1-1"><span class="section-number-4">12.1.1</span> Tuples!</h4>
-<p>
-is like an args list without the type
-</p>
-
-</section>
-<section id="slide-12-1-2">
-<h4 id="12-1-2"><span class="section-number-4">12.1.2</span> But also introduced new ways of unpacking data</h4>
-<div class="outline-text-4" id="text-12-1-2">
-</div>
-<ol class="org-ol">
-<li><a id="12-1-2-1"></a>type matching (which is unpacking if you squint)<br /></li>
-
-<li><a id="12-1-2-2"></a>pattern-matching of tuples<br />
-<ol class="org-ol">
-<li><a id="12-1-2-2-1"></a>brilliant symmetry of tuples - so simple and so obvious<br />
-<p>
-like a pivot to a different way of seeing objects - pack/unpack
-crystal clear
-</p>
-</li>
-</ol>
-</li>
-
-<li><a id="12-1-2-3"></a>Deconstructors<br />
-<ol class="org-ol">
-<li><a id="12-1-2-3-1"></a>tuples desugared<br />
-<p>
-tuples carry the minimum amount of baggage, purest containers
-</p>
-</li>
-
-<li><a id="12-1-2-3-2"></a>demo of desconstructed type pattern matching<br />
-<div class="org-src-container">
-
-<pre><code class="C#" >switch(thing) {
-
-	case Thing("blah"):
-	 break;
-
-	case Thing("blahdy blah"):
-	 break;
-
-}
-</code></pre>
-</div>
-</li>
-</ol>
-</li>
-</ol>
-
-
-</section>
-</section>
-<section>
-<section id="slide-13">
-<h2 id="13"><span class="section-number-2">13</span> The present/future</h2>
-<div class="outline-text-2" id="text-13">
-</div>
-</section>
-<section id="slide-13-1">
-<h3 id="13-1"><span class="section-number-3">13.1</span> auto property deconstructuring</h3>
-<div class="outline-text-3" id="text-13-1">
-</div>
-</section>
-<section id="slide-13-1-1">
-<h4 id="13-1-1"><span class="section-number-4">13.1.1</span> just syntactical repackaging really</h4>
-
-</section>
-<section id="slide-13-1-2">
-<h4 id="13-1-2"><span class="section-number-4">13.1.2</span> but forms symmetrical pair with object initializers</h4>
-<p>
-just like how ctors with an args list tuple get unpacked
-</p>
-
-</section>
-<section id="slide-13-2">
-<h3 id="13-2"><span class="section-number-3">13.2</span> init-only setters</h3>
-
-</section>
-<section id="slide-13-3">
-<h3 id="13-3"><span class="section-number-3">13.3</span> and finally, records</h3>
-<div class="outline-text-3" id="text-13-3">
-</div>
-</section>
-<section id="slide-13-3-1">
-<h4 id="13-3-1"><span class="section-number-4">13.3.1</span> kind of templated data-carrying classes</h4>
-
-</section>
-<section id="slide-13-3-2">
-<h4 id="13-3-2"><span class="section-number-4">13.3.2</span> intended to be used with pattern-matching</h4>
-<div class="outline-text-4" id="text-13-3-2">
-</div>
-<ol class="org-ol">
-<li><a id="13-3-2-1"></a>like anon objects v2<br /></li>
-</ol>
-
-</section>
-<section id="slide-13-3-3">
-<h4 id="13-3-3"><span class="section-number-4">13.3.3</span> culmination of data-type story</h4>
 </section>
 </section>
 </div>
 </div>
-<script src="./reveal.js/js/reveal.js"></script>
+<script src="./reveal.js/dist/reveal.js"></script>
+<script src="./reveal.js/plugin/highlight/highlight.js"></script>
+<script src="./reveal.js/plugin/notes/notes.js"></script>
+<script src="./reveal.js/plugin/reveal-pointer/dist/pointer.js"></script>
+<script src="./reveal.js/plugin/reveal-drawer/dist/drawer.js"></script>
 <script>
 // Full list of configuration options available here:
 // https://github.com/hakimel/reveal.js#configuration
@@ -504,18 +411,20 @@ slideNumber: 'c',
 rollingLinks: false,
 keyboard: true,
 mouseWheel: false,
-fragmentInURL: false,
+fragmentInURL: true,
 hashOneBasedIndex: false,
 pdfSeparateFragments: true,
 overview: true,
 
-theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-transition: Reveal.getQueryHash().transition || 'None', // see README of reveal.js for options
+transition: 'None',
 transitionSpeed: 'default',
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealHighlight, RevealNotes, RevealPointer, RevealDrawer ],
 
 // Optional libraries used to extend reveal.js
 dependencies: [
- { src: './reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }]
+]
 
 ,slideNumber: 'h.v', hash: true,});
 </script>

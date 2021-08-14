@@ -1,14 +1,19 @@
 # -**- mode: Org; eval: (reveal-mode 1); -**-
 # -**- org-image-actual-width: 500; -**-
-#+OPTIONS: toc:nil 
+#+OPTIONS: toc:nil reveal_fragmentinurl:t reveal_totaltime:t
+#+REVEAL_ROOT: ./reveal.js
 #+REVEAL_INIT_SCRIPT: slideNumber: 'h.v', 
 #+REVEAL_INIT_SCRIPT: hash: true, 
 #+REVEAL_THEME: sunblind
 #+REVEAL_TRANS:None
 #+REVEAL_TITLE_SLIDE:
 #+REVEAL_EXTRA_CSS:./custom.css
+#+REVEAL_EXTRA_CSS:./reveal.js/plugin/reveal-pointer/dist/pointer.css
+#+REVEAL_EXTRA_CSS:./reveal.js/plugin/reveal-drawer/dist/drawer.css
 #+REVEAL_HLEVEL:1
-#+REVEAL_PLUGINS: (highlight)
+#+REVEAL_PLUGINS: (highlight notes)
+#+REVEAL_ADD_PLUGIN: pointer RevealPointer plugin/reveal-pointer/dist/pointer.js
+#+REVEAL_ADD_PLUGIN: drawer RevealDrawer plugin/reveal-drawer/dist/drawer.js
 #+Title: Deconstructors
 #+Description: blah blah blah
 * 
@@ -67,9 +72,11 @@ var thing = new Thing("blah", 123);
 
 #  decayed, degenerated from OO data+behaviour
 
-#+ATTR_REVEAL: :frag (roll-in roll-in)
-- encapsulates
-- packs
+#+ATTR_REVEAL: :frag roll-in
+do two things:
+    #+ATTR_REVEAL: :frag (roll-in roll-in)
+  - encapsulate
+  - pack
 
 
 
@@ -84,6 +91,7 @@ var thing = new Thing("blah", 123);
      //now parameters are the dog's business...
 
      #+end_src
+     #+ATTR_REVEAL: :frag roll-in
      [[./dog1.jpg]]
      @@html: </div>@@
 
@@ -96,6 +104,7 @@ var thing = new Thing("blah", 123);
       var stick = dog.FetchStick();
 
       #+end_src
+     #+ATTR_REVEAL: :frag roll-in
       [[./dog2.jpg]]
      @@html: </div>@@
 
@@ -131,8 +140,20 @@ var thing = new Thing("blah", 123);
 
 
 * C# Syntax
-  that's the semantics of it...
-  C# syntax has always supported both, but asymetrically
+    #+ATTR_REVEAL: :frag (roll-in roll-in)
+  - C# syntax hasn't /*in the past*/ distinguished between these two ways of thinking about objects.
+  - you shovel in, then poke about after using the dot operator
+    
+    shovel-in/poke-about  vs ideal pack/unpack
+  
+
+
+
+  
+  
+
+
+
 
 * The rising tide of pack/unpack
  [[./dogsurf.jpg]]
@@ -157,6 +178,10 @@ var thing = new Thing("blah", 123);
       Voice = "yapyapyap"
     };
     #+end_src
+    
+#+begin_notes
+because bog-standard ctors _really_ need an implementing type: doesn't fit ad hoc use case
+#+end_notes
 #+ATTR_REVEAL: :frag roll-in
   - props go in, props come out: symmetry!
     #+begin_src C#
@@ -216,7 +241,7 @@ var thing = new Thing("blah", 123);
       var pets = new[]
       {
         new Dog("Graham", 13),
-        new Cat("Tabitha", Foods.Kippers)
+        new Cat("Tabitha", Food.Kippers)
       };
 
       //...
@@ -227,7 +252,7 @@ var thing = new Thing("blah", 123);
           CallOut(name);
           break;
 
-        case Cat(_, var faveFood):
+        case Cat("Tabitha", var faveFood):
           PutOutSomeFood(faveFood);
           break;
       }
@@ -235,71 +260,8 @@ var thing = new Thing("blah", 123);
 #+ATTR_REVEAL: :frag roll-in
   - amazing symmetry achieved!
 
-* Dog looking at itself in a mirror
-  switch and 'is Type' statements are clear reflections of the syntax used to construct the type in the first place
-
-  Pic of dog here please
-
-
-
-* demo of implementing deconstructor...
-
-** 2016
-   what happened in 2016?
-
-*** Tuples!
-    is like an args list without the type
-
-*** But also introduced new ways of unpacking data
-
-**** type matching (which is unpacking if you squint)
-
-**** pattern-matching of tuples
-
-***** brilliant symmetry of tuples - so simple and so obvious
-      like a pivot to a different way of seeing objects - pack/unpack
-      crystal clear
-
-**** Deconstructors
-
-***** tuples desugared
-      tuples carry the minimum amount of baggage, purest containers
-      
-***** demo of desconstructed type pattern matching
-
-#+BEGIN_SRC C#
-switch(thing) {
-
-  case Thing("blah"):
-   break;
-
-  case Thing("blahdy blah"):
-   break;
-
-}
-#+END_SRC
-      
-
-* The present/future
-
-** auto property deconstructuring
-
-*** just syntactical repackaging really
-
-*** but forms symmetrical pair with object initializers
-    just like how ctors with an args list tuple get unpacked
-
-** init-only setters
-
-** and finally, records
-
-*** kind of templated data-carrying classes
-
-*** intended to be used with pattern-matching
-
-**** like anon objects v2
-
-*** culmination of data-type story
-
-
+* The End
+  [[./mirror.jpg]]
+  
+  ...dogs don't recognise mirrors as mirrors...
 
