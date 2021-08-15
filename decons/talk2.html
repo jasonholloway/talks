@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>Deconstructors</title>
-<meta name="author" content="U-MYPD\Jason.Holloway"/>
+<meta name="author" content="jason"/>
 <meta name="description" content="blah blah blah"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
@@ -14,14 +14,16 @@
 
 <link rel="stylesheet" href="./custom.css"/>
 
+<link rel="stylesheet" href="./prism.css"/>
+
+<link rel="stylesheet" href="./prismjs-vs/Sources/dist/prism-vs-dark.css"/>
+
 <link rel="stylesheet" href="./reveal.js/plugin/reveal-pointer/dist/pointer.css"/>
 
 <link rel="stylesheet" href="./reveal.js/plugin/reveal-drawer/dist/drawer.css"/>
-<link rel="stylesheet" href="./reveal.js/plugin/highlight/zenburn.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="sketch.js/lib/sketch.js"></script>
 <script src="dazzleSketch/dazzleSketch.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
 <body>
 <div class="reveal">
@@ -31,10 +33,8 @@
 <h2 id="1"><span class="section-number-2">1</span> </h2>
 <div class="org-src-container">
 
-<pre><code class="C#" >
-var thing = new Thing("blah", 123);
-
-</code></pre>
+<pre class="src src-C#">var thing = new Thing("blah", 123);
+</pre>
 </div>
 
 </section>
@@ -44,10 +44,8 @@ var thing = new Thing("blah", 123);
 <h2 id="2"><span class="section-number-2">2</span> Constructors <span class="mini-exclaim">(woo!)</span></h2>
 <div class="org-src-container">
 
-<pre><code class="C#" >
-var thing = new Thing("blah", 123);
-
-</code></pre>
+<pre class="src src-C#">var thing = new Thing("blah", 123);
+</pre>
 </div>
 <aside class="notes">
 <p>
@@ -102,12 +100,10 @@ data is opaquely wrapped
 </p>
 <div class="org-src-container">
 
-<pre><code class="C#" >
-var dog = new Dog(name: "Bruce", loyalty: 0.37, enthusiasm: 0.76);
+<pre class="src src-C#">var dog = new Dog(name: "Bruce", loyalty: 0.37, enthusiasm: 0.76);
 
 //now parameters are the dog's business...
-
-</code></pre>
+</pre>
 </div>
 <p class="fragment roll-in">
 <img src="./dog1.jpg" alt="dog1.jpg" class="fragment roll-in" />
@@ -120,12 +116,10 @@ and behaviour is exposed
 </p>
 <div class="org-src-container">
 
-<pre><code class="C#" >
-//our business is limited to the contract
+<pre class="src src-C#">//our business is limited to the contract
 
 var stick = dog.FetchStick();
-
-</code></pre>
+</pre>
 </div>
 <p class="fragment roll-in">
  <img src="./dog2.jpg" alt="dog2.jpg" class="fragment roll-in" />
@@ -145,7 +139,7 @@ data is transparently structured
 </p>
 <div class="org-src-container">
 
-<pre><code class="C#" >class Dog
+<pre class="src src-C#">class Dog
 {
 	public FetchResult FetchStick()
 	{
@@ -155,14 +149,14 @@ data is transparently structured
 		);
 	}
 }
-</code></pre>
+</pre>
 </div></li>
 <li class="fragment roll-in"><p>
 to be unpacked later
 </p>
 <div class="org-src-container">
 
-<pre><code class="C#" >
+<pre class="src src-C#">
 var fetched = dog.FetchStick();
 
 if(fetched.Success)
@@ -170,7 +164,7 @@ if(fetched.Success)
 	Write($"Wow, this stick is {fetched.Stick.Weight} kilogrammes in weight!");
 }
 
-</code></pre>
+</pre>
 </div></li>
 
 </ul>
@@ -181,7 +175,7 @@ if(fetched.Success)
 <section id="slide-5">
 <h2 id="5"><span class="section-number-2">5</span> Illustrative picture</h2>
 
-<div class="figure">
+<div id="org3f0d9a2" class="figure">
 <p><img src="./dogstick.jpg" alt="dogstick.jpg" />
 </p>
 </div>
@@ -219,7 +213,7 @@ shovel-in/poke-about  vs ideal pack/unpack
 <section id="slide-7">
 <h2 id="7"><span class="section-number-2">7</span> The rising tide of pack/unpack</h2>
 
-<div class="figure">
+<div id="org04436a0" class="figure">
 <p><img src="./dogsurf.jpg" alt="dogsurf.jpg" />
 </p>
 </div>
@@ -235,13 +229,13 @@ object initializers - set properties directly
 </p>
 <div class="org-src-container">
 
-<pre><code class="C#" >//caller dictates props
+<pre class="src src-C#">//caller dictates props
 var meal = new Dinner
 {
 	Main = new MeatInGravy(),
 	Dessert = new DryBiscuits()
 };
-</code></pre>
+</pre>
 </div></li>
 
 </ul>
@@ -251,12 +245,12 @@ needed by anonymous objects, essential to LINQ
 </p>
 <div class="org-src-container">
 
-<pre><code class="C#" >return new 
+<pre class="src src-C#">return new 
 {
 	Decibels = 90,
 	Voice = "yapyapyap"
 };
-</code></pre>
+</pre>
 </div></li>
 
 </ul>
@@ -269,14 +263,14 @@ because bog-standard ctors <span class="underline">really</span> need an impleme
 </aside>
 <ul class="fragment roll-in">
 <li><p>
-props go in, props come out: symmetry!
+props go in, props come out: symmetry! (kind of)
 </p>
 <div class="org-src-container">
 
-<pre><code class="C#" >barks
+<pre class="src src-C#">barks
 	.Where(x =&gt; x.Voice == "yapyapyap")
 	.Select(_ =&gt; "could be a poodle?");
-</code></pre>
+</pre>
 </div></li>
 
 </ul>
@@ -309,7 +303,7 @@ allows us to probe the type used to construct the object
 </p>
 <div class="org-src-container">
 
-<pre class="fragment roll-in"><code class="C#" >if(pet is Dog dog)
+<pre class="fragment roll-in">if(pet is Dog dog)
 {
 	Beckon(dog.Name);
 }
@@ -317,14 +311,14 @@ else
 {
 	//...
 }
-</code></pre>
+</pre>
 </div></li>
 
 </ul>
 
 <div class="org-src-container">
 
-<pre class="fragment roll-in"><code class="C#" >switch(pet)
+<pre class="fragment roll-in">switch(pet)
 {
 	case Dog dog:
 		Beckon(dog.Name);
@@ -335,7 +329,7 @@ else
 		WaitForAges();
 		break;
 }
-</code></pre>
+</pre>
 </div>
 <ul class="fragment roll-in">
 <li>types go in, types come out: symmetry!</li>
@@ -353,7 +347,7 @@ else
 </ul>
 <div class="org-src-container">
 
-<pre class="fragment roll-in"><code class="C#" >var pets = new[]
+<pre class="fragment roll-in">var pets = new[]
 {
 	new Dog("Graham", 13),
 	new Cat("Tabitha", Food.Kippers)
@@ -371,7 +365,7 @@ switch(pet)
 		PutOutSomeFood(faveFood);
 		break;
 }
-</code></pre>
+</pre>
 </div>
 <ul class="fragment roll-in">
 <li>amazing symmetry achieved!</li>
@@ -382,25 +376,57 @@ switch(pet)
 </section>
 <section>
 <section id="slide-11">
-<h2 id="11"><span class="section-number-2">11</span> The End</h2>
+<h2 id="11"><span class="section-number-2">11</span> C#8 Property-Unpacking</h2>
+<ul class="fragment roll-in">
+<li>mirrors object initializers: props in and props out&#x2026;  <br/> with <i>same(ish) syntax</i></li>
 
-<div class="figure">
+</ul>
+<div class="org-src-container">
+
+<pre class="fragment roll-in">			var pets = new[]
+			{
+				new { Name = "Gerald" }
+				new { Name = "Tabitha" }
+			};
+
+			//...
+
+			switch(pet)
+			{
+				case { Name: var name }:
+					CallOut(name);
+					break;
+			}
+
+//but does above work????
+</pre>
+</div>
+<ul class="fragment roll-in">
+<li>pinnacle of symmetry reached!</li>
+
+</ul>
+
+
+</section>
+</section>
+<section>
+<section id="slide-12">
+<h2 id="12"><span class="section-number-2">12</span> The End</h2>
+
+<div id="org74229fa" class="figure">
 <p><img src="./mirror.jpg" alt="mirror.jpg" />
 </p>
 </div>
-
-<p>
-&#x2026;dogs don't recognise mirrors as mirrors&#x2026;
-</p>
 </section>
 </section>
 </div>
 </div>
 <script src="./reveal.js/dist/reveal.js"></script>
-<script src="./reveal.js/plugin/highlight/highlight.js"></script>
 <script src="./reveal.js/plugin/notes/notes.js"></script>
 <script src="./reveal.js/plugin/reveal-pointer/dist/pointer.js"></script>
 <script src="./reveal.js/plugin/reveal-drawer/dist/drawer.js"></script>
+<script src="./prism.js"></script>
+<script src="./prism-setup.js"></script>
 <script>
 // Full list of configuration options available here:
 // https://github.com/hakimel/reveal.js#configuration
@@ -423,7 +449,7 @@ transition: 'None',
 transitionSpeed: 'default',
 
 // Plugins with reveal.js 4.x
-plugins: [ RevealHighlight, RevealNotes, RevealPointer, RevealDrawer ],
+plugins: [ RevealNotes, RevealPointer, RevealDrawer ],
 
 // Optional libraries used to extend reveal.js
 dependencies: [

@@ -16,6 +16,14 @@ img {
 		font-size: 70%;
 }
 
+div.figure p img {
+		height: 560px;
+}
+
+pre.language-csharp {
+		font-size: 50% !important;
+}
+
 .org-src-container pre {
 		margin: 0;
 		width: 100%;

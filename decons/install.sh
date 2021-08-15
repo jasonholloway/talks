@@ -18,3 +18,6 @@
 
 (git clone git@github.com:csev/dazzleSketch.git &&
      find dazzleSketch -name '*js' | xargs sed -i 's/keypress/keydown/')
+
+(git clone git@github.com:JeremyJeanson/prismjs-vs.git &&
+     sed -i 's/code/pre/g' ./prismjs-vs/Sources/dist/prism-vs-dark.css )

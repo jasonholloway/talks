@@ -8,30 +8,29 @@
 #+REVEAL_TRANS:None
 #+REVEAL_TITLE_SLIDE:
 #+REVEAL_EXTRA_CSS:./custom.css
+#+REVEAL_EXTRA_CSS:./prism.css
+#+REVEAL_EXTRA_CSS:./prismjs-vs/Sources/dist/prism-vs-dark.css
 #+REVEAL_EXTRA_CSS:./reveal.js/plugin/reveal-pointer/dist/pointer.css
 #+REVEAL_EXTRA_CSS:./reveal.js/plugin/reveal-drawer/dist/drawer.css
 #+REVEAL_HLEVEL:1
-#+REVEAL_PLUGINS: (highlight notes)
+#+REVEAL_PLUGINS: (notes)
 #+REVEAL_ADD_PLUGIN: pointer RevealPointer plugin/reveal-pointer/dist/pointer.js
 #+REVEAL_ADD_PLUGIN: drawer RevealDrawer plugin/reveal-drawer/dist/drawer.js
 #+REVEAL_HEAD_PREAMBLE: <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 #+REVEAL_HEAD_PREAMBLE: <script src="sketch.js/lib/sketch.js"></script>
 #+REVEAL_HEAD_PREAMBLE: <script src="dazzleSketch/dazzleSketch.js"></script>
+#+REVEAL_EXTRA_SCRIPTS: ("./prism.js" "./prism-setup.js")
 #+Title: Deconstructors
 #+Description: blah blah blah
 * 
 
 #+BEGIN_SRC C#
-
 var thing = new Thing("blah", 123);
-
 #+END_SRC
 
 * Constructors @@html:<span class="mini-exclaim">(woo!)</span>@@
 #+BEGIN_SRC C#
-
 var thing = new Thing("blah", 123);
-
 #+END_SRC
 #+begin_notes
   that's the end of the talk (joke)
@@ -50,31 +49,6 @@ var thing = new Thing("blah", 123);
   encapsulation=delegation and packing=trust
 #+end_notes
 
-#    it creates an object, an instance of a class
-#    it sets up the new instance
-#    via the interfaces you know it implements, you can then interact with it
-    
-#  encapsulates (behaviour)
-
-#  simply structured args list into black hole
-
-#  and it's one way
-#       it's the business of the implementing type what it actually does
-
-#  this hides stuff below the contract
-#       at this point we can wash our hands of it
-  
-# packs (data)
-#      objects as transparent containers
-
-#  in trad C#, this done by properties, branching etc
-
-#  eg result classes
-
-#  transparency, symmetry
-
-#  decayed, degenerated from OO data+behaviour
-
 #+ATTR_REVEAL: :frag roll-in
 do two things:
     #+ATTR_REVEAL: :frag (roll-in roll-in)
@@ -88,11 +62,9 @@ do two things:
    - data is opaquely wrapped
      @@html: <div class="dog-box">@@
      #+begin_src C#
-
      var dog = new Dog(name: "Bruce", loyalty: 0.37, enthusiasm: 0.76);
 
      //now parameters are the dog's business...
-
      #+end_src
      #+ATTR_REVEAL: :frag roll-in
      [[./dog1.jpg]]
@@ -101,11 +73,9 @@ do two things:
    - and behaviour is exposed
      @@html: <div class="dog-box">@@
       #+begin_src C#
-
       //our business is limited to the contract
 
       var stick = dog.FetchStick();
-
       #+end_src
      #+ATTR_REVEAL: :frag roll-in
       [[./dog2.jpg]]
@@ -128,14 +98,12 @@ do two things:
       #+end_src
    - to be unpacked later
       #+begin_src C#
-
       var fetched = dog.FetchStick();
 
       if(fetched.Success)
       {
         Write($"Wow, this stick is {fetched.Stick.Weight} kilogrammes in weight!");
       }
-
       #+end_src
 
 * Illustrative picture
@@ -186,7 +154,7 @@ do two things:
 because bog-standard ctors _really_ need an implementing type: doesn't fit ad hoc use case
 #+end_notes
 #+ATTR_REVEAL: :frag roll-in
-  - props go in, props come out: symmetry!
+  - props go in, props come out: symmetry! (kind of)
     #+begin_src C#
     barks
       .Where(x => x.Voice == "yapyapyap")
@@ -263,8 +231,32 @@ because bog-standard ctors _really_ need an implementing type: doesn't fit ad ho
 #+ATTR_REVEAL: :frag roll-in
   - amazing symmetry achieved!
 
+* C#8 Property-Unpacking
+#+ATTR_REVEAL: :frag roll-in
+  - mirrors object initializers: props in and props out... @@html: <br/>@@ with /same(ish) syntax/
+#+ATTR_REVEAL: :frag roll-in
+  #+begin_src C#
+      var pets = new[]
+      {
+        new { Name = "Gerald" }
+        new { Name = "Tabitha" }
+      };
+
+      //...
+
+      switch(pet)
+      {
+        case { Name: var name }:
+          CallOut(name);
+          break;
+      }
+
+//but does above work????
+  #+end_src
+#+ATTR_REVEAL: :frag roll-in
+  - pinnacle of symmetry reached!
+
+
 * The End
   [[./mirror.jpg]]
-  
-  ...dogs don't recognise mirrors as mirrors...
 
