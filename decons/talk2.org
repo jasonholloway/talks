@@ -112,6 +112,10 @@ do two things:
   - C# syntax hasn't /*in the past*/ distinguished between these two ways of thinking about objects.
   - you shovel in, then poke about after using the dot operator @@html:<br />@@(which covers all cases)
     
+   #+ATTR_REVEAL: :frag roll-in
+    [[./shovel.png]]
+    [[./pack.png]]
+
     #+begin_notes
     shovel-in/poke-about  vs ideal pack/unpack
     #+end_notes
@@ -225,7 +229,7 @@ because bog-standard ctors _really_ need an implementing type: doesn't fit ad ho
   #+begin_src C#
       var pets = new object[]
       {
-        new Dog { Name = "Bruce" }
+        new Dog { Name = "Bruce", DoesHeel: true }
         new Cat { Name = "Tabitha" }
       };
 
@@ -233,7 +237,7 @@ because bog-standard ctors _really_ need an implementing type: doesn't fit ad ho
 
       switch(pet)
       {
-        case Dog { Name: var name }:
+        case Dog { Name: var name, DoesHeel: true }:
           Beckon(name);
           break;
       }

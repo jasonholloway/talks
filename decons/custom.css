@@ -1,3 +1,7 @@
+section#slide-6 img {
+		border: 0;
+		width: 40%;
+}
 
 div.revealjs-drawer-menu {
 		display: none;

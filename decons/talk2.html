@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>Deconstructors</title>
-<meta name="author" content="jason"/>
+<meta name="author" content="U-MYPD\Jason.Holloway"/>
 <meta name="description" content="blah blah blah"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
@@ -22,6 +22,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="sketch.js/lib/sketch.js"></script>
 <script src="dazzleSketch/dazzleSketch.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
 <body>
 <div class="reveal">
@@ -171,7 +172,7 @@ if(fetched.Success)
 <section id="slide-5">
 <h2 id="5"><span class="section-number-2">5</span> Illustrative picture</h2>
 
-<div id="orge9b33b1" class="figure">
+<div class="figure">
 <p><img src="./dogstick.jpg" alt="dogstick.jpg" />
 </p>
 </div>
@@ -186,6 +187,11 @@ if(fetched.Success)
 <li class="fragment roll-in">C# syntax hasn't <i><b>in the past</b></i> distinguished between these two ways of thinking about objects.</li>
 <li class="fragment roll-in"><p>
 you shovel in, then poke about after using the dot operator <br />(which covers all cases)
+</p>
+
+<p class="fragment roll-in">
+<img src="./shovel.png" alt="shovel.png" class="fragment roll-in" />
+<img src="./pack.png" alt="pack.png" />
 </p>
 
 <aside class="notes">
@@ -204,7 +210,7 @@ shovel-in/poke-about  vs ideal pack/unpack
 <section id="slide-7">
 <h2 id="7"><span class="section-number-2">7</span> The rising tide of pack/unpack</h2>
 
-<div id="orgd38046c" class="figure">
+<div class="figure">
 <p><img src="./dogsurf.jpg" alt="dogsurf.jpg" />
 </p>
 </div>
@@ -372,7 +378,7 @@ switch(pet)
 
 <pre class="fragment roll-in">var pets = new object[]
 {
-	new Dog { Name = "Bruce" }
+	new Dog { Name = "Bruce", DoesHeel: true }
 	new Cat { Name = "Tabitha" }
 };
 
@@ -380,7 +386,7 @@ switch(pet)
 
 switch(pet)
 {
-	case Dog { Name: var name }:
+	case Dog { Name: var name, DoesHeel: true }:
 		Beckon(name);
 		break;
 }
@@ -398,7 +404,7 @@ switch(pet)
 <section id="slide-12">
 <h2 id="12"><span class="section-number-2">12</span> The End</h2>
 
-<div id="org3fdc95d" class="figure">
+<div class="figure">
 <p><img src="./mirror.jpg" alt="mirror.jpg" />
 </p>
 </div>
