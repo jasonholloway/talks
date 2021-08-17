@@ -10,12 +10,9 @@
 #+REVEAL_EXTRA_CSS:./custom.css
 #+REVEAL_EXTRA_CSS:./prism.css
 #+REVEAL_EXTRA_CSS:./prismjs-vs/Sources/dist/prism-vs-dark.css
-#+REVEAL_EXTRA_CSS:./reveal.js/plugin/reveal-pointer/dist/pointer.css
 #+REVEAL_EXTRA_CSS:./reveal.js/plugin/reveal-drawer/dist/drawer.css
 #+REVEAL_HLEVEL:1
-#+REVEAL_PLUGINS: (notes)
-#+REVEAL_ADD_PLUGIN: pointer RevealPointer plugin/reveal-pointer/dist/pointer.js
-#+REVEAL_ADD_PLUGIN: drawer RevealDrawer plugin/reveal-drawer/dist/drawer.js
+#+REVEAL_PLUGINS: (notes drawer)
 #+REVEAL_HEAD_PREAMBLE: <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 #+REVEAL_HEAD_PREAMBLE: <script src="sketch.js/lib/sketch.js"></script>
 #+REVEAL_HEAD_PREAMBLE: <script src="dazzleSketch/dazzleSketch.js"></script>

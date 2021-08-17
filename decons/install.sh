@@ -21,3 +21,7 @@
 
 (git clone git@github.com:JeremyJeanson/prismjs-vs.git &&
      sed -i 's/code/pre/g' ./prismjs-vs/Sources/dist/prism-vs-dark.css )
+
+(cd reveal.js/plugin &&
+     git clone git@github.com:rajgoel/reveal.js-plugins.git)
+     
