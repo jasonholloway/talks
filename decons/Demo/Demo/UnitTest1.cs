@@ -23,9 +23,11 @@ namespace Demo
     {
         public Thing(string name)
         {
-            
+            Name = name;
         }
-        //...
+        
+        public string Name { get; set; }
+        public int Age { get; set; }
     }
     
     public class Animal : Thing

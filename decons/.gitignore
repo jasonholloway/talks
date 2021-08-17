@@ -4,4 +4,7 @@ dazzleSketch
 prismjs-vs
 sketch*
 *swp
+bin
+obj
+.idea
 

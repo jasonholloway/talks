@@ -1,3 +1,11 @@
+div.org-src-container pre.src {
+		padding: 0.5em;
+}
+
+.reveal p {
+		margin: 5px 0;
+}
+
 span[class|=section-number] {
   display: none;
 }

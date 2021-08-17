@@ -116,9 +116,9 @@ and behaviour is exposed
 </p>
 <div class="org-src-container">
 
-<pre class="src src-C#">//our business is limited to the contract
+<pre class="src src-C#">var stick = dog.FetchStick();
 
-var stick = dog.FetchStick();
+//our business is limited to the contract
 </pre>
 </div>
 <p class="fragment roll-in">
@@ -156,14 +156,12 @@ to be unpacked later
 </p>
 <div class="org-src-container">
 
-<pre class="src src-C#">
-var fetched = dog.FetchStick();
+<pre class="src src-C#">var fetched = dog.FetchStick();
 
 if(fetched.Success)
 {
 	Write($"Wow, this stick is {fetched.Stick.Weight} kilogrammes in weight!");
 }
-
 </pre>
 </div></li>
 
@@ -175,7 +173,7 @@ if(fetched.Success)
 <section id="slide-5">
 <h2 id="5"><span class="section-number-2">5</span> Illustrative picture</h2>
 
-<div id="org3f0d9a2" class="figure">
+<div id="orgad50078" class="figure">
 <p><img src="./dogstick.jpg" alt="dogstick.jpg" />
 </p>
 </div>
@@ -189,22 +187,17 @@ if(fetched.Success)
 <ul>
 <li class="fragment roll-in">C# syntax hasn't <i><b>in the past</b></i> distinguished between these two ways of thinking about objects.</li>
 <li class="fragment roll-in"><p>
-you shovel in, then poke about after using the dot operator
+you shovel in, then poke about after using the dot operator <br />(which covers all cases)
 </p>
 
+<aside class="notes">
 <p>
 shovel-in/poke-about  vs ideal pack/unpack
-</p></li>
+</p>
+
+</aside></li>
 
 </ul>
-
-
-
-
-
-
-
-
 
 
 </section>
@@ -213,7 +206,7 @@ shovel-in/poke-about  vs ideal pack/unpack
 <section id="slide-7">
 <h2 id="7"><span class="section-number-2">7</span> The rising tide of pack/unpack</h2>
 
-<div id="org04436a0" class="figure">
+<div id="org75a1638" class="figure">
 <p><img src="./dogsurf.jpg" alt="dogsurf.jpg" />
 </p>
 </div>
@@ -307,10 +300,6 @@ allows us to probe the type used to construct the object
 {
 	Beckon(dog.Name);
 }
-else
-{
-	//...
-}
 </pre>
 </div></li>
 
@@ -383,26 +372,24 @@ switch(pet)
 </ul>
 <div class="org-src-container">
 
-<pre class="fragment roll-in">			var pets = new[]
-			{
-				new { Name = "Gerald" }
-				new { Name = "Tabitha" }
-			};
+<pre class="fragment roll-in">var pets = new object[]
+{
+	new Dog { Name = "Bruce" }
+	new Cat { Name = "Tabitha" }
+};
 
-			//...
+//...
 
-			switch(pet)
-			{
-				case { Name: var name }:
-					CallOut(name);
-					break;
-			}
-
-//but does above work????
+switch(pet)
+{
+	case Dog { Name: var name }:
+		Beckon(name);
+		break;
+}
 </pre>
 </div>
 <ul class="fragment roll-in">
-<li>pinnacle of symmetry reached!</li>
+<li>pinnacle of prop-based symmetry</li>
 
 </ul>
 
@@ -413,7 +400,7 @@ switch(pet)
 <section id="slide-12">
 <h2 id="12"><span class="section-number-2">12</span> The End</h2>
 
-<div id="org74229fa" class="figure">
+<div id="org9562a50" class="figure">
 <p><img src="./mirror.jpg" alt="mirror.jpg" />
 </p>
 </div>

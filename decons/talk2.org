@@ -73,9 +73,9 @@ do two things:
    - and behaviour is exposed
      @@html: <div class="dog-box">@@
       #+begin_src C#
-      //our business is limited to the contract
-
       var stick = dog.FetchStick();
+
+      //our business is limited to the contract
       #+end_src
      #+ATTR_REVEAL: :frag roll-in
       [[./dog2.jpg]]
@@ -113,17 +113,11 @@ do two things:
 * C# Syntax
     #+ATTR_REVEAL: :frag (roll-in roll-in)
   - C# syntax hasn't /*in the past*/ distinguished between these two ways of thinking about objects.
-  - you shovel in, then poke about after using the dot operator
+  - you shovel in, then poke about after using the dot operator @@html:<br />@@(which covers all cases)
     
+    #+begin_notes
     shovel-in/poke-about  vs ideal pack/unpack
-  
-
-
-
-  
-  
-
-
+    #+end_notes
 
 
 * The rising tide of pack/unpack
@@ -180,10 +174,6 @@ because bog-standard ctors _really_ need an implementing type: doesn't fit ad ho
       {
         Beckon(dog.Name);
       }
-      else
-      {
-        //...
-      }
     #+end_src
 
   #+ATTR_REVEAL: :frag roll-in
@@ -236,25 +226,23 @@ because bog-standard ctors _really_ need an implementing type: doesn't fit ad ho
   - mirrors object initializers: props in and props out... @@html: <br/>@@ with /same(ish) syntax/
 #+ATTR_REVEAL: :frag roll-in
   #+begin_src C#
-      var pets = new[]
+      var pets = new object[]
       {
-        new { Name = "Gerald" }
-        new { Name = "Tabitha" }
+        new Dog { Name = "Bruce" }
+        new Cat { Name = "Tabitha" }
       };
 
       //...
 
       switch(pet)
       {
-        case { Name: var name }:
-          CallOut(name);
+        case Dog { Name: var name }:
+          Beckon(name);
           break;
       }
-
-//but does above work????
   #+end_src
 #+ATTR_REVEAL: :frag roll-in
-  - pinnacle of symmetry reached!
+  - pinnacle of prop-based symmetry
 
 
 * The End
