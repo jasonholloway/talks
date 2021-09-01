@@ -1,0 +1,9 @@
+* Mega-Obscure DSLs
+** What's a DSL?
+*** eg Cucumber (though fradulently structured to look like English - better examples somewhere?)
+*** Regex
+** Embedded in C#
+** Fluent syntax
+** Overloadable operators
+** LINQ overriding
+** Implicit type-coercion
